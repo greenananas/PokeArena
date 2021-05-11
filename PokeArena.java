@@ -1,6 +1,4 @@
-import java.time.chrono.ThaiBuddhistEra;
-
-public class main {
+public class PokeArena {
     public static void main(String[] args) {
         attack dracocharge=new attack("Dracocharge",pokeTypes.type.DRAGON,true,100,70,16);
         attack dracogriffe=new attack("Dracogriffe",pokeTypes.type.DRAGON,true,80,100,24);
