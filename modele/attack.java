@@ -36,20 +36,20 @@ public class attack {
     /**
      * Créer une attaque
      *
-     * @param n Nom de l'attaque
-     * @param t Type de l'attaque
-     * @param a Attaque physique ou spéciale
-     * @param p Puissance de l'attaque
-     * @param pr Précision de l'attaque
+     * @param name  Nom de l'attaque
+     * @param type  Type de l'attaque
+     * @param isPhysical  Attaque physique ou spéciale
+     * @param power  Puissance de l'attaque
+     * @param precision Précision de l'attaque
      * @param pp Points de pouvoir de l'attaque
      */
-    public attack(String n,pokeTypes.type t,boolean a,int p,int pr,int pp){
-        this.name=n;
-        this.type=t;
-        this.physical=a;
-        this.power=p;
-        this.precision=pr;
-        this.pp=pp;
+    public attack(String name, pokeTypes.type type, boolean isPhysical, int power, int precision, int pp) {
+        this.name = name;
+        this.type = type;
+        this.physical = isPhysical;
+        this.power = power;
+        this.precision = precision;
+        this.pp = pp;
     }
 
     /**
@@ -57,82 +57,106 @@ public class attack {
      *
      * @return Nom de l'attaque
      */
-    public String getName(){return this.name;}
+    public String getName() {
+        return this.name;
+    }
 
     /**
      * Obtenir le type de l'attaque
      *
      * @return Type de l'attaque
      */
-    public pokeTypes.type getType(){return this.type;}
+    public pokeTypes.type getType() {
+        return this.type;
+    }
 
     /**
      * Vérifier que l'attaque est physique
      *
      * @return Attaque physique ou spéciale
      */
-    public boolean isPhysical(){return this.physical;}
+    public boolean isPhysical() {
+        return this.physical;
+    }
 
     /**
      * Obtenir la puissance de l'attaque
      *
      * @return Puissance de l'attaque
      */
-    public int getPower(){return this.power;}
+    public int getPower() {
+        return this.power;
+    }
 
     /**
      * Obtenir la précision de l'attaque
      *
      * @return Précision de l'attaque
      */
-    public int getPrecision(){return this.precision;}
+    public int getPrecision() {
+        return this.precision;
+    }
 
     /**
      * Obtenir les points de pouvoir de l'attaque
      *
      * @return Points de pouvoir de l'attaque
      */
-    public int getPP(){return this.pp;}
+    public int getPP() {
+        return this.pp;
+    }
 
     /**
      * Modifier le nom de l'attaque
      *
      * @param n Nouveau nom de l'attaque
      */
-    public void setName(String n){this.name=n;}
+    public void setName(String n) {
+        this.name = n;
+    }
 
     /**
      * Modifier le type de l'attaque
      *
      * @param t Nouveau type de l'attaque
      */
-    public void setType(pokeTypes.type t){this.type=t;}
+    public void setType(pokeTypes.type t) {
+        this.type = t;
+    }
 
     /**
      * Rendre l'attaque physique ou spéciale
      *
      * @param p Physique (true) ou spéciale (false)
      */
-    public void setPhysical(boolean p){this.physical=p;}
+    public void setPhysical(boolean p) {
+        this.physical = p;
+    }
 
     /**
      * Modifier la puissance de l'attaque
      *
      * @param p Nouvelle puissance de l'attaque
      */
-    public void setPower(int p){this.power=p;}
+    public void setPower(int p) {
+        this.power = p;
+    }
 
     /**
      * Modifier la précision de l'attaque
      *
      * @param p Nouvelle précision de l'attaque
      */
-    public void setPrecision(int p){this.precision=p;}
+    public void setPrecision(int p) {
+        this.precision = p;
+    }
 
     /**
      * Modifier les points de pouvoir de l'attaque
      *
      * @param pp Points de pouvoir de l'attaque
      */
-    public void setPP(int pp){this.pp=pp;}
+    public void setPP(int pp) {
+        this.pp = pp;
+    }
 }

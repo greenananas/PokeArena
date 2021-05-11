@@ -12,26 +12,26 @@ public class pokeTypes {
     /**
      * Énumération des niveaux d'effet des attaques de Pokémon.
      */
-    public enum EffectLevel {
+    public enum EffectivenessLevel {
         INEFFECTIVE(0.0), WEAK(0.5), NORMAL(1.0), STRONG(2.0);
 
-        private double value;
+        private final double value;
 
-        EffectLevel(final double newValue) {
+        EffectivenessLevel(final double newValue) {
             value = newValue;
         }
 
-        public double getEffect() {
+        public double getEffectiveness() {
             return value;
         }
     }
 
     // norm fight fly pois grnd rock bug ghst stel fire wter grss elec psyc ice drag dark fair
-    private static final EffectLevel norm = EffectLevel.NORMAL;
-    private static final EffectLevel weak = EffectLevel.WEAK;
-    private static final EffectLevel str  = EffectLevel.STRONG;
-    private static final EffectLevel inef = EffectLevel.INEFFECTIVE;
-    private static final EffectLevel allGen[][] =
+    private static final EffectivenessLevel norm = EffectivenessLevel.NORMAL;
+    private static final EffectivenessLevel weak = EffectivenessLevel.WEAK;
+    private static final EffectivenessLevel str  = EffectivenessLevel.STRONG;
+    private static final EffectivenessLevel inef = EffectivenessLevel.INEFFECTIVE;
+    private static final EffectivenessLevel allGen[][] =
     {
         //offensif en colonne, défensif en ligne
              // norm  fght  fly   pois  grnd  rock  bug   ghst  stel  fire  wter  grss  elec  psyc  ice   drag  dark  fair
@@ -56,7 +56,7 @@ public class pokeTypes {
              // norm  fght  fly   pois  grnd  rock  bug   ghst  stel  fire  wter  grss  elec  psyc  ice   drag  dark  fair
     };
 
-    public static EffectLevel getTypeAdvantage(type defenseType, type attackType) {
+    public static EffectivenessLevel getTypeAdvantage(type attackType, type defenseType) {
         return allGen[defenseType.ordinal()][attackType.ordinal()];
     }
 }
