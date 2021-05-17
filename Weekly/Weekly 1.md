@@ -53,7 +53,7 @@ Avec un **poids de 30**, le développement des **graphismes** nous parait être 
 
 Un élément très important dans Pokémon est la **base de données** à exploiter. Les jeux principaux intégrant 898 espèces de Pokémon et 764 attaques (sans compter talents, objets...), il est extrêmement important d'avoir quelqu'un de 100% dévoué à son formatage pour en tirer une utilisation optimale. Nous avons choisi un **poids de 25** pour cette mission, et l'avons confié à **Lény**.
 
-La **partie réseau** nous semble très importante, puisque c'est celle qui va donner le plus de plu value à notre jeu. En effet, pouvoir jouer à Pokémon en ligne depuis n'importe quelle plateforme sera notre plus grosse différence avec des projets déjà exitants. Ne connaissant pas exactement encore les solutions à mettre en oeuvre, nous avons choisi de lui affilier un **poids de 20** et de le donner à **Louis**.
+La **partie réseau** nous semble très importante, puisque c'est celle qui va donner le plus de plu value à notre jeu. En effet, pouvoir jouer à Pokémon en ligne depuis n'importe quelle plateforme sera notre plus grosse différence avec des projets déjà exitants. Ne connaissant pas exactement encore les solutions à mettre en oeuvre, nous avons choisi de lui affilier un **poids de 30** et de le donner à **Louis**.
 
 La **partie rédaction**, liée aux weekly, à la documentation et au rapport final nous paraît prédominante puisque c'est celle-ci qui mettra en avant le fruit de notre travail. Son **poids est de 25** et est pour l'instant occtroyé à **Mathis**, le "propriétaire de produit" en langage agile. Pour le **rapport final**, le travail sera sûrement partagé avec **Camille**.
 
