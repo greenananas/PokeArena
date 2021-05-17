@@ -65,14 +65,6 @@ Afin de rester cohérents dans notre vision du projet, nous avons choisi d'axer 
 
 ![uml](https://cdn.discordapp.com/attachments/757522319307571271/843867573296693268/UMLPokemon.png)
 
-Vert: class
-
-Jaune: interface
-
-Bleu: abstract class
-
-Rouge: enum
-
 
 
 ## Outils de collaboration
