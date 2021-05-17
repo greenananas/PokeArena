@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Class regroupant des énumérations de types et d'effets (faiblesses, résistances)
  */

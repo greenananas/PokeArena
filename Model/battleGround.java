@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Class décrivant le terrain d'un combat Pokémon.
  */

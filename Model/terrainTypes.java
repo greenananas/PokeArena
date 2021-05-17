@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Class énumérant les différents types de terrains.
  */

@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Class décrivant un Pokémon.
  */

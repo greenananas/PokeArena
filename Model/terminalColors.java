@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Class listant les codes couleurs à utiliser dans le terminal.
  */
