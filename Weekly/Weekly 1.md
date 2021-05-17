@@ -63,7 +63,7 @@ Enfin la partie de **schématisation technique** du projet nous semble relativem
 
 Afin de rester cohérents dans notre vision du projet, nous avons choisi d'axer notre fin de semaine sur **l'architecture globale du code**. Nous avons finalement établi un schéma UML complet (bien que non définitif) de notre structure globale :
 
-![uml](/Users/mathis/Desktop/uml.png)
+![uml](https://cdn.discordapp.com/attachments/822020048335405079/843755236820385792/UMLPokemon.png)
 
 Vert: class
 
