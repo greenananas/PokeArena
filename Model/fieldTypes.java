@@ -1,12 +1,27 @@
+package Model;
 /**
  * Class énumérant les différents types de terrains.
  */
-public class terrainTypes {
+public class fieldTypes {
 
     /**
      * Énumération des différents types de terrains.
      */
-    public enum terrain {
+    public enum field {
         ELECTRIC, GRASSY, MISSY, PSYCHIC
+    }
+
+    /**
+     * Énumération des différents types de terrains.
+     */
+    public enum weather {
+        RAIN, SUNNY, HAIL, SANDSTORM
+    }
+
+    /**
+     * Énumération des différents types de terrains.
+     */
+    public enum traps {
+        SPIKES, ROCKS, POISON_SPIKES
     }
 }

@@ -1,14 +1,18 @@
+package Model;
 /**
  * Class décrivant le terrain d'un combat Pokémon.
  */
 public class battleGround {
-    private terrainTypes.terrain terrain;
+    private fieldTypes.field field;
+    private fieldTypes.weather weather;
+    private fieldTypes.traps leftsideTraps;
+    private fieldTypes.traps rightsideTraps;
 
-    public terrainTypes.terrain getTerrain() {
-        return this.terrain;
+    public fieldTypes.field getTerrain() {
+        return this.field;
     }
 
-    public void setTerrain(terrainTypes.terrain t) {
-        this.terrain = t;
+    public void setTerrain(fieldTypes.field t) {
+        this.field = t;
     }
 }

@@ -1,3 +1,4 @@
+import Model.*;
 public class PokeArena {
     public static void main(String[] args) {
         attack dracocharge=new attack("Dracocharge",pokeTypes.type.DRAGON,true,100,70,16);

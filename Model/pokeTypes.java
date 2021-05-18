@@ -1,3 +1,4 @@
+package Model;
 /**
  * Class regroupant des énumérations de types et d'effets (faiblesses, résistances)
  */
@@ -17,8 +18,8 @@ public class pokeTypes {
 
         private final double value;
 
-        EffectivenessLevel(final double newValue) {
-            value = newValue;
+        EffectivenessLevel(final double value) {
+            this.value = value;
         }
 
         public double getEffectiveness() {
@@ -34,7 +35,7 @@ public class pokeTypes {
     private static final EffectivenessLevel allGen[][] =
             {
                     //offensif en colonne, défensif en ligne
-                    // norm  fght  fly   pois  grnd  rock  bug   ghst  stel  fire  wter  grss  elec  psyc  ice   drag  dark  fair
+                            // norm  fght  fly   pois  grnd  rock  bug   ghst  stel  fire  wter  grss  elec  psyc  ice   drag  dark  fair
                     /* norm */ {norm, str, norm, norm, norm, norm, norm, inef, norm, norm, norm, norm, norm, norm, norm, norm, norm, norm},
                     /* fght */ {norm, norm, str, norm, norm, norm, norm, inef, norm, norm, norm, norm, norm, norm, norm, norm, norm, str},
                     /* fly  */ {norm, weak, norm, norm, inef, str, weak, norm, norm, norm, norm, weak, str, norm, str, norm, norm, norm},
@@ -53,7 +54,7 @@ public class pokeTypes {
                     /* drag */ {norm, norm, norm, norm, norm, norm, norm, norm, norm, weak, weak, weak, weak, norm, str, str, norm, str},
                     /* dark */ {norm, str, norm, norm, norm, str, weak, norm, norm, norm, norm, norm, norm, inef, norm, norm, weak, str},
                     /* fair */ {norm, weak, norm, str, norm, norm, weak, norm, str, norm, norm, norm, norm, norm, norm, inef, weak, norm}
-                    // norm  fght  fly   pois  grnd  rock  bug   ghst  stel  fire  wter  grss  elec  psyc  ice   drag  dark  fair
+                            // norm  fght  fly   pois  grnd  rock  bug   ghst  stel  fire  wter  grss  elec  psyc  ice   drag  dark  fair
             };
 
     public static EffectivenessLevel getTypeAdvantage(type attackType, type defenseType) {

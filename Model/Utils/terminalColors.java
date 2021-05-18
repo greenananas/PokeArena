@@ -1,4 +1,4 @@
-package Utils;
+package Model.Utils;
 
 /**
  * Class listant les codes couleurs à utiliser dans le terminal.

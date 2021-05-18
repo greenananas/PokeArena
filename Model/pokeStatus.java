@@ -1,3 +1,4 @@
+package Model;
 /**
  * Class énumérant les status.
  */

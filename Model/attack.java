@@ -1,3 +1,4 @@
+package Model;
 /**
  * Class décrivant l'attaque d'un Pokémon.
  */

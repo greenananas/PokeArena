@@ -1,3 +1,4 @@
+package Model;
 import Utils.terminalColors;
 
 import java.util.Scanner;

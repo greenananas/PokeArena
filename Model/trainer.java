@@ -1,5 +1,5 @@
+package Model;
 import java.util.Scanner;
-
 /**
  * Class décrivant un dresseur de Pokémon.
  */
