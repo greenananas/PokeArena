@@ -12,7 +12,7 @@ public class team {
      *
      * @param team Équipe de Pokémon du dresseur
      */
-    public trainer(pokemon[] team) {
+    public team(pokemon[] team) {
         this.pokemonTeam = team;
     }
 

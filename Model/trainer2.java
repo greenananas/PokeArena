@@ -25,7 +25,7 @@ public class trainer2 {
      */
     public trainer(String name, team pkteam) {
         this.displayName = name;
-        this.pokemonTeam = team;
+        this.pokemonTeam = pkteam;
     }
 
     /**
