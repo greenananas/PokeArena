@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+abstract WebSocketClient {}
+abstract WebSocketServer {}
+
+package PokeArenaNetwork {
+
+WebSocketClient <|-- PokeArenaClient
+WebSocketServer <|-- PokeArenaServer
+
+class PokeArenaServer {
+-String hostname
+-int portNumber
+-String status
+-PokeArenaProtocol pap
++PokeArenaServer(String hostname, int portNumber)
++start()
++stop()
++int getPortNumber()
++String getHostname()
++String getStatus()
++onOpen(WebSocket ws, ClientHandshake clientHandshake)
++onClose(WebSocket ws, int code, String reason, boolean remote)
++onMessage(WebSocket ws, String message)
++onError(WebSocket ws, Exception e)
++onStart()
+PokeArenaServer(InetSocketAddress address)
+}
+
+PokeArenaServer "1" -- "1" PokeArenaProtocol
+
+class PokeArenaClient {
+-String status
++connect(String serverHostname, int portNumber)
++disconnect()
++String getStatus()
++sendAction(<T> action)
++sendMove(Move move)
++sendForfeit()
++sendItem(Item item)
++sendChangePokemon(Pokemon pokemon)
++sendTeam(equipe de pokemon)
++onOpen(ServerHandskake serverHandshake)
++onClose(int code, String reason, boolean remote)
++onMessage(String message)
++onError(Exception e)
++PokeArenaClient(URI serverURI)
+}
+
+class PokeArenaProtocol{
+    +PokeArenaPacket processPacket(PokeArenaPacket request)
+}
+
+interface PokeArenaPacket {
+}
+
+class PokeArenaSupervisionPacket {
+}
+
+class PokeArenaDataPacket {
+}
+
+class PokeArenaSupervisionPacket implements PokeArenaPacket
+class PokeArenaDataPacket implements PokeArenaPacket
+
+}
+@enduml
