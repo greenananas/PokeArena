@@ -6,10 +6,7 @@ abstract WebSocketServer {}
 
 package PokeArenaNetwork {
 
-WebSocketClient <|-- PokeArenaClient
-WebSocketServer <|-- PokeArenaServer
-
-class PokeArenaServer {
+class PokeArenaServer extends WebSocketServer {
 -String hostname
 -int portNumber
 -String status
@@ -30,7 +27,7 @@ PokeArenaServer(InetSocketAddress address)
 
 PokeArenaServer "1" -- "1" PokeArenaProtocol
 
-class PokeArenaClient {
+class PokeArenaClient extends WebSocketClient {
 -String status
 +connect(String serverHostname, int portNumber)
 +disconnect()
@@ -52,17 +49,15 @@ class PokeArenaProtocol{
     +PokeArenaPacket processPacket(PokeArenaPacket request)
 }
 
-interface PokeArenaPacket {
+abstract PokeArenaPacket {
 }
 
-class PokeArenaSupervisionPacket {
+class PokeArenaMovePacket extends PokeArenaPacket
+class PokeArenaPingPacket extends PokeArenaPacket
+class PokeArenaPongPacket extends PokeArenaPacket
+
+class PokeArenaUtilities {
+#{static}GSON
 }
 
-class PokeArenaDataPacket {
-}
-
-class PokeArenaSupervisionPacket implements PokeArenaPacket
-class PokeArenaDataPacket implements PokeArenaPacket
-
-}
 @enduml

@@ -9,33 +9,33 @@ import java.net.InetSocketAddress;
 public class PokeArenaServer extends WebSocketServer {
 
     /**
-     * Nom ou adresse IP du serveur
+     * Nom ou adresse IP du serveur.
      */
     private String hostname;
     /**
-     * Numéro de port du serveur
+     * Numéro de port du serveur.
      */
     private int portNumber;
     /**
-     * Statut du serveur
+     * Statut du serveur.
      */
     private String status;
 
     /**
-     * Créer un serveur PokeArenaServer
+     * Créer un serveur PokeArenaServer.
      *
-     * @param hostname   Nom ou adresse IP du serveur
-     * @param portNumber Numéro de port du serveur
+     * @param hostname   Nom ou adresse IP du serveur.
+     * @param portNumber Numéro de port du serveur.
      */
     public PokeArenaServer(String hostname, int portNumber) {
         super(new InetSocketAddress(hostname, portNumber));
     }
 
     /**
-     * Méthode appelée lors de l'ouverture d'une connexion
+     * Méthode appelée lors de l'ouverture d'une connexion.
      *
-     * @param ws              Instance de connexion du entre le serveur et le client qui vient d'initier la connexion
-     * @param clientHandshake Informations relatives à la connexion
+     * @param ws              Instance de connexion du entre le serveur et le client qui vient d'initier la connexion.
+     * @param clientHandshake Informations relatives à la connexion.
      */
     @Override
     public void onOpen(WebSocket ws, ClientHandshake clientHandshake) {
@@ -45,12 +45,12 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Méthode appelée lors de la fermeture d'une connexion
+     * Méthode appelée lors de la fermeture d'une connexion.
      *
-     * @param ws      Instance de connexion entre le serveur et le client qui vient de fermer la connexion
-     * @param code    Code
-     * @param message Informations additionnels
-     * @param remote  Indique si la connexion a été fermée par l'hôte distant
+     * @param ws      Instance de connexion entre le serveur et le client qui vient de fermer la connexion.
+     * @param code    Code.
+     * @param message Informations additionnels.
+     * @param remote  Indique si la connexion a été fermée par l'hôte distant.
      */
     @Override
     public void onClose(WebSocket ws, int code, String message, boolean remote) {
@@ -59,10 +59,10 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Méthode appelée lors de la reception d'un message au sein d'une connexion
+     * Méthode appelée lors de la reception d'un message au sein d'une connexion.
      *
-     * @param ws      Instance de connexion associée à l'évenement
-     * @param message Message décodé en UTF-8 qui vient d'être reçu
+     * @param ws      Instance de connexion associée à l'évenement.
+     * @param message Message décodé en UTF-8 qui vient d'être reçu.
      */
     @Override
     public void onMessage(WebSocket ws, String message) {
@@ -71,10 +71,10 @@ public class PokeArenaServer extends WebSocketServer {
 
     /**
      * Méthode appelée quand un erreur se produit.
-     * Si une erreur provoque l'échec d'une connexion alors la méthode onClose(...) sera appelée additionnellement
+     * Si une erreur provoque l'échec d'une connexion alors la méthode onClose(...) sera appelée additionnellement.
      *
-     * @param ws Instance de la connexion associée à l'évenement
-     * @param e  Exception qui provoque l'erreur
+     * @param ws Instance de la connexion associée à l'évenement.
+     * @param e  Exception qui provoque l'erreur.
      */
     @Override
     public void onError(WebSocket ws, Exception e) {
@@ -82,7 +82,7 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Méthode appelée quand le démarrage du serveur est réussi
+     * Méthode appelée quand le démarrage du serveur est réussi.
      */
     @Override
     public void onStart() {
@@ -90,7 +90,7 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Obtenir le nom d'hôte ou adresse IP du serveur
+     * Obtenir le nom d'hôte ou adresse IP du serveur.
      *
      * @return Nom d'hôte ou adresse IP du serveur
      */
@@ -99,27 +99,27 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Obtenir le numéro de port du serveur
+     * Obtenir le numéro de port du serveur.
      *
-     * @return Numéro de port du serveur
+     * @return Numéro de port du serveur.
      */
     public int getPortNumber() {
         return portNumber;
     }
 
     /**
-     * Obtenir le statut du serveur
+     * Obtenir le statut du serveur.
      *
-     * @return Statut du serveur
+     * @return Statut du serveur.
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * Modifier le statut du serveur
+     * Modifier le statut du serveur.
      *
-     * @param status Statut du serveur
+     * @param status Statut du serveur.
      */
     public void setStatus(String status) {
         this.status = status;
