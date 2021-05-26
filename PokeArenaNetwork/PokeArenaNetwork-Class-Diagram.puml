@@ -58,6 +58,7 @@ class PokeArenaPongPacket extends PokeArenaPacket
 
 class PokeArenaUtilities {
 #{static}GSON
++createPacket(PokeArenaPacketType packetType, <A> packetData)
 }
 
 @enduml

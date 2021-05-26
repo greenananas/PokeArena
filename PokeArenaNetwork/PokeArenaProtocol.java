@@ -1,5 +1,7 @@
 package PokeArenaNetwork;
 
+import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
+
 public class PokeArenaProtocol {
 
    /**
@@ -13,7 +15,7 @@ public class PokeArenaProtocol {
       PokeArenaPacket response;
       switch (request.getType()) {
          case PING:
-            response = new PokeArenaPongPacket();
+            response = createPacket(PokeArenaPacketType.PONG, null);
             break;
          //TODO: Implémenter les autres cas
          default:

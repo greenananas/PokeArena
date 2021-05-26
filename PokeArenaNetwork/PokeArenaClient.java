@@ -1,5 +1,8 @@
 package PokeArenaNetwork;
 
+import Model.Move;
+import Model.Pokemon;
+import Model.Team;
 import com.google.gson.Gson;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -7,6 +10,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 
 import static PokeArenaNetwork.PokeArenaUtilities.GSON;
+import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
 public class PokeArenaClient extends WebSocketClient {
 
@@ -72,11 +76,17 @@ public class PokeArenaClient extends WebSocketClient {
     /**
      * Envoyer une action au serveur.
      *
-     * @param action Action qui va être envoyée au serveur.
-     * @param <A>    Type générique qui doit être sérialisable en JSON.
+     * @param packetType Type du paquet qui va être envoyé.
+     * @param packetData Données du paquet qui va être envoyé.
+     * @param <A>        Type générique qui doit être sérialisable en JSON.
      */
-    public <A> void sendAction(A action) {
-        send(GSON.toJson(action));
+    public <A> void sendPacket(PokeArenaPacketType packetType, A packetData) {
+        PokeArenaPacket packet = createPacket(packetType, packetData);
+        send(GSON.toJson(packet));
+    }
+
+    public void sendPing() {
+       sendPacket(PokeArenaPacketType.PING, null);
     }
 
     /**
@@ -85,17 +95,17 @@ public class PokeArenaClient extends WebSocketClient {
      * @param move Attaque qui va être envoyée au serveur.
      */
     public void sendMove(Move move) {
-        sendAction(move);
+        sendPacket(PokeArenaPacketType.MOVE, move);
     }
 
-    /**
-     * Envoyer un objet au serveur.
-     *
-     * @param item Objet qui va être envoyé au serveur.
-     */
-    public void sendItem(Item item) {
-        sendAction(item);
-    }
+//    /**
+//     * Envoyer un objet au serveur.
+//     *
+//     * @param item Objet qui va être envoyé au serveur.
+//     */
+//    public void sendItem(Item item) {
+//        sendAction(item);
+//    }
 
     /**
      * Envoyer une équipe au serveur.
@@ -103,7 +113,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param team Équipe qui va être envoyée au serveur.
      */
     public void sendTeam(Team team) {
-        sendAction(team);
+        sendPacket(PokeArenaPacketType.TEAM, team);
     }
 
     /**
@@ -112,7 +122,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param pokemon Pokemon à changer qui va être envoyé au serveur.
      */
     public void sendChangePokemon(Pokemon pokemon) {
-        sendAction(pokemon);
+        sendPacket(PokeArenaPacketType.CHANGEPOKEMON, pokemon);
     }
 
     /**

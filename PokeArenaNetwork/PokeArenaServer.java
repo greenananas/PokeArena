@@ -4,9 +4,12 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import javax.swing.text.Utilities;
 import java.net.InetSocketAddress;
 
 public class PokeArenaServer extends WebSocketServer {
+
+    private final PokeArenaProtocol pap = new PokeArenaProtocol();
 
     /**
      * Nom ou adresse IP du serveur.
@@ -67,6 +70,8 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message reçu : " + message);
+        //TODO: Faire différement en parsant le paquet
+        //pap.processPacket(PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
     }
 
     /**
@@ -87,6 +92,10 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onStart() {
 
+    }
+
+    public void start() {
+        this.run();
     }
 
     /**
