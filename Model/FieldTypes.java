@@ -2,7 +2,7 @@ package Model;
 /**
  * Class énumérant les différents types de terrains.
  */
-public class fieldTypes {
+public class FieldTypes {
 
     /**
      * Énumération des différents types de terrains.

@@ -2,7 +2,7 @@ package Model;
 /**
  * Class regroupant des énumérations de types et d'effets (faiblesses, résistances)
  */
-public class pokeTypes {
+public class PokeTypes {
     /**
      * Énumération des différents types de Pokémon.
      */

@@ -2,7 +2,7 @@ package Model;
 /**
  * Class décrivant l'attaque d'un Pokémon.
  */
-public class attack {
+public class Move {
 
     /**
      * Nom de l'attaque
@@ -12,7 +12,7 @@ public class attack {
     /**
      * Type de l'attaque
      */
-    private pokeTypes.type type;
+    private PokeTypes.type type;
 
     /**
      * Attaque physique ou spéciale
@@ -35,6 +35,11 @@ public class attack {
     private int pp;
 
     /**
+     * Priorité d'une attaque
+     */
+    private int priority;
+
+    /**
      * Créer une attaque
      *
      * @param name       Nom de l'attaque
@@ -43,14 +48,16 @@ public class attack {
      * @param power      Puissance de l'attaque
      * @param precision  Précision de l'attaque
      * @param pp         Points de pouvoir de l'attaque
+     * @param priority   Priorité d'une attaque
      */
-    public attack(String name, pokeTypes.type type, boolean isPhysical, int power, int precision, int pp) {
+    public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority) {
         this.name = name;
         this.type = type;
         this.physical = isPhysical;
         this.power = power;
         this.precision = precision;
         this.pp = pp;
+        this.priority = priority;
     }
 
     /**
@@ -67,7 +74,7 @@ public class attack {
      *
      * @return Type de l'attaque
      */
-    public pokeTypes.type getType() {
+    public PokeTypes.type getType() {
         return this.type;
     }
 
@@ -108,6 +115,15 @@ public class attack {
     }
 
     /**
+     * Obtenir la priorité d'une attaque
+     *
+     * @return Priorité de l'attaque
+     */
+    public int getPriority() {
+        return priority;
+    }
+
+    /**
      * Modifier le nom de l'attaque
      *
      * @param n Nouveau nom de l'attaque
@@ -121,7 +137,7 @@ public class attack {
      *
      * @param t Nouveau type de l'attaque
      */
-    public void setType(pokeTypes.type t) {
+    public void setType(PokeTypes.type t) {
         this.type = t;
     }
 
@@ -159,5 +175,14 @@ public class attack {
      */
     public void setPP(int pp) {
         this.pp = pp;
+    }
+
+    /**
+     * Modifier la priorité d'une attaque
+     *
+     * @param priority Priorité d'une attaque
+     */
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

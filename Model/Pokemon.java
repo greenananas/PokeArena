@@ -1,8 +1,11 @@
 package Model;
+
+import Model.Utils.TerminalColors;
+
 /**
  * Class décrivant un Pokémon.
  */
-public class pokemon {
+public class Pokemon {
     /**
      * Nom du Pokémon
      */
@@ -11,7 +14,7 @@ public class pokemon {
     /**
      * Types du Pokémon
      */
-    private pokeTypes.type type1, type2;
+    private PokeTypes.type type1, type2;
 
     /**
      * Niveau du Pokémon.
@@ -66,7 +69,7 @@ public class pokemon {
     /**
      * Statut du Pokémon.
      */
-    private pokeStatus.status status = pokeStatus.status.NORMAL;
+    private PokeStatus.status status = PokeStatus.status.NORMAL;
 
     /**
      * État de confusion du Pokémon.
@@ -76,7 +79,7 @@ public class pokemon {
     /**
      * Attaques du Pokémon.
      */
-    private attack attack1, attack2, attack3, attack4;
+    private Move move1, move2, move3, move4;
 
     /**
      * Créer un Pokémon.
@@ -96,9 +99,9 @@ public class pokemon {
      * @param a3         Troisième attaque du Pokémon
      * @param a4         Quatrième attaque du Pokémon
      */
-    public pokemon(String n, pokeTypes.type t1, pokeTypes.type t2, int l, int hp,
+    public Pokemon(String n, PokeTypes.type t1, PokeTypes.type t2, int l, int hp,
                    int attack, int defense, int speAttack, int speDefense, int speed,
-                   attack a1, attack a2, attack a3, attack a4) {
+                   Move a1, Move a2, Move a3, Move a4) {
         this.name = n;
         this.type1 = t1;
         this.type2 = t2;
@@ -112,10 +115,10 @@ public class pokemon {
         this.speDefense = speDefense;
         this.speed = speed;
 
-        this.attack1 = a1;
-        this.attack2 = a2;
-        this.attack3 = a3;
-        this.attack4 = a4;
+        this.move1 = a1;
+        this.move2 = a2;
+        this.move3 = a3;
+        this.move4 = a4;
     }
 
     /**
@@ -132,7 +135,7 @@ public class pokemon {
      *
      * @return Type du Pokémon
      */
-    public pokeTypes.type getType1() {
+    public PokeTypes.type getType1() {
         return this.type1;
     }
 
@@ -141,7 +144,7 @@ public class pokemon {
      *
      * @return Type du Pokémon
      */
-    public pokeTypes.type getType2() {
+    public PokeTypes.type getType2() {
         return this.type2;
     }
 
@@ -222,8 +225,8 @@ public class pokemon {
      *
      * @return Attaque 1 du Pokémon
      */
-    public attack getAttack1() {
-        return this.attack1;
+    public Move getMove1() {
+        return this.move1;
     }
 
     /**
@@ -231,8 +234,8 @@ public class pokemon {
      *
      * @return Attaque 2 du Pokémon
      */
-    public attack getAttack2() {
-        return this.attack2;
+    public Move getMove2() {
+        return this.move2;
     }
 
     /**
@@ -240,8 +243,8 @@ public class pokemon {
      *
      * @return Attaque 3 du Pokémon
      */
-    public attack getAttack3() {
-        return this.attack3;
+    public Move getMove3() {
+        return this.move3;
     }
 
     /**
@@ -249,8 +252,8 @@ public class pokemon {
      *
      * @return Attaque 4 du Pokémon
      */
-    public attack getAttack4() {
-        return this.attack4;
+    public Move getMove4() {
+        return this.move4;
     }
 
     /**
@@ -276,7 +279,7 @@ public class pokemon {
      *
      * @return Statut du Pokémon
      */
-    public pokeStatus.status getStatus() {
+    public PokeStatus.status getStatus() {
         return this.status;
     }
 
@@ -303,7 +306,7 @@ public class pokemon {
      *
      * @param t Nouveau type du Pokémon
      */
-    public void setType1(pokeTypes.type t) {
+    public void setType1(PokeTypes.type t) {
         this.type1 = t;
     }
 
@@ -312,7 +315,7 @@ public class pokemon {
      *
      * @param t Nouveau type du Pokémon
      */
-    public void setType2(pokeTypes.type t) {
+    public void setType2(PokeTypes.type t) {
         this.type2 = t;
     }
 
@@ -393,8 +396,8 @@ public class pokemon {
      *
      * @param a Nouvelle première attaque du Pokémon
      */
-    public void setAttack1(attack a) {
-        this.attack1 = a;
+    public void setMove1(Move a) {
+        this.move1 = a;
     }
 
     /**
@@ -402,8 +405,8 @@ public class pokemon {
      *
      * @param a Nouvelle deuxième attaque du Pokémon
      */
-    public void setAttack2(attack a) {
-        this.attack2 = a;
+    public void setMove2(Move a) {
+        this.move2 = a;
     }
 
     /**
@@ -411,8 +414,8 @@ public class pokemon {
      *
      * @param a Nouvelle troisième attaque du Pokémon
      */
-    public void setAttack3(attack a) {
-        this.attack3 = a;
+    public void setMove3(Move a) {
+        this.move3 = a;
     }
 
     /**
@@ -420,8 +423,8 @@ public class pokemon {
      *
      * @param a Nouvelle quatrième attaque du Pokémon
      */
-    public void setAttack4(attack a) {
-        this.attack4 = a;
+    public void setMove4(Move a) {
+        this.move4 = a;
     }
 
     /**
@@ -447,7 +450,7 @@ public class pokemon {
      *
      * @param s Nouveau statut du Pokémon
      */
-    public void setStatus(pokeStatus.status s) {
+    public void setStatus(PokeStatus.status s) {
         this.status = s;
     }
 
@@ -476,7 +479,7 @@ public class pokemon {
      * @param a L'attaque à vérifier
      * @return Le Pokémon est de même type
      */
-    public boolean isStabbed(attack a) {
+    public boolean isStabbed(Move a) {
         if (this.getType1() == a.getType()) {
             return true;
         } else if (this.getType2() != null) {
@@ -502,7 +505,7 @@ public class pokemon {
      * @param target Cible de l'attaque
      * @param at     Attaque lancée
      */
-    public void attack(pokemon target, attack at) {
+    public void attack(Pokemon target, Move at) {
         if (doesHit(target, at)) {
             if (target.getTypeMultiplier(at) != 0) {
                 System.out.println("\nL'attaque " + at.getName() + " a touché " + target.getName() + ".");
@@ -522,7 +525,7 @@ public class pokemon {
      * @param at     Attaque lancée
      * @return L'attaque lancée touche l'ennemi
      */
-    public boolean doesHit(pokemon target, attack at) {
+    public boolean doesHit(Pokemon target, Move at) {
         int precision = (int) Math.floor(Math.random() * 100);
         if (precision <= at.getPrecision()) {
             return true;
@@ -537,7 +540,7 @@ public class pokemon {
      * @param at     Attaque lancée
      * @return Le nombre de points de vie infligés à la cible
      */
-    public int getHitDamage(pokemon target, attack at) {
+    public int getHitDamage(Pokemon target, Move at) {
         double damageAlgo;
         if (at.isPhysical()) {
             damageAlgo = ((((2 * (double) this.getLevel()) / 5) + 2) * at.getPower() * ((double) this.getAttack() / (double) target.getDefense())) / 50;
@@ -565,7 +568,7 @@ public class pokemon {
         }
 
         double burntMultiplier = 1;
-        if (this.getStatus() == pokeStatus.status.BURNT && at.isPhysical()) {
+        if (this.getStatus() == PokeStatus.status.BURNT && at.isPhysical()) {
             burntMultiplier = 0.5;
         }
 
@@ -587,10 +590,10 @@ public class pokemon {
      * @param at Attaque lancée
      * @return Multiplicateur compris entre 0 et 4
      */
-    public double getTypeMultiplier(attack at) {
-        double typeMultiplier = pokeTypes.getTypeAdvantage(this.getType1(), at.getType()).getEffectiveness();
+    public double getTypeMultiplier(Move at) {
+        double typeMultiplier = PokeTypes.getTypeAdvantage(this.getType1(), at.getType()).getEffectiveness();
         if (this.getType2() != null) {
-            typeMultiplier *= pokeTypes.getTypeAdvantage(this.getType2(), at.getType()).getEffectiveness();
+            typeMultiplier *= PokeTypes.getTypeAdvantage(this.getType2(), at.getType()).getEffectiveness();
         }
         return typeMultiplier;
     }
@@ -601,7 +604,7 @@ public class pokemon {
      * @param at Attaque lancée
      * @return L'attaque est un coup critique
      */
-    public boolean isCritical(attack at) {
+    public boolean isCritical(Move at) {
         double critProb = 1 / 24;
         if (this.getCritStage(at) == 1) {
             critProb = 1 / 8;
@@ -627,12 +630,12 @@ public class pokemon {
      * @param at Attaque lancée
      * @return Niveau de probabilité (0, 1, 2 ou 3)
      */
-    public int getCritStage(attack at) {
+    public int getCritStage(Move at) {
         //non implémenté
         return 0;
     }
 
-    public boolean isFaster(pokemon p) {
+    public boolean isFaster(Pokemon p) {
         if (this.getSpeed() > p.getSpeed()) {
             return true;
         } else if (this.getSpeed() < p.getSpeed()) {
@@ -644,5 +647,27 @@ public class pokemon {
                 return false;
             }
         }
+    }
+
+    public String showHP() {
+        String hpBarString = this.getName() + " : |";
+        int hpBar = (int) Math.ceil(((double) this.getHP() / (double) this.getFullHP()) * 10);
+        String barColor;
+        if (hpBar > 5) {
+            barColor = TerminalColors.ANSI_GREEN;
+        } else if (hpBar > 3) {
+            barColor = TerminalColors.ANSI_YELLOW;
+        } else {
+            barColor = TerminalColors.ANSI_RED;
+        }
+        for (int i = 0; i < 10; i++) {
+            if (hpBar > i) {
+                hpBarString += barColor + "█";
+            } else {
+                hpBarString += TerminalColors.ANSI_WHITE + "-";
+            }
+        }
+        hpBarString += TerminalColors.ANSI_WHITE + "| " + this.getHP() + "HP";
+        return hpBarString;
     }
 }

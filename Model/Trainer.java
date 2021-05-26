@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Class décrivant un dresseur de Pokémon.
  */
-public class trainer2 {
+public class Trainer {
 
     /**
      * Pseudonyme du dresseur
@@ -15,15 +15,15 @@ public class trainer2 {
     /**
      * Équipe de Pokémon du dresseur
      */
-    private team pokemonTeam;
+    private Team pokemonTeam;
 
     /**
      * Créer un dresseur
      *
      * @param name Pseudonyme du dresseur
-     * @param team Équipe de Pokémon du dresseur
+     * @param pkteam Équipe de Pokémon du dresseur
      */
-    public trainer(String name, team pkteam) {
+    public Trainer(String name, Team pkteam) {
         this.displayName = name;
         this.pokemonTeam = pkteam;
     }
@@ -42,7 +42,7 @@ public class trainer2 {
      *
      * @return Équipe de Pokémon
      */
-    public team getPokemonTeam() {
+    public Team getPokemonTeam() {
         return this.pokemonTeam;
     }
 
@@ -58,14 +58,14 @@ public class trainer2 {
     /**
      * Modifier l'équipe de Pokémon d'un dresseur
      *
-     * @param team Nouvelle équipe du dresseur
+     * @param pkteam Nouvelle équipe du dresseur
      */
-    public void setPokemonTeam(team pkteam) {
+    public void setPokemonTeam(Team pkteam) {
         this.pokemonTeam = pkteam;
     }
 
     public boolean hasPokemonLeft() {
-        for (pokemon p : this.getPokemonTeam()) {
+        for (Pokemon p : this.getPokemonTeam()) {
             if (!p.isKO()) {
                 return true;
             }
@@ -73,11 +73,11 @@ public class trainer2 {
         return false;
     }
 
-    public pokemon changePokemon() {
+    public Pokemon changePokemon() {
         int counter = 1;
-        pokemon[] alive = new pokemon[5];
+        Pokemon[] alive = new Pokemon[5];
         System.out.println(this.getDisplayName() + " change de Pokémon.");
-        for (pokemon p : this.getPokemonTeam()) {
+        for (Pokemon p : this.getPokemonTeam()) {
             if (!p.isKO()) {
                 alive[counter - 1] = p;
                 System.out.println(counter + " " + p.getName());

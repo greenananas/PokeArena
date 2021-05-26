@@ -2,7 +2,7 @@ package Model;
 /**
  * Class énumérant les status.
  */
-public class pokeStatus {
+public class PokeStatus {
 
     /**
      * Énumération des status.

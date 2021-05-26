@@ -1,18 +1,18 @@
 package Model;
 
-public class team {
+public class Team {
 
     /**
      * Équipe de Pokémon du dresseur
      */
-    private pokemon[] pokemonTeam;
+    private Pokemon[] pokemonTeam;
 
     /**
-     * Créer une team
+     * Créer une Team
      *
      * @param team Équipe de Pokémon du dresseur
      */
-    public team(pokemon[] team) {
+    public Team(Pokemon[] team) {
         this.pokemonTeam = team;
     }
 
@@ -21,7 +21,7 @@ public class team {
      *
      * @return Équipe de Pokémon
      */
-    public pokemon[] getPokemonTeam() {
+    public Pokemon[] getPokemonTeam() {
         return this.pokemonTeam;
     }
 
@@ -31,7 +31,7 @@ public class team {
      * @param n Numéro du Pokémon dans l'équipe du dresseur
      * @return Pokémon choisi
      */
-    public pokemon getPokemon(int n) {
+    public Pokemon getPokemon(int n) {
         return this.pokemonTeam[n];
     }
 
@@ -41,7 +41,7 @@ public class team {
      * @param p Nouveau Pokémon du dresseur
      * @param n Emplacement du Pokémon dans l'équipe du dresseur
      */
-    public void setPokemon(pokemon p, int n) {
+    public void setPokemon(Pokemon p, int n) {
         this.pokemonTeam[n] = p;
     }
 
