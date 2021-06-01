@@ -1,5 +1,6 @@
 package PokeArenaNetwork;
 
+import Model.Action;
 import Model.Move;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,7 +21,8 @@ public class PokeArenaUtilities {
     private static final RuntimeTypeAdapterFactory<?> typeFactory = RuntimeTypeAdapterFactory
             .of(PokeArenaPacket.class, "type") // Here you specify which is the parent class and what field particularizes the child class.
             .registerSubtype(PokeArenaPingPacket.class, "PING") // if the flag equals the class name, you can skip the second parameter. This is only necessary, when the "type" field does not equal the class name.
-            .registerSubtype(PokeArenaMovePacket.class, "MOVE");
+            .registerSubtype(PokeArenaMovePacket.class, "MOVE")
+            .registerSubtype(PokeArenaActionPacket.class, "ACTION");
 
     /**
      * Objet utilisé pour la sérialisation des paquets PokeArenaPacket.
@@ -49,6 +51,9 @@ public class PokeArenaUtilities {
                 break;
             case MOVE:
                 packet = new PokeArenaMovePacket((Move) packetData);
+                break;
+            case ACTION:
+                packet = new PokeArenaActionPacket((Action) packetData);
                 break;
             default:
                 packet = null;

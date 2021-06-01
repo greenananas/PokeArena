@@ -47,7 +47,11 @@ public class PokeArenaProtocol {
             case PING:
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
-            case MOVE:
+            case MOVE: //TODO: A enlever
+                System.out.println(((PokeArenaMovePacket) request).getMove().getName());
+                response = request;
+                break;
+            case ACTION:
                 response = processActionPacket(ws, request);
                 break;
             default:
