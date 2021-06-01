@@ -24,39 +24,6 @@ public class Battle {
         this.bg = bg;
     }
 
-    public class ThreadedBattle implements Runnable {
-
-        private Trainer self; //Joueur courant
-        private final SynchronousQueue<Object> result;
-        private Pokemon currentPkmn;
-
-        public ThreadedBattle(Trainer self, SynchronousQueue<Object> result, Pokemon current) {
-            this.self = self;
-            this.result = result;
-            this.currentPkmn = current;
-        }
-
-        @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    synchronized (lock) {
-                        while (!lock) {
-                            lock.wait();
-                        }
-                        //Process
-                        //self.getAction()
-                        //result.put()
-                        playersLatch.countDown();
-                        lock.wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
 
     public void setUpBattle() {
         playersLatch = new CountDownLatch(2);
