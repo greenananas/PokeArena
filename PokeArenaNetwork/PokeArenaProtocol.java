@@ -1,9 +1,8 @@
 package PokeArenaNetwork;
 
-//import Model.Battle;
-
+import Model.Battle;
+import Model.Action;
 import org.java_websocket.WebSocket;
-
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
@@ -18,17 +17,18 @@ public class PokeArenaProtocol {
     /**
      * Combat sur lequel le protocole va agir.
      */
-    //private Battle battle;
+    private Battle battle;
 
     /**
      * Dernière action envoyée par le client 1.
      */
-    //private Action client1Action;
+    private Action client1Action;
 
     /**
      * Dernière action envoyée par le client 2.
      */
-    //private Action client2Action;
+    private Action client2Action;
+
     public PokeArenaProtocol(PokeArenaServer server) {
         this.server = server;
     }
