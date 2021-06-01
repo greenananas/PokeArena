@@ -2,7 +2,7 @@ package Model;
 /**
  * Class décrivant l'attaque d'un Pokémon.
  */
-public class Move {
+public class Move extends Action {
 
     /**
      * Nom de l'attaque
@@ -35,11 +35,6 @@ public class Move {
     private int pp;
 
     /**
-     * Priorité d'une attaque
-     */
-    private int priority;
-
-    /**
      * Créer une attaque
      *
      * @param name       Nom de l'attaque
@@ -51,13 +46,13 @@ public class Move {
      * @param priority   Priorité d'une attaque
      */
     public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority) {
+        super(acTypes.ATTACK, priority);
         this.name = name;
         this.type = type;
         this.physical = isPhysical;
         this.power = power;
         this.precision = precision;
         this.pp = pp;
-        this.priority = priority;
     }
 
     /**
@@ -115,15 +110,6 @@ public class Move {
     }
 
     /**
-     * Obtenir la priorité d'une attaque
-     *
-     * @return Priorité de l'attaque
-     */
-    public int getPriority() {
-        return priority;
-    }
-
-    /**
      * Modifier le nom de l'attaque
      *
      * @param n Nouveau nom de l'attaque
@@ -177,12 +163,4 @@ public class Move {
         this.pp = pp;
     }
 
-    /**
-     * Modifier la priorité d'une attaque
-     *
-     * @param priority Priorité d'une attaque
-     */
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
 }

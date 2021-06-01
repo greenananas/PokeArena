@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -65,74 +66,28 @@ public class Trainer {
     }
 
     public boolean hasPokemonLeft() {
-        for (Pokemon p : this.getPokemonTeam()) {
-            if (!p.isKO()) {
-                return true;
-            }
-        }
-        return false;
+        return !this.pokemonTeam.isDefeated();
+    }
+
+    public Pokemon getLeadingPkmn() {
+        return pokemonTeam.get(0);
     }
 
     public Pokemon changePokemon() {
         int counter = 1;
-        Pokemon[] alive = new Pokemon[5];
-        System.out.println(this.getDisplayName() + " change de Pokémon.");
-        for (Pokemon p : this.getPokemonTeam()) {
+        for (Pokemon p : this.pokemonTeam.getPokemons()) {
             if (!p.isKO()) {
-                alive[counter - 1] = p;
-                System.out.println(counter + " " + p.getName());
-                counter++;
+                System.out.print(" K.O ");
             }
+            System.out.println(counter + " - " + p.getName());
+            counter++;
         }
         Scanner s = new Scanner(System.in);
-        boolean check = false;
-        int choice = 0;
-        while (!check) {
+        int choice;
+        do {
             choice = s.nextInt();
-            switch (choice) {
-                case 1:
-                    check = true;
-                    break;
-                case 2:
-                    if (counter >= 2) {
-                        check = true;
-                    } else {
-                        System.out.println("Pokémon introuvable.");
-                    }
-                    break;
-                case 3:
-                    if (counter >= 3) {
-                        check = true;
-                    } else {
-                        System.out.println("Pokémon introuvable.");
-                    }
-                    break;
-                case 4:
-                    if (counter >= 4) {
-                        check = true;
-                    } else {
-                        System.out.println("Pokémon introuvable.");
-                    }
-                    break;
-                case 5:
-                    if (counter >= 5) {
-                        check = true;
-                    } else {
-                        System.out.println("Pokémon introuvable.");
-                    }
-                    break;
-                case 6:
-                    if (counter >= 6) {
-                        check = true;
-                    } else {
-                        System.out.println("Pokémon introuvable.");
-                    }
-                    break;
-                default:
-                    System.out.println("Tu troll mec.");
-                    break;
-            }
-        }
-        return alive[choice - 1];
+        } while (choice < 1 || choice > 6 || pokemonTeam.get(choice).isKO());
+        Collections.swap(pokemonTeam.getPokemons(), 0, choice);
+        return pokemonTeam.get(choice);
     }
 }

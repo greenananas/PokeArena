@@ -3,9 +3,13 @@ import PokeArenaNetwork.ClientExemple;
 import PokeArenaNetwork.PokeArenaClient;
 import PokeArenaNetwork.ServeurExemple;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
 public class PokeArena {
     public static void main(String[] args) {
-        /*
+
         Move dracocharge=new Move("Dracocharge", PokeTypes.type.DRAGON,true,100,70,16,0);
         Move dracogriffe=new Move("Dracogriffe", PokeTypes.type.DRAGON,true,80,100,24,0);
         Move seisme=new Move("Séisme", PokeTypes.type.GROUND,true,100,100,16,0);
@@ -42,27 +46,28 @@ public class PokeArena {
         Pokemon elekable1=new Pokemon("Elekable", PokeTypes.type.ELECTRIC,null,50,75,123,67,95,85,95,poingeclair,poingfeu,poingglace,seisme);
         Pokemon pingoleon1=new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL,50,84,86,88,111,101,60,surf,hydrocanon,luminocanon,laserglace);
 
-        Team team1=new Team(new Pokemon[3]);
-        team1.setPokemon(elekable, 0);
-        team1.setPokemon(togekiss, 1);
-        team1.setPokemon(tyranocif, 2);
+        Team team1=new Team();
+        team1.setPokemon(elekable);
+        team1.setPokemon(togekiss);
+        team1.setPokemon(tyranocif);
 
-        Team team2=new Team(new Pokemon[3]);
-        team2.setPokemon(elekable1, 0);
-        team2.setPokemon(togekiss1, 1);
-        team2.setPokemon(tyranocif1, 2);
+        Team team2=new Team();
+        team2.setPokemon(elekable1);
+        team2.setPokemon(togekiss1);
+        team2.setPokemon(tyranocif1);
 
         Trainer t1 = new Trainer("Mathis", team1);
         Trainer t2 = new Trainer("Maël", team2);
         Battle combat = new Battle(t1, t2, new BattleGround());
-        combat.setUpBattle();
-
-         */
 
         //Créer un trainer
 
-        ServeurExemple.main(null);
-        PokeArenaClient moi = new PokeArenaClient();
+        ServeurExemple.main(combat);
+        try {
+            PokeArenaClient moi = new PokeArenaClient(new URI("ws://localhost:8888"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         //connecte le client au serveur
         //moi.connect();
         //Passe le trainer au serveur
