@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class ClientExemple {
 
-   public static void main(String[] args) throws URISyntaxException, InterruptedException {
+   public static void main(String[] args) throws URISyntaxException {
       PokeArenaClient client = new PokeArenaClient(new URI("ws://localhost:8888"));
       client.connect();
 

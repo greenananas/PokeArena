@@ -1,20 +1,14 @@
 package PokeArenaNetwork;
 
-public abstract class PokeArenaPacket<A> {
+public abstract class PokeArenaPacket {
 
     /**
      * Type du paquet.
      */
-    private PokeArenaPacketType type;
+    private final PokeArenaPacketType type;
 
-    /**
-     * Données du paquet au format JSON.
-     */
-    private A data;
-
-    public PokeArenaPacket(PokeArenaPacketType type, A data) {
+    public PokeArenaPacket(PokeArenaPacketType type) {
         this.type = type;
-        this.data = data;
     }
 
     public PokeArenaPacketType getType() {

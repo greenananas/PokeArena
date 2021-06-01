@@ -86,7 +86,7 @@ public class PokeArenaServer extends WebSocketServer {
         ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
         PokeArenaUtilities.parseJsonPacket(message);
-        protocol.processPacket(ws, PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
+        protocol.processPacket(ws, PokeArenaUtilities.parseJsonPacket(message));
     }
 
     /**

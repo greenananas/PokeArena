@@ -9,9 +9,6 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 
-import static PokeArenaNetwork.PokeArenaUtilities.GSON;
-import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
-
 public class PokeArenaClient extends WebSocketClient {
 
     /**
@@ -81,8 +78,8 @@ public class PokeArenaClient extends WebSocketClient {
      * @param <A>        Type générique qui doit être sérialisable en JSON.
      */
     public <A> void sendPacket(PokeArenaPacketType packetType, A packetData) {
-        PokeArenaPacket packet = createPacket(packetType, packetData);
-        send(GSON.toJson(packet));
+        PokeArenaPacket packet = PokeArenaUtilities.createPacket(packetType, packetData);
+        send(PokeArenaUtilities.toJson(packet));
     }
 
     public void sendPing() {
