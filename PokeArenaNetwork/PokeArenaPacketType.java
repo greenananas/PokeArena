@@ -7,4 +7,5 @@ public enum PokeArenaPacketType {
     CHANGEPOKEMON,
     ITEM,
     TEAM,
+    ACTION,
 }
