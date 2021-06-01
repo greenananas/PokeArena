@@ -32,7 +32,6 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        send("HELLO");
         System.out.println("Ouverture de la connexion");
     }
 

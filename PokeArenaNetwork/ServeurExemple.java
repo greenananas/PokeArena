@@ -3,7 +3,7 @@ package PokeArenaNetwork;
 public class ServeurExemple {
 
     public static void main(String[] args) {
-        PokeArenaServer server = new PokeArenaServer("localhost", 8888);
+        PokeArenaServer server = new PokeArenaServer("localhost", 8886);
         server.start();
         try {
             Thread.sleep(10000);

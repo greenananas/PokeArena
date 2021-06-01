@@ -44,8 +44,12 @@ public class PokeArenaUtilities {
             case PING:
                 packet = new PokeArenaPingPacket();
                 break;
+            case PONG:
+                packet = new PokeArenaPongPacket();
+                break;
             case MOVE:
                 packet = new PokeArenaMovePacket((Move) packetData);
+                break;
             default:
                 packet = null;
                 //TODO: Remplacer par le lancement d'une erreur

@@ -90,6 +90,15 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
+     * Envoyer un paquet au client.
+     *
+     * @param packet Paquet qui va être envoyé.
+     */
+    public void sendPacket(WebSocket ws, PokeArenaPacket packet) {
+        ws.send(PokeArenaUtilities.toJson(packet));
+    }
+
+    /**
      * Méthode appelée quand un erreur se produit.
      * Si une erreur provoque l'échec d'une connexion alors la méthode onClose(...) sera appelée additionnellement.
      *

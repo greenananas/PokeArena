@@ -41,18 +41,19 @@ public class PokeArenaProtocol {
      * @param request Paquet à traiter.
      * @return Paquet de réponse.
      */
-    public PokeArenaPacket processPacket(WebSocket ws, PokeArenaPacket request) {
+    public void processPacket(WebSocket ws, PokeArenaPacket request) {
         PokeArenaPacket response;
         switch (request.getType()) {
             case PING:
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
-            case ACTION:
+            case MOVE:
                 response = processActionPacket(ws, request);
+                break;
             default:
                 response = null;
         }
-        return response;
+        server.sendPacket(ws, response);
     }
 
     /**
