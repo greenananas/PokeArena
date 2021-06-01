@@ -70,7 +70,9 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message reçu : " + message);
+        ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
+        PokeArenaUtilities.parseJsonPacket(message);
         //pap.processPacket(PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
     }
 
@@ -92,10 +94,6 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onStart() {
 
-    }
-
-    public void start() {
-        this.run();
     }
 
     /**
