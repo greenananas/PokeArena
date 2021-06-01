@@ -1,0 +1,10 @@
+package PokeArenaNetwork;
+
+public enum PokeArenaServerState {
+    WAITING_FOR_CLIENT1_TO_JOIN,
+    WAITING_FOR_CLIENT2_TO_JOIN,
+    WAITING_FOR_START,
+    IN_BATTLE,
+    WAITING_FOR_CLIENT_1_ACTION,
+    WAITING_FOR_CLIENT_2_ACTION,
+}

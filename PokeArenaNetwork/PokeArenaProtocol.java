@@ -4,6 +4,12 @@ import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
 public class PokeArenaProtocol {
 
+   PokeArenaServer server;
+
+   public PokeArenaProtocol(PokeArenaServer server) {
+      this.server = server;
+   }
+
    /**
     * Traite un paquet et retourne la réponse associé.
     * La réponse peut être nulle si le paquet entré en paramètre ne nécessite pas de réponse.
@@ -15,6 +21,9 @@ public class PokeArenaProtocol {
       PokeArenaPacket response;
       switch (request.getType()) {
          case PING:
+            response = createPacket(PokeArenaPacketType.PONG, null);
+            break;
+         case MOVE:
             response = createPacket(PokeArenaPacketType.PONG, null);
             break;
          //TODO: Implémenter les autres cas

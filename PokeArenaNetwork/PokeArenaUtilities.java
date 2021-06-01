@@ -1,5 +1,6 @@
 package PokeArenaNetwork;
 
+import Model.Move;
 import com.google.gson.Gson;
 
 public class PokeArenaUtilities {
@@ -11,7 +12,7 @@ public class PokeArenaUtilities {
        try {
            packet = GSON.fromJson(jsonPacket, PokeArenaPacket.class);
        } catch (Exception e) {
-           System.out.println(e.getMessage());
+           System.out.println("Une erreur est survenue");
        }
        return packet;
     }
@@ -22,6 +23,8 @@ public class PokeArenaUtilities {
             case PING:
                 packet = new PokeArenaPingPacket();
                 break;
+            case MOVE:
+                packet = new PokeArenaMovePacket((Move) packetData);
             default:
                 packet = null;
                 //TODO: Remplacer par le lancement d'une erreur

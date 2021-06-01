@@ -4,12 +4,9 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-import javax.swing.text.Utilities;
 import java.net.InetSocketAddress;
 
 public class PokeArenaServer extends WebSocketServer {
-
-    private final PokeArenaProtocol pap = new PokeArenaProtocol();
 
     /**
      * Nom ou adresse IP du serveur.
@@ -20,9 +17,14 @@ public class PokeArenaServer extends WebSocketServer {
      */
     private int portNumber;
     /**
-     * Statut du serveur.
+     * État du serveur.
      */
-    private String status;
+    private PokeArenaServerState state;
+
+    private WebSocket client1WS;
+    private WebSocket client2WS;
+
+    private final PokeArenaProtocol pap = new PokeArenaProtocol(this);
 
     /**
      * Créer un serveur PokeArenaServer.
@@ -42,9 +44,20 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onOpen(WebSocket ws, ClientHandshake clientHandshake) {
-        ws.send("Bienvenue sur le serveur " + hostname + ":" + portNumber); // Envoie un message au nouveau client
-        broadcast("Nouvelle connexion : " + clientHandshake.getResourceDescriptor()); // Envoie d'un message à tout les clients connectés
-        System.out.println("Nouvelle connexion de : " + ws.getRemoteSocketAddress());
+        switch (state) {
+            case WAITING_FOR_CLIENT1_TO_JOIN:
+                client1WS = ws;
+                ws.send("Bienvenue sur le serveur, vous êtes le joueur 1");
+                state = PokeArenaServerState.WAITING_FOR_CLIENT2_TO_JOIN;
+                break;
+            case WAITING_FOR_CLIENT2_TO_JOIN:
+                client2WS = ws;
+                ws.send("Bienvenue sur le serveur, vous êtes le joueur 2");
+                state = PokeArenaServerState.WAITING_FOR_START;
+                break;
+            default:
+                ws.close();
+        }
     }
 
     /**
@@ -73,7 +86,7 @@ public class PokeArenaServer extends WebSocketServer {
         ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
         PokeArenaUtilities.parseJsonPacket(message);
-        //pap.processPacket(PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
+        pap.processPacket(PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
     }
 
     /**
@@ -93,7 +106,7 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onStart() {
-
+        this.state = PokeArenaServerState.WAITING_FOR_CLIENT1_TO_JOIN;
     }
 
     /**
@@ -115,20 +128,20 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Obtenir le statut du serveur.
+     * Obtenir l'état du serveur.
      *
-     * @return Statut du serveur.
+     * @return État du serveur.
      */
-    public String getStatus() {
-        return status;
+    public PokeArenaServerState getState() {
+        return state;
     }
 
     /**
-     * Modifier le statut du serveur.
+     * Modifier l'état du serveur.
      *
-     * @param status Statut du serveur.
+     * @param state État du serveur.
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(PokeArenaServerState state) {
+        this.state = state;
     }
 }
