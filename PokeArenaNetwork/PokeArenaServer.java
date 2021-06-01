@@ -24,7 +24,7 @@ public class PokeArenaServer extends WebSocketServer {
     private WebSocket client1WS;
     private WebSocket client2WS;
 
-    private final PokeArenaProtocol pap = new PokeArenaProtocol(this);
+    private final PokeArenaProtocol protocol = new PokeArenaProtocol(this);
 
     /**
      * Créer un serveur PokeArenaServer.
@@ -86,7 +86,7 @@ public class PokeArenaServer extends WebSocketServer {
         ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
         PokeArenaUtilities.parseJsonPacket(message);
-        pap.processPacket(PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
+        protocol.processPacket(ws, PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
     }
 
     /**
@@ -143,5 +143,13 @@ public class PokeArenaServer extends WebSocketServer {
      */
     public void setState(PokeArenaServerState state) {
         this.state = state;
+    }
+
+    protected WebSocket getClient1WS() {
+        return client1WS;
+    }
+
+    protected WebSocket getClient2WS() {
+        return client2WS;
     }
 }

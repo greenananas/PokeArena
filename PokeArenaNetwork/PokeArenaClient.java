@@ -86,7 +86,7 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     public void sendPing() {
-       sendPacket(PokeArenaPacketType.PING, null);
+        sendPacket(PokeArenaPacketType.PING, null);
     }
 
     /**

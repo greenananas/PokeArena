@@ -10,7 +10,9 @@ class PokeArenaServer extends WebSocketServer {
 -String hostname
 -int portNumber
 -String status
--PokeArenaProtocol pap
+-PokeArenaProtocol protocol
+-WebSocket client1WS
+-WebSocket client2WS
 +PokeArenaServer(String hostname, int portNumber)
 +start()
 +stop()
