@@ -1,6 +1,7 @@
 package PokeArenaNetwork;
 
 //import Model.Battle;
+
 import org.java_websocket.WebSocket;
 
 
@@ -28,7 +29,6 @@ public class PokeArenaProtocol {
      * Dernière action envoyée par le client 2.
      */
     //private Action client2Action;
-
     public PokeArenaProtocol(PokeArenaServer server) {
         this.server = server;
     }
