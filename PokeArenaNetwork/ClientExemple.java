@@ -9,19 +9,25 @@ import java.util.Scanner;
 
 public class ClientExemple {
 
-    public static void main(String[] args) throws URISyntaxException {
-        PokeArenaClient client = new PokeArenaClient(new URI("ws://localhost:8886"));
-        client.connect();
+    public static void main(String[] args) {
+        PokeArenaClient client;
+        try {
+            client = new PokeArenaClient("localhost", 8888);
+            client.connect();
 
-        Scanner sc = new Scanner(System.in);
-        String input = sc.next();
+            Scanner sc = new Scanner(System.in);
+            String input = sc.next();
 
 
-        while (!input.equals("quit")) {
-            if (input.equals("ping")) client.sendPing();
-            if (input.equals("move")) client.sendMove(new Move("Dracocharge", PokeTypes.type.DRAGON,true,100,70,16,0));
-            input = sc.next();
+            while (!input.equals("quit")) {
+                if (input.equals("ping")) client.sendPing();
+                if (input.equals("move"))
+                    client.sendMove(new Move("Dracocharge", PokeTypes.type.DRAGON, true, 100, 70, 16, 0));
+                input = sc.next();
+            }
+            client.close();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-        client.close();
     }
 }

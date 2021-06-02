@@ -8,6 +8,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 public class PokeArenaClient extends WebSocketClient {
 
@@ -23,6 +24,14 @@ public class PokeArenaClient extends WebSocketClient {
      */
     public PokeArenaClient(URI serveurURI) {
         super(serveurURI);
+    }
+
+    public PokeArenaClient(String serveurURI) throws URISyntaxException {
+       this(new URI(serveurURI));
+    }
+
+    public PokeArenaClient(String hostname, int portNumber) throws URISyntaxException {
+        this("ws://" + hostname + ":" + portNumber);
     }
 
     /**
