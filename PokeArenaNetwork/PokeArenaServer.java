@@ -36,7 +36,7 @@ public class PokeArenaServer extends WebSocketServer {
     /**
      * Protocole qui va être utilisé pour traiter les paquets.
      */
-    private final PokeArenaProtocol protocol = new PokeArenaProtocol(this);
+    private final PokeArenaServerProtocol protocol = new PokeArenaServerProtocol(this);
 
     /**
      * Créer un serveur PokeArenaServer.
