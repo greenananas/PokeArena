@@ -12,18 +12,30 @@ public class PokeArenaServer extends WebSocketServer {
      * Nom ou adresse IP du serveur.
      */
     private String hostname;
+
     /**
      * Numéro de port du serveur.
      */
     private int portNumber;
+
     /**
      * État du serveur.
      */
     private PokeArenaServerState state;
 
+    /**
+     * Connexion associée au client 1.
+     */
     private WebSocket client1WS;
+
+    /**
+     * Connexion associée au client 2.
+     */
     private WebSocket client2WS;
 
+    /**
+     * Protocole qui va être utilisé pour traiter les paquets.
+     */
     private final PokeArenaProtocol protocol = new PokeArenaProtocol(this);
 
     /**
@@ -154,10 +166,20 @@ public class PokeArenaServer extends WebSocketServer {
         this.state = state;
     }
 
+    /**
+     * Obtenir la connexion associée au client 1.
+     *
+     * @return Connexion associé au client 1.
+     */
     protected WebSocket getClient1WS() {
         return client1WS;
     }
 
+    /**
+     * Obtenir la connexion associée au client 2.
+     *
+     * @return Connexion associée au client 2.
+     */
     protected WebSocket getClient2WS() {
         return client2WS;
     }

@@ -3,7 +3,6 @@ package PokeArenaNetwork;
 import Model.Move;
 import Model.Pokemon;
 import Model.Team;
-import com.google.gson.Gson;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -18,7 +17,7 @@ public class PokeArenaClient extends WebSocketClient {
     private String status;
 
     /**
-     * Créer un client PokeArenaClient.
+     * Créer un client PokeArenaClient à partir d'une URI.
      *
      * @param serveurURI URI du serveur au format de type ws://hostname:portnumber
      */
@@ -26,10 +25,21 @@ public class PokeArenaClient extends WebSocketClient {
         super(serveurURI);
     }
 
+    /**
+     * Créer un client PokeArenaClient à partir d'une URI au format String.
+     *
+     * @param serveurURI URI du serveur au format de type ws://hostname:portnumber
+     * @throws URISyntaxException Soulevé si la chaîne de caractères n'est pas à un format valide d'URI.
+     */
     public PokeArenaClient(String serveurURI) throws URISyntaxException {
-       this(new URI(serveurURI));
+        this(new URI(serveurURI));
     }
 
+    /**
+     * @param hostname   Nom d'hôte du serveur
+     * @param portNumber Numéro de port du serveur.
+     * @throws URISyntaxException Soulevé si le nom d'hôte ou le numéro de port ne sont pas valides.
+     */
     public PokeArenaClient(String hostname, int portNumber) throws URISyntaxException {
         this("ws://" + hostname + ":" + portNumber);
     }
@@ -102,15 +112,6 @@ public class PokeArenaClient extends WebSocketClient {
     public void sendMove(Move move) {
         sendPacket(PokeArenaPacketType.MOVE, move);
     }
-
-//    /**
-//     * Envoyer un objet au serveur.
-//     *
-//     * @param item Objet qui va être envoyé au serveur.
-//     */
-//    public void sendItem(Item item) {
-//        sendAction(item);
-//    }
 
     /**
      * Envoyer une équipe au serveur.
