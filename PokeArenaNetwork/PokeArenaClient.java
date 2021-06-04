@@ -89,19 +89,18 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     /**
-     * Envoyer une action au serveur.
-     *
-     * @param packetType Type du paquet qui va être envoyé.
-     * @param packetData Données du paquet qui va être envoyé.
-     * @param <A>        Type générique qui doit être sérialisable en JSON.
+     * Envoyer un paquet au serveur.
+     * @param packet Paquet qui va être envoyé.
      */
-    public <A> void sendPacket(PokeArenaPacketType packetType, A packetData) {
-        PokeArenaPacket packet = PokeArenaUtilities.createPacket(packetType, packetData);
+    public void sendPacket(PokeArenaPacket packet) {
         send(PokeArenaUtilities.toJson(packet));
     }
 
+    /**
+     * Envoyer un ping au serveur.
+     */
     public void sendPing() {
-        sendPacket(PokeArenaPacketType.PING, null);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
     }
 
     /**
@@ -110,7 +109,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param move Attaque qui va être envoyée au serveur.
      */
     public void sendMove(Move move) {
-        sendPacket(PokeArenaPacketType.MOVE, move);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
     }
 
     /**
@@ -119,7 +118,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param team Équipe qui va être envoyée au serveur.
      */
     public void sendTeam(Team team) {
-        sendPacket(PokeArenaPacketType.TEAM, team);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEAM, team));
     }
 
     /**
@@ -128,7 +127,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param pokemon Pokemon à changer qui va être envoyé au serveur.
      */
     public void sendChangePokemon(Pokemon pokemon) {
-        sendPacket(PokeArenaPacketType.CHANGEPOKEMON, pokemon);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.CHANGEPOKEMON, pokemon));
     }
 
     /**
