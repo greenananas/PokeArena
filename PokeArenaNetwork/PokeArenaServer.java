@@ -34,7 +34,7 @@ public class PokeArenaServer extends WebSocketServer {
     private WebSocket client2WS;
 
     /**
-     * Protocole qui va être utilisé pour traiter les paquets.
+     * Protocole utilisé pour traiter les paquets et gérer l'état du serveur.
      */
     private final PokeArenaServerProtocol protocol = new PokeArenaServerProtocol(this);
 
@@ -97,7 +97,6 @@ public class PokeArenaServer extends WebSocketServer {
         System.out.println("Message reçu : " + message);
         ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
-        PokeArenaUtilities.parseJsonPacket(message);
         protocol.processPacket(ws, PokeArenaUtilities.parseJsonPacket(message));
     }
 

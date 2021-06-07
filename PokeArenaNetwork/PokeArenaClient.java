@@ -12,9 +12,11 @@ import java.net.URISyntaxException;
 public class PokeArenaClient extends WebSocketClient {
 
     /**
-     * Statut du client.
+     * État du client.
      */
-    private String status;
+    private PokeArenaClientState state = PokeArenaClientState.NOT_CONNECTED;
+
+    private final PokeArenaClientProtocol protocol = new PokeArenaClientProtocol(this);
 
     /**
      * Créer un client PokeArenaClient à partir d'une URI.
@@ -51,7 +53,12 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        System.out.println("Ouverture de la connexion");
+        if (state == PokeArenaClientState.NOT_CONNECTED) {
+            System.out.println("Ouverture de la connexion");
+            state = PokeArenaClientState.WAITING_FOR_START;
+        } else {
+            //TODO: Lever une erreur
+        }
     }
 
     /**
@@ -62,6 +69,8 @@ public class PokeArenaClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         System.out.println("Message reçu : " + message);
+        send("J'ai bien reçu ton message");
+        protocol.processPacket(getConnection(), PokeArenaUtilities.parseJsonPacket(message));
     }
 
     /**
@@ -90,6 +99,7 @@ public class PokeArenaClient extends WebSocketClient {
 
     /**
      * Envoyer un paquet au serveur.
+     *
      * @param packet Paquet qui va être envoyé.
      */
     public void sendPacket(PokeArenaPacket packet) {
@@ -138,20 +148,20 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     /**
-     * Obtenir le statut du client.
+     * Obtenir l'état du client.
      *
-     * @return Statut du client.
+     * @return État du client.
      */
-    public String getStatus() {
-        return status;
+    public PokeArenaClientState getState() {
+        return state;
     }
 
     /**
-     * Modifier le statut du client.
+     * Modifier l'état du client.
      *
-     * @param status Statut du client.
+     * @param state État du client.
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(PokeArenaClientState state) {
+        this.state = state;
     }
 }

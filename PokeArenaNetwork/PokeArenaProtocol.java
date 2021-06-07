@@ -21,14 +21,4 @@ abstract public class PokeArenaProtocol {
      */
     abstract public void processPacket(WebSocket ws, PokeArenaPacket request);
 
-    /**
-     * Traite un paquet de type Action et retourne la réponse associé.
-     * La réponse peut être nulle si le paquet entré en paramètre ne nécessite pas de réponse.
-     *
-     * @param ws      Connexion associé au paquet à traiter.
-     * @param request Paquet à traiter.
-     * @return Paquet de réponse.
-     */
-    abstract protected PokeArenaPacket processActionPacket(WebSocket ws, PokeArenaPacket request);
-
 }
