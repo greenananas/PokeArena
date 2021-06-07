@@ -114,6 +114,13 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     /**
+     * Envoyer une demande de rafraichissement des informations du combat au serveur.
+     */
+    public void sendRefresh() {
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.REFRESH, null));
+    }
+
+    /**
      * Envoyer une attaque au serveur.
      *
      * @param move Attaque qui va être envoyée au serveur.
