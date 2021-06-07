@@ -59,12 +59,12 @@ public class PokeArenaServer extends WebSocketServer {
         switch (state) {
             case WAITING_FOR_CLIENT1_TO_JOIN:
                 client1WS = ws;
-                ws.send("Bienvenue sur le serveur, vous êtes le joueur 1");
+                sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 1"));
                 state = PokeArenaServerState.WAITING_FOR_CLIENT2_TO_JOIN;
                 break;
             case WAITING_FOR_CLIENT2_TO_JOIN:
                 client2WS = ws;
-                ws.send("Bienvenue sur le serveur, vous êtes le joueur 2");
+                sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 2"));
                 state = PokeArenaServerState.WAITING_FOR_START;
                 break;
             default:
@@ -95,9 +95,9 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message reçu : " + message);
-        ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
-        protocol.processPacket(ws, PokeArenaUtilities.parseJsonPacket(message));
+        PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet != null) protocol.processPacket(ws, packet);
     }
 
     /**

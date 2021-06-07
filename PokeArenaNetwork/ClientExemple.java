@@ -23,6 +23,7 @@ public class ClientExemple {
                 if (input.equals("ping")) client.sendPing();
                 if (input.equals("move"))
                     client.sendMove(new Move("Dracocharge", PokeTypes.type.DRAGON, true, 100, 70, 16, 0));
+                if (input.equals("texte")) client.sendText("Ceci est un message texte");
                 input = sc.next();
             }
             client.close();

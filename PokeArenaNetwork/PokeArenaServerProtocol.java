@@ -40,6 +40,11 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case PING:
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
+            case TEXT:
+                String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
+                System.out.println(clt + " dit : " + ((PokeArenaTextPacket) request).getText());
+                response = null;
+                break;
             case MOVE: //TODO: A enlever
                 System.out.println(((PokeArenaMovePacket) request).getMove().getName());
                 response = request;
@@ -50,7 +55,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             default:
                 response = null;
         }
-        server.sendPacket(ws, response);
+        if (response != null) {
+            server.sendPacket(ws, response);
+        }
     }
 
     /**

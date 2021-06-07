@@ -19,8 +19,10 @@ public class PokeArenaUtilities {
      * Enregistrement des sous-types de la classe PokeArenaPacket.
      */
     private static final RuntimeTypeAdapterFactory<?> TYPE_FACTORY = RuntimeTypeAdapterFactory
-            .of(PokeArenaPacket.class, "type") // Here you specify which is the parent class and what field particularizes the child class.
-            .registerSubtype(PokeArenaPingPacket.class, "PING") // if the flag equals the class name, you can skip the second parameter. This is only necessary, when the "type" field does not equal the class name.
+            .of(PokeArenaPacket.class, "type")
+            .registerSubtype(PokeArenaPingPacket.class, "PING")
+            .registerSubtype(PokeArenaPongPacket.class, "PONG")
+            .registerSubtype(PokeArenaTextPacket.class, "TEXT")
             .registerSubtype(PokeArenaMovePacket.class, "MOVE")
             .registerSubtype(PokeArenaActionPacket.class, "ACTION");
 
@@ -40,8 +42,7 @@ public class PokeArenaUtilities {
         try {
             packet = GSON.fromJson(jsonPacket, REQUEST_LIST_TYPE_TOKEN.getType());
         } catch (Exception e) {
-            System.out.println("Une erreur est survenue : ");
-            e.printStackTrace();
+            System.out.println("Une erreur est survenue : " + e.getMessage());
         }
         return packet;
     }
@@ -65,6 +66,9 @@ public class PokeArenaUtilities {
                 break;
             case MOVE:
                 packet = new PokeArenaMovePacket((Move) packetData);
+                break;
+            case TEXT:
+                packet = new PokeArenaTextPacket((String) packetData);
                 break;
             case ACTION:
                 packet = new PokeArenaActionPacket((Action) packetData);

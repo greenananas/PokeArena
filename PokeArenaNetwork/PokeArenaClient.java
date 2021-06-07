@@ -69,8 +69,8 @@ public class PokeArenaClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         System.out.println("Message reçu : " + message);
-        send("J'ai bien reçu ton message");
-        protocol.processPacket(getConnection(), PokeArenaUtilities.parseJsonPacket(message));
+        PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet != null) protocol.processPacket(getConnection(), packet);
     }
 
     /**
@@ -120,6 +120,15 @@ public class PokeArenaClient extends WebSocketClient {
      */
     public void sendMove(Move move) {
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
+    }
+
+    /**
+     * Envoyer un message texte au serveur.
+     *
+     * @param text Texte du message qui va être envoyé au serveur.
+     */
+    public void sendText(String text) {
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, text));
     }
 
     /**

@@ -29,10 +29,17 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
             case PING:
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
+            case TEXT:
+                System.out.println("Serveur dit : " + ((PokeArenaTextPacket) request).getText());
+                // Pas de break pour avoir la réponse = null
+                response = null;
+                break;
             default:
                 response = null;
         }
-        client.sendPacket(response);
+        if (response != null) {
+            client.sendPacket(response);
+        }
     }
 
 }
