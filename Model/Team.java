@@ -50,7 +50,7 @@ public class Team {
      *
      * @param p Nouveau Pokémon du dresseur
      */
-    public void setPokemon(Pokemon p) {
+    public void addPokemon(Pokemon p) {
         assert pokemonTeam.size() < 6;
         this.pokemonTeam.add(p);
     }
