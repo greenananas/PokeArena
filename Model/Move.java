@@ -35,6 +35,11 @@ public class Move extends Action {
     private int pp;
 
     /**
+     * Taux de critique de base d'une attaque
+     */
+    private int critRate;
+
+    /**
      * Créer une attaque
      *
      * @param name       Nom de l'attaque
@@ -45,7 +50,7 @@ public class Move extends Action {
      * @param pp         Points de pouvoir de l'attaque
      * @param priority   Priorité d'une attaque
      */
-    public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority) {
+    public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority, int critRate) {
         super(acTypes.ATTACK, priority);
         this.name = name;
         this.type = type;
@@ -53,6 +58,7 @@ public class Move extends Action {
         this.power = power;
         this.precision = precision;
         this.pp = pp;
+        this.critRate = critRate;
     }
 
     /**
@@ -110,6 +116,15 @@ public class Move extends Action {
     }
 
     /**
+     * Obtenir le taux de critique d'une attaque
+     *
+     * @return Taux de critique de l'attaque
+     */
+    public int getCritRate() {
+        return critRate;
+    }
+
+    /**
      * Modifier le nom de l'attaque
      *
      * @param n Nouveau nom de l'attaque
@@ -163,4 +178,20 @@ public class Move extends Action {
         this.pp = pp;
     }
 
+    /**
+     * Modifier le taux de critique d'uen attaque
+     *
+     * @param critRate Nouveau taux de critique de l'attaque
+     */
+    public void setCritRate(int critRate) {
+        this.critRate = critRate;
+    }
+
+    @Override
+    public String toString() {
+        String mv = (physical?"Phy.":"Spé.");
+        return " " + type + " | " + name + " | " + mv + " | Puissance = " + power +
+                " | Précision = " + precision +
+                " | PP = " + pp;
+    }
 }

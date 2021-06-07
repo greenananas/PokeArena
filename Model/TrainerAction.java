@@ -8,10 +8,10 @@ public class TrainerAction extends Pair<Trainer, Action> {
     }
 
     public Trainer getTrainer(){
-        return this.getTrainer();
+        return super.getTrainer();
     }
 
     public Action getAction(){
-        return this.getAction();
+        return super.getAction();
     }
 }

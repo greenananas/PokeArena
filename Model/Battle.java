@@ -12,7 +12,7 @@ public class Battle {
     public Battle(Trainer left, Trainer right, BattleGround bg) {
         trainer1 = new TrainerAction(left, null);
         trainer2 = new TrainerAction(right, null);
-        this.bg = bg;
+        Battle.bg = bg;
     }
 
     public void takeTurns (Action T1action, Action T2action) {
