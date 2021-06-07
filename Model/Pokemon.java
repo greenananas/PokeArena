@@ -480,10 +480,10 @@ public class Pokemon {
      * @return Le Pokémon est de même type
      */
     public boolean isStabbed(Move a) {
-        if (this.getType1() == a.getType()) {
+        if (this.getType1() == a.getMoveType()) {
             return true;
         } else if (this.getType2() != null) {
-            if (this.getType2() == a.getType()) {
+            if (this.getType2() == a.getMoveType()) {
                 return true;
             }
         }
@@ -591,9 +591,9 @@ public class Pokemon {
      * @return Multiplicateur compris entre 0 et 4
      */
     public double getTypeMultiplier(Move at) {
-        double typeMultiplier = PokeTypes.getTypeAdvantage(this.getType1(), at.getType()).getEffectiveness();
+        double typeMultiplier = PokeTypes.getTypeAdvantage(this.getType1(), at.getMoveType()).getEffectiveness();
         if (this.getType2() != null) {
-            typeMultiplier *= PokeTypes.getTypeAdvantage(this.getType2(), at.getType()).getEffectiveness();
+            typeMultiplier *= PokeTypes.getTypeAdvantage(this.getType2(), at.getMoveType()).getEffectiveness();
         }
         return typeMultiplier;
     }

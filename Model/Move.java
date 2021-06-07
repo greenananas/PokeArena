@@ -69,7 +69,7 @@ public class Move extends Action {
      *
      * @return Type de l'attaque
      */
-    public PokeTypes.type getAttackType() {
+    public PokeTypes.type getMoveType() {
         return this.type;
     }
 
