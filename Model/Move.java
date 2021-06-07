@@ -2,7 +2,7 @@ package Model;
 /**
  * Class décrivant l'attaque d'un Pokémon.
  */
-public class Move {
+public class Move extends Action {
 
     /**
      * Nom de l'attaque
@@ -35,9 +35,9 @@ public class Move {
     private int pp;
 
     /**
-     * Priorité d'une attaque
+     * Taux de critique de base d'une attaque
      */
-    private int priority;
+    private int critRate;
 
     /**
      * Créer une attaque
@@ -50,14 +50,15 @@ public class Move {
      * @param pp         Points de pouvoir de l'attaque
      * @param priority   Priorité d'une attaque
      */
-    public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority) {
+    public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority, int critRate) {
+        super(acTypes.ATTACK, priority);
         this.name = name;
         this.type = type;
         this.physical = isPhysical;
         this.power = power;
         this.precision = precision;
         this.pp = pp;
-        this.priority = priority;
+        this.critRate = critRate;
     }
 
     /**
@@ -74,7 +75,7 @@ public class Move {
      *
      * @return Type de l'attaque
      */
-    public PokeTypes.type getType() {
+    public PokeTypes.type getMoveType() {
         return this.type;
     }
 
@@ -115,12 +116,12 @@ public class Move {
     }
 
     /**
-     * Obtenir la priorité d'une attaque
+     * Obtenir le taux de critique d'une attaque
      *
-     * @return Priorité de l'attaque
+     * @return Taux de critique de l'attaque
      */
-    public int getPriority() {
-        return priority;
+    public int getCritRate() {
+        return critRate;
     }
 
     /**
@@ -178,11 +179,19 @@ public class Move {
     }
 
     /**
-     * Modifier la priorité d'une attaque
+     * Modifier le taux de critique d'uen attaque
      *
-     * @param priority Priorité d'une attaque
+     * @param critRate Nouveau taux de critique de l'attaque
      */
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setCritRate(int critRate) {
+        this.critRate = critRate;
+    }
+
+    @Override
+    public String toString() {
+        String mv = (physical?"Phy.":"Spé.");
+        return " " + type + " | " + name + " | " + mv + " | Puissance = " + power +
+                " | Précision = " + precision +
+                " | PP = " + pp;
     }
 }

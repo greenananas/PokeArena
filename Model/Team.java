@@ -1,18 +1,28 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Team {
 
     /**
      * Équipe de Pokémon du dresseur
      */
-    private Pokemon[] pokemonTeam;
+    private ArrayList<Pokemon> pokemonTeam;
 
     /**
-     * Créer une Team
+     * Créer une team vide
+     *
+     */
+    public Team() {
+        this.pokemonTeam = new ArrayList<>();
+    }
+
+    /**
+     * Créer une team
      *
      * @param team Équipe de Pokémon du dresseur
      */
-    public Team(Pokemon[] team) {
+    public Team(ArrayList<Pokemon> team) {
         this.pokemonTeam = team;
     }
 
@@ -21,7 +31,7 @@ public class Team {
      *
      * @return Équipe de Pokémon
      */
-    public Pokemon[] getPokemonTeam() {
+    public ArrayList<Pokemon> getPokemons() {
         return this.pokemonTeam;
     }
 
@@ -31,18 +41,27 @@ public class Team {
      * @param n Numéro du Pokémon dans l'équipe du dresseur
      * @return Pokémon choisi
      */
-    public Pokemon getPokemon(int n) {
-        return this.pokemonTeam[n];
+    public Pokemon get(int n) {
+        return this.pokemonTeam.get(n);
     }
 
     /**
      * Modifier le Pokémon d'un dresseur
      *
      * @param p Nouveau Pokémon du dresseur
-     * @param n Emplacement du Pokémon dans l'équipe du dresseur
      */
-    public void setPokemon(Pokemon p, int n) {
-        this.pokemonTeam[n] = p;
+    public void addPokemon(Pokemon p) {
+        assert pokemonTeam.size() < 6;
+        this.pokemonTeam.add(p);
+    }
+
+    public boolean isDefeated() {
+        for (Pokemon p : this.pokemonTeam) {
+            if (!p.isKO()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

@@ -1,45 +1,74 @@
 package Model;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.SynchronousQueue;
-
 /**
  * Class décrivant un combat Pokémon. Non définitif (à remplacer par une interface sûrement).
  */
 public class Battle {
-    private Trainer trainer1; //Dresseur1
-    private Trainer trainer2; //Dresseur2
-    Pokemon currentPokemonT1;
-    Pokemon currentPokemonT2;
-    private static BattleGround bg;  //Terrain de combat
-    private Boolean lock = true;
-    volatile CountDownLatch playersLatch;
+    private TrainerAction trainer1;
+    private TrainerAction trainer2;
 
-    private final SynchronousQueue<Object> queryT1 = new SynchronousQueue<>();
-    private final SynchronousQueue<Object> queryT2 = new SynchronousQueue<>();
+    private static BattleGround bg;  //Terrain de combat
 
     public Battle(Trainer left, Trainer right, BattleGround bg) {
-        this.trainer1 = left;
-        this.trainer2 = right;
-        this.bg = bg;
+        trainer1 = new TrainerAction(left, null);
+        trainer2 = new TrainerAction(right, null);
+        Battle.bg = bg;
     }
 
-
-    public void setUpBattle() {
-        playersLatch = new CountDownLatch(2);
-        currentPokemonT1 = trainer1.getPokemonTeam().getPokemon(0);
-        currentPokemonT2 = trainer2.getPokemonTeam().getPokemon(0);
-        Thread thread1 = new Thread(new ThreadedBattle(trainer1, queryT1, currentPokemonT1));
-        Thread thread2 = new Thread(new ThreadedBattle(trainer2, queryT2, currentPokemonT2));
-        thread1.start();
-        thread2.start();
-        battle();
+    public void takeTurns (Action T1action, Action T2action) {
+        trainer1.pairWith(T1action);
+        trainer2.pairWith(T2action);
+        TrainerAction firstToAct = calculatePriority();
+        TrainerAction secondToAct = (firstToAct == trainer1 ? trainer2 : trainer1);
+        apply(firstToAct);
+        if (!secondToAct.getTrainer().getLeadingPkmn().isKO()) {
+            apply(secondToAct);
+            if (firstToAct.getTrainer().getLeadingPkmn().isKO()) {
+                if (!firstToAct.getTrainer().hasPokemonLeft()) {
+                    endBattle(secondToAct.getTrainer());
+                } else {
+                    firstToAct.getTrainer().changePokemon();
+                }
+            }
+        }
+        else {
+            if (!secondToAct.getTrainer().hasPokemonLeft()) {
+                endBattle(firstToAct.getTrainer());
+            } else {
+                secondToAct.getTrainer().changePokemon();
+            }
+        }
     }
 
+    public void apply (TrainerAction current) {
+        if (current.getAction().getType() == acTypes.ATTACK) {
+            Pokemon target = (current == trainer1 ? trainer2.getTrainer().getLeadingPkmn() : trainer1.getTrainer().getLeadingPkmn());
+            current.getTrainer().getLeadingPkmn().attack(target, (Move) current.getAction());
+        }
+        else if (current.getAction().getType() == acTypes.CHANGEPKM) {
+            current.getTrainer().changePokemon();
+        }
+    }
+
+    public TrainerAction calculatePriority() {
+        TrainerAction firstToAct;
+        if (trainer1.getAction().getPriority() > trainer2.getAction().getPriority()) {
+            firstToAct = trainer1;
+        }
+        else if (trainer1.getAction().getPriority() < trainer2.getAction().getPriority()) {
+            firstToAct = trainer2;
+        }
+        else {
+            firstToAct = (trainer1.getTrainer().getLeadingPkmn().isFaster(trainer2.getTrainer().getLeadingPkmn()) ? trainer1 : trainer2);
+        }
+        return firstToAct;
+    }
+
+    /*
     public void battle() {
-        /* Affichage initial*/
+        /* Affichage initial
         System.out.println(trainer1.getDisplayName() + " vs " + trainer2.getDisplayName() + "\n");
-        /*Sélection des Pokémon main*/
+        Sélection des Pokémon main
 
         Pokemon firstAttacker;
         Pokemon secondAttacker;
@@ -50,21 +79,6 @@ public class Battle {
         while (winner == null) {
             currentPokemonT1.showHP();
             currentPokemonT2.showHP();
-
-            //Choix des joueurs
-            lock = false;
-            lock.notifyAll();
-            try {
-                //queryT1.take();
-                //queryT2.take();
-                playersLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            lock = true;
-            lock.notifyAll();
-            playersLatch = new CountDownLatch(2);
-            //
 
             if (currentPokemonT1.isFaster(currentPokemonT2)) {
                 firstAttacker = currentPokemonT1;
@@ -169,6 +183,7 @@ public class Battle {
         }
         endBattle(winner);
     }
+    */
 
     public void endBattle(Trainer w) {
         System.out.println(w.getDisplayName() + " remporte le combat.");

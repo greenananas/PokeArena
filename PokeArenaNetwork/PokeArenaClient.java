@@ -3,29 +3,47 @@ package PokeArenaNetwork;
 import Model.Move;
 import Model.Pokemon;
 import Model.Team;
-import com.google.gson.Gson;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
-
-import static PokeArenaNetwork.PokeArenaUtilities.GSON;
-import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
+import java.net.URISyntaxException;
 
 public class PokeArenaClient extends WebSocketClient {
 
     /**
-     * Statut du client.
+     * État du client.
      */
-    private String status;
+    private PokeArenaClientState state = PokeArenaClientState.NOT_CONNECTED;
+
+    private final PokeArenaClientProtocol protocol = new PokeArenaClientProtocol(this);
 
     /**
-     * Créer un client PokeArenaClient.
+     * Créer un client PokeArenaClient à partir d'une URI.
      *
      * @param serveurURI URI du serveur au format de type ws://hostname:portnumber
      */
     public PokeArenaClient(URI serveurURI) {
         super(serveurURI);
+    }
+
+    /**
+     * Créer un client PokeArenaClient à partir d'une URI au format String.
+     *
+     * @param serveurURI URI du serveur au format de type ws://hostname:portnumber
+     * @throws URISyntaxException Soulevé si la chaîne de caractères n'est pas à un format valide d'URI.
+     */
+    public PokeArenaClient(String serveurURI) throws URISyntaxException {
+        this(new URI(serveurURI));
+    }
+
+    /**
+     * @param hostname   Nom d'hôte du serveur
+     * @param portNumber Numéro de port du serveur.
+     * @throws URISyntaxException Soulevé si le nom d'hôte ou le numéro de port ne sont pas valides.
+     */
+    public PokeArenaClient(String hostname, int portNumber) throws URISyntaxException {
+        this("ws://" + hostname + ":" + portNumber);
     }
 
     /**
@@ -35,8 +53,12 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        send("HELLO");
-        System.out.println("Ouverture de la connexion");
+        if (state == PokeArenaClientState.NOT_CONNECTED) {
+            System.out.println("Ouverture de la connexion");
+            state = PokeArenaClientState.WAITING_FOR_START;
+        } else {
+            //TODO: Lever une erreur
+        }
     }
 
     /**
@@ -47,6 +69,8 @@ public class PokeArenaClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         System.out.println("Message reçu : " + message);
+        PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet != null) protocol.processPacket(getConnection(), packet);
     }
 
     /**
@@ -74,19 +98,26 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     /**
-     * Envoyer une action au serveur.
+     * Envoyer un paquet au serveur.
      *
-     * @param packetType Type du paquet qui va être envoyé.
-     * @param packetData Données du paquet qui va être envoyé.
-     * @param <A>        Type générique qui doit être sérialisable en JSON.
+     * @param packet Paquet qui va être envoyé.
      */
-    public <A> void sendPacket(PokeArenaPacketType packetType, A packetData) {
-        PokeArenaPacket packet = createPacket(packetType, packetData);
-        send(GSON.toJson(packet));
+    public void sendPacket(PokeArenaPacket packet) {
+        send(PokeArenaUtilities.toJson(packet));
     }
 
+    /**
+     * Envoyer un ping au serveur.
+     */
     public void sendPing() {
-        sendPacket(PokeArenaPacketType.PING, null);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
+    }
+
+    /**
+     * Envoyer une demande de rafraichissement des informations du combat au serveur.
+     */
+    public void sendRefresh() {
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.REFRESH, null));
     }
 
     /**
@@ -95,17 +126,17 @@ public class PokeArenaClient extends WebSocketClient {
      * @param move Attaque qui va être envoyée au serveur.
      */
     public void sendMove(Move move) {
-        sendPacket(PokeArenaPacketType.MOVE, move);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
     }
 
-//    /**
-//     * Envoyer un objet au serveur.
-//     *
-//     * @param item Objet qui va être envoyé au serveur.
-//     */
-//    public void sendItem(Item item) {
-//        sendAction(item);
-//    }
+    /**
+     * Envoyer un message texte au serveur.
+     *
+     * @param text Texte du message qui va être envoyé au serveur.
+     */
+    public void sendText(String text) {
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, text));
+    }
 
     /**
      * Envoyer une équipe au serveur.
@@ -113,7 +144,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param team Équipe qui va être envoyée au serveur.
      */
     public void sendTeam(Team team) {
-        sendPacket(PokeArenaPacketType.TEAM, team);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEAM, team));
     }
 
     /**
@@ -122,7 +153,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param pokemon Pokemon à changer qui va être envoyé au serveur.
      */
     public void sendChangePokemon(Pokemon pokemon) {
-        sendPacket(PokeArenaPacketType.CHANGEPOKEMON, pokemon);
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.CHANGEPOKEMON, pokemon));
     }
 
     /**
@@ -133,20 +164,20 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     /**
-     * Obtenir le statut du client.
+     * Obtenir l'état du client.
      *
-     * @return Statut du client.
+     * @return État du client.
      */
-    public String getStatus() {
-        return status;
+    public PokeArenaClientState getState() {
+        return state;
     }
 
     /**
-     * Modifier le statut du client.
+     * Modifier l'état du client.
      *
-     * @param status Statut du client.
+     * @param state État du client.
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(PokeArenaClientState state) {
+        this.state = state;
     }
 }

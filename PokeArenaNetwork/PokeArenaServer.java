@@ -12,19 +12,31 @@ public class PokeArenaServer extends WebSocketServer {
      * Nom ou adresse IP du serveur.
      */
     private String hostname;
+
     /**
      * Numéro de port du serveur.
      */
     private int portNumber;
+
     /**
      * État du serveur.
      */
     private PokeArenaServerState state;
 
+    /**
+     * Connexion associée au client 1.
+     */
     private WebSocket client1WS;
+
+    /**
+     * Connexion associée au client 2.
+     */
     private WebSocket client2WS;
 
-    private final PokeArenaProtocol protocol = new PokeArenaProtocol(this);
+    /**
+     * Protocole utilisé pour traiter les paquets et gérer l'état du serveur.
+     */
+    private final PokeArenaServerProtocol protocol = new PokeArenaServerProtocol(this);
 
     /**
      * Créer un serveur PokeArenaServer.
@@ -47,12 +59,12 @@ public class PokeArenaServer extends WebSocketServer {
         switch (state) {
             case WAITING_FOR_CLIENT1_TO_JOIN:
                 client1WS = ws;
-                ws.send("Bienvenue sur le serveur, vous êtes le joueur 1");
+                sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 1"));
                 state = PokeArenaServerState.WAITING_FOR_CLIENT2_TO_JOIN;
                 break;
             case WAITING_FOR_CLIENT2_TO_JOIN:
                 client2WS = ws;
-                ws.send("Bienvenue sur le serveur, vous êtes le joueur 2");
+                sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 2"));
                 state = PokeArenaServerState.WAITING_FOR_START;
                 break;
             default:
@@ -83,10 +95,18 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message reçu : " + message);
-        ws.send("J'ai bien recu ton message");
         //TODO: Faire différement en parsant le paquet
-        PokeArenaUtilities.parseJsonPacket(message);
-        protocol.processPacket(ws, PokeArenaUtilities.GSON.fromJson(message, PokeArenaPacket.class));
+        PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet != null) protocol.processPacket(ws, packet);
+    }
+
+    /**
+     * Envoyer un paquet au client.
+     *
+     * @param packet Paquet qui va être envoyé.
+     */
+    public void sendPacket(WebSocket ws, PokeArenaPacket packet) {
+        ws.send(PokeArenaUtilities.toJson(packet));
     }
 
     /**
@@ -145,10 +165,20 @@ public class PokeArenaServer extends WebSocketServer {
         this.state = state;
     }
 
+    /**
+     * Obtenir la connexion associée au client 1.
+     *
+     * @return Connexion associé au client 1.
+     */
     protected WebSocket getClient1WS() {
         return client1WS;
     }
 
+    /**
+     * Obtenir la connexion associée au client 2.
+     *
+     * @return Connexion associée au client 2.
+     */
     protected WebSocket getClient2WS() {
         return client2WS;
     }

@@ -2,6 +2,8 @@ package Model;
 
 import Model.Utils.TerminalColors;
 
+import java.util.ArrayList;
+
 /**
  * Class décrivant un Pokémon.
  */
@@ -274,6 +276,15 @@ public class Pokemon {
         return this.evasion;
     }
 
+    public ArrayList<Move> getMove() {
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.add(move1);
+        moves.add(move2);
+        moves.add(move3);
+        moves.add(move4);
+        return moves;
+    }
+
     /**
      * Obtenir le statut du Pokémon.
      *
@@ -480,10 +491,10 @@ public class Pokemon {
      * @return Le Pokémon est de même type
      */
     public boolean isStabbed(Move a) {
-        if (this.getType1() == a.getType()) {
+        if (this.getType1() == a.getMoveType()) {
             return true;
         } else if (this.getType2() != null) {
-            if (this.getType2() == a.getType()) {
+            if (this.getType2() == a.getMoveType()) {
                 return true;
             }
         }
@@ -516,6 +527,7 @@ public class Pokemon {
         } else {
             System.out.println("\nL'attaque " + at.getName() + " a échoué.");
         }
+        at.setPP(at.getPP()-1);
     }
 
     /**
@@ -591,9 +603,9 @@ public class Pokemon {
      * @return Multiplicateur compris entre 0 et 4
      */
     public double getTypeMultiplier(Move at) {
-        double typeMultiplier = PokeTypes.getTypeAdvantage(this.getType1(), at.getType()).getEffectiveness();
+        double typeMultiplier = PokeTypes.getTypeAdvantage(this.getType1(), at.getMoveType()).getEffectiveness();
         if (this.getType2() != null) {
-            typeMultiplier *= PokeTypes.getTypeAdvantage(this.getType2(), at.getType()).getEffectiveness();
+            typeMultiplier *= PokeTypes.getTypeAdvantage(this.getType2(), at.getMoveType()).getEffectiveness();
         }
         return typeMultiplier;
     }
@@ -615,6 +627,9 @@ public class Pokemon {
         if (this.getCritStage(at) == 3) {
             critProb = 1;
         }
+        if (this.getCritStage(at) == -1) {
+            critProb = 0;
+        }
 
         double critRandom = (int) Math.floor(Math.random());
         if (critRandom < critProb) {
@@ -631,8 +646,8 @@ public class Pokemon {
      * @return Niveau de probabilité (0, 1, 2 ou 3)
      */
     public int getCritStage(Move at) {
-        //non implémenté
-        return 0;
+        //Tenir compte de nature, objet et changement de stats lorsque implémenté
+        return at.getCritRate();
     }
 
     public boolean isFaster(Pokemon p) {
@@ -669,5 +684,10 @@ public class Pokemon {
         }
         hpBarString += TerminalColors.ANSI_WHITE + "| " + this.getHP() + "HP";
         return hpBarString;
+    }
+
+    @Override
+    public String toString() {
+        return type1 + " " + (type2==null?"":type2) + " | " + showHP() + " | " + status + (confused?"CONFUS":"");
     }
 }
