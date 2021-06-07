@@ -4,46 +4,64 @@ package Model;
  * Class décrivant un combat Pokémon. Non définitif (à remplacer par une interface sûrement).
  */
 public class Battle {
-    private Trainer trainer1; //Dresseur1
-    private Trainer trainer2; //Dresseur2
+    private TrainerAction trainer1;
+    private TrainerAction trainer2;
 
     private static BattleGround bg;  //Terrain de combat
 
     public Battle(Trainer left, Trainer right, BattleGround bg) {
-        this.trainer1 = left;
-        this.trainer2 = right;
+        trainer1 = new TrainerAction(left, null);
+        trainer2 = new TrainerAction(right, null);
         this.bg = bg;
     }
 
     public void takeTurns (Action T1action, Action T2action) {
-        if (T1action.getPriority() > T2action.getPriority()) {
-            apply(trainer1, T1action);
-            if (!trainer2.getLeadingPkmn().isKO()) {
-                apply(trainer2, T2action);
-            } else {
-                if (trainer2.hasPokemonLeft()) {
-                    endBattle(trainer1);
+        trainer1.pairWith(T1action);
+        trainer2.pairWith(T2action);
+        TrainerAction firstToAct = calculatePriority();
+        TrainerAction secondToAct = (firstToAct == trainer1 ? trainer2 : trainer1);
+        apply(firstToAct);
+        if (!secondToAct.getTrainer().getLeadingPkmn().isKO()) {
+            apply(secondToAct);
+            if (firstToAct.getTrainer().getLeadingPkmn().isKO()) {
+                if (!firstToAct.getTrainer().hasPokemonLeft()) {
+                    endBattle(secondToAct.getTrainer());
                 } else {
-                    trainer2.changePokemon();
+                    firstToAct.getTrainer().changePokemon();
                 }
             }
         }
-        else if (T1action.getPriority() == T2action.getPriority()) {
-            //TO-DO
-        }
         else {
-            //TO-DO
+            if (!secondToAct.getTrainer().hasPokemonLeft()) {
+                endBattle(firstToAct.getTrainer());
+            } else {
+                secondToAct.getTrainer().changePokemon();
+            }
         }
     }
 
-    public void apply (Trainer current, Action action) {
-        if (action.getType() == acTypes.ATTACK) {
-            Pokemon target = (current == trainer1 ? trainer2.getLeadingPkmn() : trainer1.getLeadingPkmn());
-            current.getLeadingPkmn().attack(target, (Move) action);
+    public void apply (TrainerAction current) {
+        if (current.getAction().getType() == acTypes.ATTACK) {
+            Pokemon target = (current == trainer1 ? trainer2.getTrainer().getLeadingPkmn() : trainer1.getTrainer().getLeadingPkmn());
+            current.getTrainer().getLeadingPkmn().attack(target, (Move) current.getAction());
         }
-        else if (action.getType() == acTypes.CHANGEPKM) {
-            current.changePokemon();
+        else if (current.getAction().getType() == acTypes.CHANGEPKM) {
+            current.getTrainer().changePokemon();
         }
+    }
+
+    public TrainerAction calculatePriority() {
+        TrainerAction firstToAct;
+        if (trainer1.getAction().getPriority() > trainer2.getAction().getPriority()) {
+            firstToAct = trainer1;
+        }
+        else if (trainer1.getAction().getPriority() < trainer2.getAction().getPriority()) {
+            firstToAct = trainer2;
+        }
+        else {
+            firstToAct = (trainer1.getTrainer().getLeadingPkmn().isFaster(trainer2.getTrainer().getLeadingPkmn()) ? trainer1 : trainer2);
+        }
+        return firstToAct;
     }
 
     /*
