@@ -22,6 +22,16 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      */
     private Action client2Action;
 
+    /**
+     * Trainer du client 1, utilisée uniquement pour créer l'objet Battle lors de l'initialisation du combat.
+     */
+    private Trainer client1Trainer;
+
+    /**
+     * Trainer du client 2, utilisée uniquement pour créer l'objet Battle lors de l'initialisation du combat.
+     */
+    private Trainer client2Trainer;
+
     public PokeArenaServerProtocol(PokeArenaServer server) {
         this.server = server;
     }
@@ -55,12 +65,30 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 break;
             case TEAM:
                 Team team = ((PokeArenaTeamPacket) request).getTeam();
-                if (ws == server.getClient1WS()) {
-                    String name = "Joueur1";
-                    new Trainer(name, team);
-                } else if (ws == server.getClient2WS()) {
-                    String name = "Joueur2";
-                    new Trainer(name, team);
+                switch (server.getState()) {
+                    case WAITING_FOR_CLIENTS_TEAM:
+                        if (ws == server.getClient1WS()) {
+                            client1Trainer = new Trainer("Joueur 1", team);
+                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_TEAM);
+                        } else if (ws == server.getClient2WS()) {
+                            client2Trainer = new Trainer("Joueur 2", team);
+                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_TEAM);
+                        }
+                        break;
+                    case WAITING_FOR_CLIENT_1_TEAM:
+                        if (ws == server.getClient1WS()) {
+                            client1Trainer = new Trainer("Joueur 1", team);
+                            server.setState(PokeArenaServerState.WAITING_FOR_START);
+                        }
+                        break;
+                    case WAITING_FOR_CLIENT_2_TEAM:
+                        if (ws == server.getClient2WS()) {
+                            client2Trainer = new Trainer("Joueur 2", team);
+                            server.setState(PokeArenaServerState.WAITING_FOR_START);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             case TEXT:
                 String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
