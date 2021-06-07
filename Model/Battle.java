@@ -4,8 +4,8 @@ package Model;
  * Class décrivant un combat Pokémon. Non définitif (à remplacer par une interface sûrement).
  */
 public class Battle {
-    private TrainerAction trainer1;
-    private TrainerAction trainer2;
+    public TrainerAction trainer1;
+    public TrainerAction trainer2;
 
     private static BattleGround bg;  //Terrain de combat
 

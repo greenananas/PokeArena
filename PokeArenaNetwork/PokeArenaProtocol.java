@@ -11,7 +11,7 @@ abstract public class PokeArenaProtocol {
     /**
      * Combat sur lequel le protocole va agir.
      */
-    private Battle battle;
+    protected Battle battle;
 
     /**
      * Traite un paquet.

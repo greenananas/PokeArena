@@ -2,6 +2,8 @@ package PokeArenaNetwork;
 
 import Model.Action;
 import Model.Battle;
+import Model.Pokemon;
+import Model.Team;
 import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
@@ -41,8 +43,18 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
             case REFRESH:
-                //TODO: response = createPacket(update packet);
-                response = null;
+                Team trainerTeam = null;
+                Pokemon opponentPokemon = null;
+                if (ws == server.getClient1WS()) {
+                    trainerTeam = battle.trainer1.getTrainer().getPokemonTeam();
+                    opponentPokemon = battle.trainer2.getTrainer().getLeadingPkmn();
+                } else if (ws == server.getClient2WS()) {
+                    trainerTeam = battle.trainer2.getTrainer().getPokemonTeam();
+                    opponentPokemon = battle.trainer1.getTrainer().getLeadingPkmn();
+                }
+                response = (trainerTeam != null && opponentPokemon != null)
+                        ? createPacket(PokeArenaPacketType.UPDATE, new Update(trainerTeam, opponentPokemon))
+                        : null;
                 break;
             case TEXT:
                 String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";

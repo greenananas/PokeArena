@@ -70,7 +70,7 @@ public class PokeArenaUtilities {
                 packet = new PokeArenaRefreshPacket();
                 break;
             case UPDATE:
-                packet = new PokeArenaUpdatePacket();
+                packet = new PokeArenaUpdatePacket((Update) packetData);
                 break;
             case MOVE:
                 packet = new PokeArenaMovePacket((Move) packetData);
