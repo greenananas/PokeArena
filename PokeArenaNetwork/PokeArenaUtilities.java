@@ -2,6 +2,7 @@ package PokeArenaNetwork;
 
 import Model.Action;
 import Model.Move;
+import Model.Team;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -74,6 +75,9 @@ public class PokeArenaUtilities {
                 break;
             case MOVE:
                 packet = new PokeArenaMovePacket((Move) packetData);
+                break;
+            case TEAM:
+                packet = new PokeArenaTeamPacket((Team) packetData);
                 break;
             case TEXT:
                 packet = new PokeArenaTextPacket((String) packetData);

@@ -1,9 +1,6 @@
 package PokeArenaNetwork;
 
-import Model.Action;
-import Model.Battle;
-import Model.Pokemon;
-import Model.Team;
+import Model.*;
 import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
@@ -56,6 +53,15 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                         ? createPacket(PokeArenaPacketType.UPDATE, new Update(trainerTeam, opponentPokemon))
                         : null;
                 break;
+            case TEAM:
+                Team team = ((PokeArenaTeamPacket) request).getTeam();
+                if (ws == server.getClient1WS()) {
+                    String name = "Joueur1";
+                    new Trainer(name, team);
+                } else if (ws == server.getClient2WS()) {
+                    String name = "Joueur2";
+                    new Trainer(name, team);
+                }
             case TEXT:
                 String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
                 System.out.println(clt + " dit : " + ((PokeArenaTextPacket) request).getText());
