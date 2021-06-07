@@ -31,7 +31,10 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 break;
             case TEXT:
                 System.out.println("Serveur dit : " + ((PokeArenaTextPacket) request).getText());
-                // Pas de break pour avoir la réponse = null
+                response = null;
+                break;
+            case UPDATE:
+                //TODO: Mettre à jour les informations du client contenus dans battle
                 response = null;
                 break;
             default:

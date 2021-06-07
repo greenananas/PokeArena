@@ -40,6 +40,10 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case PING:
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
+            case REFRESH:
+                //TODO: response = createPacket(update packet);
+                response = null;
+                break;
             case TEXT:
                 String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
                 System.out.println(clt + " dit : " + ((PokeArenaTextPacket) request).getText());
