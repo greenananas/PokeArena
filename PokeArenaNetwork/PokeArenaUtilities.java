@@ -27,6 +27,7 @@ public class PokeArenaUtilities {
             .registerSubtype(PokeArenaUpdatePacket.class, "UPDATE")
             .registerSubtype(PokeArenaTextPacket.class, "TEXT")
             .registerSubtype(PokeArenaMovePacket.class, "MOVE")
+            .registerSubtype(PokeArenaTeamPacket.class, "TEAM")
             .registerSubtype(PokeArenaActionPacket.class, "ACTION");
 
     /**

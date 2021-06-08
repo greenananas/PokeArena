@@ -65,6 +65,10 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 break;
             case TEAM:
                 Team team = ((PokeArenaTeamPacket) request).getTeam();
+                System.out.println("Équipe reçue :");
+                for (Pokemon p : team.getPokemons()) {
+                    System.out.println(" - " + p);
+                }
                 switch (server.getState()) {
                     case WAITING_FOR_CLIENTS_TEAM:
                         if (ws == server.getClient1WS()) {
@@ -90,6 +94,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     default:
                         break;
                 }
+                response = null;
+                break;
             case TEXT:
                 String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
                 System.out.println(clt + " dit : " + ((PokeArenaTextPacket) request).getText());
