@@ -1,6 +1,8 @@
 package PokeArenaNetwork;
 
-import Model.Action;
+import Model.Pokemon;
+import Model.Team;
+import Model.Trainer;
 import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
@@ -11,6 +13,12 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
      * Client PokeArena qui utilise le protocole.
      */
     private PokeArenaClient client;
+
+    private Trainer trainer;
+
+    private Pokemon opponentPokemon;
+
+    private Team team;
 
     public PokeArenaClientProtocol(PokeArenaClient client) {
         this.client = client;
@@ -34,7 +42,16 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 response = null;
                 break;
             case UPDATE:
-                //TODO: Mettre à jour les informations du client contenus dans battle
+                if (client.getState() == PokeArenaClientState.WAITING_FOR_START) {
+                    client.setState(PokeArenaClientState.IN_BATTLE);
+                }
+                if (trainer == null) {
+                    trainer = new Trainer("Nom Joueur", team);
+                } else {
+                    Update update = ((PokeArenaUpdatePacket) request).getUpdate();
+                    trainer.setPokemonTeam(update.getTeam());
+                    this.opponentPokemon = update.getOpponentPokemon();
+                }
                 response = null;
                 break;
             default:
@@ -43,6 +60,18 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
         if (response != null) {
             client.sendPacket(response);
         }
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Trainer getTrainer() {
+       return trainer;
+    }
+
+    public Pokemon getOpponentPokemon () {
+        return opponentPokemon;
     }
 
 }

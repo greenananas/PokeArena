@@ -3,6 +3,7 @@ package PokeArenaNetwork;
 import Model.Move;
 import Model.Pokemon;
 import Model.Team;
+import Model.Trainer;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -55,7 +56,7 @@ public class PokeArenaClient extends WebSocketClient {
     public void onOpen(ServerHandshake serverHandshake) {
         if (state == PokeArenaClientState.NOT_CONNECTED) {
             System.out.println("Ouverture de la connexion");
-            state = PokeArenaClientState.WAITING_FOR_START;
+            state = PokeArenaClientState.NEED_TO_SEND_TEAM;
         } else {
             //TODO: Lever une erreur
         }
@@ -144,6 +145,10 @@ public class PokeArenaClient extends WebSocketClient {
      * @param team Équipe qui va être envoyée au serveur.
      */
     public void sendTeam(Team team) {
+        if (state == PokeArenaClientState.NEED_TO_SEND_TEAM) {
+            state = PokeArenaClientState.WAITING_FOR_START;
+        }
+        protocol.setTeam(team);
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEAM, team));
     }
 
@@ -177,7 +182,16 @@ public class PokeArenaClient extends WebSocketClient {
      *
      * @param state État du client.
      */
-    public void setStatus(PokeArenaClientState state) {
+    public void setState(PokeArenaClientState state) {
         this.state = state;
     }
+
+    public Trainer getTrainer() {
+       return protocol.getTrainer();
+    }
+
+    public Pokemon getOpponentPokemon() {
+        return protocol.getOpponentPokemon();
+    }
+
 }

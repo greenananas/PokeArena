@@ -1,5 +1,6 @@
 package PokeArenaNetwork;
 
+import Model.Battle;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -189,4 +190,9 @@ public class PokeArenaServer extends WebSocketServer {
     protected WebSocket getClient2WS() {
         return client2WS;
     }
+
+    public Battle getBattle() {
+       return protocol.getBattle();
+    }
+
 }

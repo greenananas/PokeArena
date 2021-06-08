@@ -123,6 +123,12 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
         if (server.getState() == PokeArenaServerState.WAITING_FOR_START) {
             battle = new Battle(client1Trainer, client2Trainer, new BattleGround());
             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+            // Mise à jour des informations du client 1
+            Update updateClient1 = new Update(battle.trainer1.getTrainer().getPokemonTeam(), battle.trainer2.getTrainer().getLeadingPkmn());
+            server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.UPDATE, updateClient1));
+            // Mise à jour des informations du client 2
+            Update updateClient2 = new Update(battle.trainer2.getTrainer().getPokemonTeam(), battle.trainer1.getTrainer().getLeadingPkmn());
+            server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.UPDATE, updateClient2));
         }
     }
 
@@ -169,6 +175,10 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 // reponse = createPacket(ClassePaquetErreur, null);
         }
         return response = null;
+    }
+
+    public Battle getBattle() {
+        return battle;
     }
 
 }
