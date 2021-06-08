@@ -65,7 +65,7 @@ public class PokeArenaServer extends WebSocketServer {
             case WAITING_FOR_CLIENT2_TO_JOIN:
                 client2WS = ws;
                 sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 2"));
-                state = PokeArenaServerState.WAITING_FOR_START;
+                state = PokeArenaServerState.WAITING_FOR_CLIENTS_TEAM;
                 break;
             default:
                 ws.close();
