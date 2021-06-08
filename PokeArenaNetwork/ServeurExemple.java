@@ -43,6 +43,9 @@ public class ServeurExemple {
                 case "state":
                     System.out.println("État du serveur : " + server.getState());
                     break;
+                case "start":
+                    server.startBattle();
+                    break;
                 default:
                     System.out.println("Commande non reconnue");
                     break;

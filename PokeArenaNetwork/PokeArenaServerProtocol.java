@@ -117,6 +117,16 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
     }
 
     /**
+     * Lancer le combat.
+     */
+    public void startBattle() {
+        if (server.getState() == PokeArenaServerState.WAITING_FOR_START) {
+            battle = new Battle(client1Trainer, client2Trainer, new BattleGround());
+            server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+        }
+    }
+
+    /**
      * Traite un paquet de type Action et retourne la réponse associé.
      * La réponse peut être nulle si le paquet entré en paramètre ne nécessite pas de réponse.
      *

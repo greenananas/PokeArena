@@ -130,6 +130,13 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
+     * Lancer le combat.
+     */
+    public void startBattle() {
+        protocol.startBattle();
+    }
+
+    /**
      * Obtenir le nom d'hôte ou adresse IP du serveur.
      *
      * @return Nom d'hôte ou adresse IP du serveur
