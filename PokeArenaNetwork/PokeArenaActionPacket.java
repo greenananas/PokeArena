@@ -16,7 +16,7 @@ public class PokeArenaActionPacket extends PokeArenaPacket {
         this.action = action;
     }
 
-    public Action getMove() {
+    public Action getAction() {
         return action;
     }
 

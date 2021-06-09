@@ -42,8 +42,16 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 response = null;
                 break;
             case UPDATE:
+                switch (client.getState()) {
+                    case WAITING_FOR_START:
+                    case ACTION_SENT:
+                        client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
+                        break;
+                    default:
+                        break;
+                }
                 if (client.getState() == PokeArenaClientState.WAITING_FOR_START) {
-                    client.setState(PokeArenaClientState.IN_BATTLE);
+                    client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
                 }
                 if (trainer == null) {
                     trainer = new Trainer("Nom Joueur", team);

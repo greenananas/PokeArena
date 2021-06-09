@@ -1,9 +1,6 @@
 package PokeArenaNetwork;
 
-import Model.Move;
-import Model.Pokemon;
-import Model.Team;
-import Model.Trainer;
+import Model.*;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -150,6 +147,13 @@ public class PokeArenaClient extends WebSocketClient {
         }
         protocol.setTeam(team);
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEAM, team));
+    }
+
+    public void sendAction(Action action) {
+       if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
+           state = PokeArenaClientState.ACTION_SENT;
+       }
+       sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.ACTION, action));
     }
 
     /**
