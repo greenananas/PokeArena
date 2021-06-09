@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Team {
 
@@ -50,9 +51,9 @@ public class Team {
      *
      * @param p Nouveau Pokémon du dresseur
      */
-    public void addPokemon(Pokemon p) {
-        assert pokemonTeam.size() < 6;
-        this.pokemonTeam.add(p);
+    public void addPokemon(Pokemon... pkmn) {
+        assert pokemonTeam.size()+pkmn.length < 6;
+        this.pokemonTeam.addAll(Arrays.asList(pkmn));
     }
 
     public boolean isDefeated() {

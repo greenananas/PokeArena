@@ -77,7 +77,7 @@ public class Trainer {
     public Pokemon changePokemon() {
         int counter = 1;
         for (Pokemon p : this.pokemonTeam.getPokemons()) {
-            if (!p.isKO()) {
+            if (p.isKO()) {
                 System.out.print(" K.O ");
             }
             System.out.println(counter + " - " + p.getName());
@@ -89,7 +89,7 @@ public class Trainer {
             choice = s.nextInt();
         } while (choice < 1 || choice > 6 || pokemonTeam.get(choice).isKO());
         Collections.swap(pokemonTeam.getPokemons(), 0, choice);
-        return pokemonTeam.get(choice);
+        return pokemonTeam.get(0);
     }
 
     public Action chooseAction(Pokemon ennemy) {
