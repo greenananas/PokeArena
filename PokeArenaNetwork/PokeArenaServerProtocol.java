@@ -257,7 +257,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 server.setState(PokeArenaServerState.BATTLE_ENDED);
                 //TODO: Envoie paquet pour dire que le combat est terminé
             } else {
-                if (firstToAct == trainer1) {
+                if (secondToAct == trainer1) {
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
                 } else {
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
