@@ -27,7 +27,7 @@ public class Battle {
                 if (!firstToAct.getTrainer().hasPokemonLeft()) {
                     endBattle(secondToAct.getTrainer());
                 } else {
-                    firstToAct.getTrainer().changePokemon();
+                    firstToAct.getTrainer().changePokemon(((ChangePkmn) firstToAct.getAction()).getIndex());
                 }
             }
         }
@@ -35,7 +35,7 @@ public class Battle {
             if (!secondToAct.getTrainer().hasPokemonLeft()) {
                 endBattle(firstToAct.getTrainer());
             } else {
-                secondToAct.getTrainer().changePokemon();
+                secondToAct.getTrainer().changePokemon(((ChangePkmn) secondToAct.getAction()).getIndex());
             }
         }
     }
@@ -46,7 +46,7 @@ public class Battle {
             current.getTrainer().getLeadingPkmn().attack(target, (Move) current.getAction());
         }
         else if (current.getAction().getType() == acTypes.CHANGEPKM) {
-            current.getTrainer().changePokemon();
+            current.getTrainer().changePokemon(((ChangePkmn) current.getAction()).getIndex());
         }
     }
 

@@ -74,41 +74,45 @@ public class Trainer {
         return pokemonTeam.get(0);
     }
 
-    public Pokemon changePokemon() {
-        int counter = 1;
-        for (Pokemon p : this.pokemonTeam.getPokemons()) {
-            if (p.isKO()) {
-                System.out.print(" K.O ");
-            }
-            System.out.println(counter + " - " + p.getName());
-            counter++;
-        }
-        Scanner s = new Scanner(System.in);
-        int choice;
-        do {
-            choice = s.nextInt();
-        } while (choice < 1 || choice > 6 || pokemonTeam.get(choice).isKO());
+    public void changePokemon(int choice) {
         Collections.swap(pokemonTeam.getPokemons(), 0, choice);
-        return pokemonTeam.get(0);
     }
 
     public Action chooseAction(Pokemon ennemy) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Move> moves = getLeadingPkmn().getMove();
-        System.out.println(ennemy);
-        for (int i = 1; i<5; i++) {
-            System.out.println(i + " - "+moves.get(i-1));
-        }
-        System.out.println("5 - Changer de pokémon");
-        int choix;
+        int actChoice, changeChoice;
         do {
-            System.out.println("Choisissez une action : ");
-            choix = sc.nextInt();
-        } while (choix < 0 || choix > 5);
-        if (choix != 5) {
-            return moves.get(choix-1);
+            changeChoice = 0;
+            System.out.println(ennemy);
+            for (int i = 1; i<5; i++) {
+                System.out.println(i + " - "+moves.get(i-1));
+            }
+            System.out.println("5 - Changer de pokémon");
+            do {
+                System.out.println("Choisissez une action : ");
+                actChoice = sc.nextInt();
+            } while (actChoice < 0 || actChoice > 5);
+            if (actChoice == 5) {
+                actChoice = 0;
+                int counter = 1;
+                System.out.println("0 - Annuler");
+                for (Pokemon p : this.pokemonTeam.getPokemons()) {
+                    if (p.isKO()) {
+                        System.out.print(" K.O ");
+                    }
+                    System.out.println(counter + " - " + p.getName());
+                    counter++;
+                    do {
+                        changeChoice = sc.nextInt();
+                    } while (changeChoice < 0 || changeChoice == 1 || changeChoice > 6 || pokemonTeam.get(changeChoice).isKO());
+                }
+            }
+        } while (actChoice == 0 && changeChoice == 0);
+        if (actChoice != 0) {
+            return moves.get(actChoice-1);
         } else {
-            return new Action(acTypes.CHANGEPKM, 6);
+            return new ChangePkmn(changeChoice-1);
         }
     }
 }
