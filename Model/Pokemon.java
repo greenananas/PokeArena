@@ -24,6 +24,66 @@ public class Pokemon {
     private int level;
 
     /**
+     * Statistique de points de vie de base du Pokémon.
+     */
+    private int baseHP;
+
+    /**
+     * Statistique d'attaque de base du Pokémon.
+     */
+    private int baseAttack;
+
+    /**
+     * Statistique de défense de base du Pokémon.
+     */
+    private int baseDefense;
+
+    /**
+     * Statistique d'attaque spéciale de base du Pokémon.
+     */
+    private int baseSpeAttack;
+
+    /**
+     * Statistique de défense spéciale de base du Pokémon.
+     */
+    private int baseSpeDefense;
+
+    /**
+     * Statistique de vitesse de base du Pokémon.
+     */
+    private int baseSpeed;
+
+    /**
+     * Points d'effort des points de vie du Pokémon.
+     */
+    private int hpEV;
+
+    /**
+     * Points d'effort d'attaque du Pokémon.
+     */
+    private int attackEV;
+
+    /**
+     * Points d'effort de défense du Pokémon.
+     */
+    private int defenseEV;
+
+    /**
+     * Points d'effort d'attaque spéciale du Pokémon.
+     */
+    private int speAttackEV;
+
+    /**
+     * Point d'effort de défense spéciale du Pokémon.
+     */
+    private int speDefenseEV;
+
+    /**
+     * Points d'efforts de vitesse du Pokémon.
+     */
+    private int speedEV;
+
+    /**
      * Points de vie restants du Pokémon.
      */
     private int hp;
@@ -59,6 +119,11 @@ public class Pokemon {
     private int speed;
 
     /**
+     * Nature du Pokémon.
+     */
+    private Nature nature;
+
+    /**
      * Précision du Pokémon.
      */
     private int precision = 100;
@@ -86,41 +151,62 @@ public class Pokemon {
     /**
      * Créer un Pokémon.
      *
-     * @param n          Nom du Pokémon
-     * @param t1         Premier type du Pokémon
-     * @param t2         Second type du Pokémon
-     * @param l          Niveau du Pokémon
-     * @param hp         Points de vie du Pokémon
-     * @param attack     Statistique d'attaque du Pokémon
-     * @param defense    Statistique de défense du Pokémon
-     * @param speAttack  Statistique d'attaque spéciale du Pokémon
-     * @param speDefense Statistique de défense spéciale du Pokémon
-     * @param speed      Statistique de vitesse du Pokémon
-     * @param a1         Première attaque du Pokémon
-     * @param a2         Deuxième attaque du Pokémon
-     * @param a3         Troisième attaque du Pokémon
-     * @param a4         Quatrième attaque du Pokémon
+     * @param n            Nom du Pokémon
+     * @param t1           Premier type du Pokémon
+     * @param t2           Second type du Pokémon
+     * @param l            Niveau du Pokémon
+     * @param hp           Points de vie du Pokémon
+     * @param attack       Statistique d'attaque du Pokémon
+     * @param defense      Statistique de défense du Pokémon
+     * @param speAttack    Statistique d'attaque spéciale du Pokémon
+     * @param speDefense   Statistique de défense spéciale du Pokémon
+     * @param speed        Statistique de vitesse du Pokémon
+     * @param attackev     Statistique d'attaque du Pokémon
+     * @param defenseev    Statistique de défense du Pokémon
+     * @param speattackev  Statistique d'attaque spéciale du Pokémon
+     * @param spedefenseev Statistique de défense spéciale du Pokémon
+     * @param speedev      Statistique de vitesse du Pokémon
+     * @param nature       Nature du Pokémon
+     * @param a1           Première attaque du Pokémon
+     * @param a2           Deuxième attaque du Pokémon
+     * @param a3           Troisième attaque du Pokémon
+     * @param a4           Quatrième attaque du Pokémon
      */
-    public Pokemon(String n, PokeTypes.type t1, PokeTypes.type t2, int l, int hp,
-                   int attack, int defense, int speAttack, int speDefense, int speed,
-                   Move a1, Move a2, Move a3, Move a4) {
+    public Pokemon(String n, PokeTypes.type t1, PokeTypes.type t2, int l,
+                   int hp, int attack, int defense, int speAttack, int speDefense, int speed,
+                   int hpev, int attackev, int defenseev, int speattackev, int spedefenseev, int speedev,
+                   String nature, Move a1, Move a2, Move a3, Move a4) {
         this.name = n;
         this.type1 = t1;
         this.type2 = t2;
         this.level = l;
 
-        this.hp = hp;
-        this.fullhp = hp;
-        this.attack = attack;
-        this.defense = defense;
-        this.speAttack = speAttack;
-        this.speDefense = speDefense;
-        this.speed = speed;
+        this.baseHP = hp;
+        this.baseAttack = attack;
+        this.baseDefense = defense;
+        this.baseSpeAttack = speAttack;
+        this.baseSpeDefense = speDefense;
+        this.baseSpeed = speed;
+        this.hpEV = hpev;
+        this.attackEV = attackev;
+        this.defenseEV = defenseev;
+        this.speAttackEV = speattackev;
+        this.speDefenseEV = spedefenseev;
+        this.speedEV = speedev;
 
         this.move1 = a1;
         this.move2 = a2;
         this.move3 = a3;
         this.move4 = a4;
+
+        this.hp = Math.round(((2 * baseHP + 31 + Math.round(hpEV / 4f)) * level) / 100f) + level + 10;
+        this.attack = Math.round(((2 * baseAttack + 31 + Math.round(attackEV / 4f)) * level) / 100f + 5);
+        this.defense = Math.round(((2 * baseDefense + 31 + Math.round(defenseEV / 4f)) * level) / 100f + 5);
+        this.speAttack = Math.round(((2 * baseSpeAttack + 31 + Math.round(speAttackEV / 4f)) * level) / 100f + 5);
+        this.speDefense = Math.round(((2 * baseSpeDefense + 31 + Math.round(speDefenseEV / 4f)) * level) / 100f + 5);
+        this.speed = Math.round(((2 * baseSpeed + Math.round(speedEV / 4f)) * level) / 100f + 5);
+
+        applyNature(nature);
     }
 
     /**
@@ -475,6 +561,20 @@ public class Pokemon {
     }
 
     /**
+     * Applique les effets de la nature associée au Pokémon
+     *
+     * @param nature La nature du Pokémon
+     */
+    private void applyNature(String nature) {
+        this.nature = Nature.valueOf(nature);
+        this.attack = Math.round(this.attack * this.nature.getMultipliers()[0]);
+        this.defense = Math.round(this.defense * this.nature.getMultipliers()[1]);
+        this.speAttack = Math.round(this.speAttack * this.nature.getMultipliers()[2]);
+        this.speDefense = Math.round(this.speDefense * this.nature.getMultipliers()[3]);
+        this.speed = Math.round(this.speed * this.nature.getMultipliers()[4]);
+    }
+
+    /**
      * Vérifier que le Pokémon peut encore se battre.
      *
      * @return Le Pokémon est KO
@@ -482,7 +582,6 @@ public class Pokemon {
     public boolean isKO() {
         return this.getHP() <= 0;
     }
-
 
     /**
      * Vérifier que l'attaque est du même type que le Pokémon.
@@ -527,7 +626,7 @@ public class Pokemon {
         } else {
             System.out.println("\nL'attaque " + at.getName() + " a échoué.");
         }
-        at.setPP(at.getPP()-1);
+        at.setPP(at.getPP() - 1);
     }
 
     /**
@@ -688,6 +787,6 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        return type1 + " " + (type2==null?"":type2) + " | " + showHP() + " | " + status + (confused?"CONFUS":"");
+        return type1 + " " + (type2 == null ? "" : type2) + " | " + showHP() + " | " + status + (confused ? "CONFUS" : "");
     }
 }

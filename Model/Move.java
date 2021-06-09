@@ -51,7 +51,7 @@ public class Move extends Action {
      * @param priority   Priorité d'une attaque
      */
     public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority, int critRate) {
-        super(acTypes.ATTACK, priority);
+        super(priority);
         this.name = name;
         this.type = type;
         this.physical = isPhysical;

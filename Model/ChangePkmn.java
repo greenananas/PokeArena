@@ -2,14 +2,14 @@ package Model;
 
 public class ChangePkmn extends Action{
 
-    private int indexNewPokemon;
+    private final int newPokemonIndex;
 
     public ChangePkmn(int index) {
-        super(acTypes.CHANGEPKM, 6);
-        indexNewPokemon = index;
+        super(6);
+        newPokemonIndex = index;
     }
 
     public int getIndex() {
-        return indexNewPokemon;
+        return newPokemonIndex;
     }
 }
