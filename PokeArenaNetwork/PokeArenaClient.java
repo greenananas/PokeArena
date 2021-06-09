@@ -164,7 +164,7 @@ public class PokeArenaClient extends WebSocketClient {
         if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
             state = PokeArenaClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.ACTION, changePkmn));
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.CHANGEPOKEMON, changePkmn));
     }
 
     /**

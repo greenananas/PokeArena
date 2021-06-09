@@ -106,18 +106,20 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 break;
             case CHANGEPOKEMON:
                 switch (server.getState()) {
-                    case WAITING_FOR_CLIENT1_CHANGEPKMN:
+                    case WAITING_FOR_CLIENT_1_CHANGEPKMN:
                         if (ws == server.getClient1WS()) {
                             battle.trainer1.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
                             response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update());
+                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
                         }
                         break;
-                    case WAITING_FOR_CLIENT2_CHANGEPKMN:
+                    case WAITING_FOR_CLIENT_2_CHANGEPKMN:
                         if (ws == server.getClient2WS()) {
                             battle.trainer2.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
                             response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update());
+                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
                         }
@@ -201,16 +203,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     client1Action = action;
                     server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
 
-                    // Simulation de traitement des actions
-                    battle.trainer1.getTrainer().getLeadingPkmn().setHP(battle.trainer1.getTrainer().getLeadingPkmn().getHP() - 10);
-                    battle.trainer2.getTrainer().getLeadingPkmn().setHP(battle.trainer2.getTrainer().getLeadingPkmn().getHP() - 10);
-                    // Qqchose retour = battle.evaluateActions(client1Action, client2Action);
-                    // En fonction du retour changer état du serveur : WAITING_FOR_CLIENTS_ACTIONS, BATTLE_ENDED...
-                    // Puis envoyer un message UPDATE au client (mise à jour HP...)
+                    handleActions(client1Action, client2Action);
 
-                    battle.takeTurns(client1Action, client2Action);
-                    //server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
-                    //server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.UPDATE, getClient2Update())); // Envoie de l'update au client 2
+                    server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.UPDATE, getClient2Update())); // Envoie de l'update au client 2
                     response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update()); // Envoie de l'update au client 1
                     break;
                 }
@@ -219,13 +214,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     client2Action = action;
                     server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
 
-                    // Simulation de traitement des actions
-                    battle.takeTurns(client1Action, client2Action);
-                    // battle.trainer1.getTrainer().getLeadingPkmn().setHP(battle.trainer1.getTrainer().getLeadingPkmn().getHP() - 10);
-                    // battle.trainer2.getTrainer().getLeadingPkmn().setHP(battle.trainer2.getTrainer().getLeadingPkmn().getHP() - 10);
-                    // Pareil que en haut
+                    handleActions(client1Action, client2Action);
 
-                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                     server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.UPDATE, getClient1Update())); // Envoie de l'update au client 1
                     response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update()); // Envoie de l'update au client 2
                     break;
@@ -236,6 +226,44 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 // reponse = createPacket(ClassePaquetErreur, null);
         }
         return response;
+    }
+
+    public void handleActions(Action T1action, Action T2action) {
+        TrainerAction trainer1 = battle.trainer1;
+        TrainerAction trainer2 = battle.trainer2;
+        trainer1.pairWith(T1action);
+        trainer2.pairWith(T2action);
+        TrainerAction firstToAct = battle.calculatePriority();
+        TrainerAction secondToAct = (firstToAct == trainer1 ? trainer2 : trainer1);
+        battle.apply(firstToAct);
+        if (!secondToAct.getTrainer().getLeadingPkmn().isKO()) {
+            battle.apply(secondToAct);
+            if (firstToAct.getTrainer().getLeadingPkmn().isKO()) {
+                if (!firstToAct.getTrainer().hasPokemonLeft()) {
+                    server.setState(PokeArenaServerState.BATTLE_ENDED);
+                    //TODO: Envoie paquet pour dire que le combat est terminé
+                } else {
+                    if (firstToAct == trainer1) {
+                        server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+                    } else {
+                        server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
+                    }
+                }
+            } else {
+                server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+            }
+        } else {
+            if (!secondToAct.getTrainer().hasPokemonLeft()) {
+                server.setState(PokeArenaServerState.BATTLE_ENDED);
+                //TODO: Envoie paquet pour dire que le combat est terminé
+            } else {
+                if (firstToAct == trainer1) {
+                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+                } else {
+                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
+                }
+            }
+        }
     }
 
     public Battle getBattle() {
