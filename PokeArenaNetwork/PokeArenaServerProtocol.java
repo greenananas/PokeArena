@@ -102,8 +102,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 response = null;
                 break;
             case MOVE: //TODO: A enlever
-                System.out.println(((PokeArenaMovePacket) request).getMove().getName());
-                response = request;
+                response = processActionPacket(ws, request);
                 break;
             case ACTION:
                 response = processActionPacket(ws, request);
@@ -140,7 +139,18 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      */
     protected PokeArenaPacket processActionPacket(WebSocket ws, PokeArenaPacket request) {
         PokeArenaPacket response;
-        Action action = ((PokeArenaActionPacket) request).getAction();
+        Action action;
+        switch (request.getType()) {
+            case MOVE:
+                action = ((PokeArenaMovePacket) request).getMove();
+                break;
+            case ACTION:
+                action = ((PokeArenaActionPacket) request).getAction();
+                break;
+            default:
+                action = null;
+        }
+
         switch (server.getState()) {
             case WAITING_FOR_CLIENTS_ACTIONS:
                 if (ws == server.getClient1WS()) {
@@ -167,8 +177,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     // En fonction du retour changer état du serveur : WAITING_FOR_CLIENTS_ACTIONS, BATTLE_ENDED...
                     // Puis envoyer un message UPDATE au client (mise à jour HP...)
 
-                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
-                    server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.UPDATE, getClient2Update())); // Envoie de l'update au client 2
+                    battle.takeTurns(client1Action, client2Action);
+                    //server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                    //server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.UPDATE, getClient2Update())); // Envoie de l'update au client 2
                     response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update()); // Envoie de l'update au client 1
                     break;
                 }
@@ -178,8 +189,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
 
                     // Simulation de traitement des actions
-                    battle.trainer1.getTrainer().getLeadingPkmn().setHP(battle.trainer1.getTrainer().getLeadingPkmn().getHP() - 10);
-                    battle.trainer2.getTrainer().getLeadingPkmn().setHP(battle.trainer2.getTrainer().getLeadingPkmn().getHP() - 10);
+                    battle.takeTurns(client1Action, client2Action);
+                    // battle.trainer1.getTrainer().getLeadingPkmn().setHP(battle.trainer1.getTrainer().getLeadingPkmn().getHP() - 10);
+                    // battle.trainer2.getTrainer().getLeadingPkmn().setHP(battle.trainer2.getTrainer().getLeadingPkmn().getHP() - 10);
                     // Pareil que en haut
 
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
@@ -188,7 +200,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     break;
                 }
             default:
-                    response = null;
+                response = null;
                 // Envoyer un paquet d'erreur
                 // reponse = createPacket(ClassePaquetErreur, null);
         }

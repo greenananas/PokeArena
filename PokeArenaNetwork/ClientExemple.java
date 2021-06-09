@@ -11,7 +11,7 @@ public class ClientExemple {
     public static void main(String[] args) {
         PokeArenaClient client;
         try {
-            client = new PokeArenaClient("localhost", 8887);
+            client = new PokeArenaClient("localhost", 8886);
             client.connect();
             Scanner sc = new Scanner(System.in);
             String input = sc.next();
@@ -72,7 +72,7 @@ public class ClientExemple {
                         client.sendRefresh();
                         break;
                     case "move":
-                        client.sendMove(dracogriffe);
+                        client.sendMove(client.getTrainer().getLeadingPkmn().getMove1());
                         break;
                     case "team1":
                         client.sendTeam(team1);

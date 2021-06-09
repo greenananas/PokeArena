@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ServeurExemple {
 
     public static void main(String[] args) {
-        PokeArenaServer server = new PokeArenaServer("localhost", 8887);
+        PokeArenaServer server = new PokeArenaServer("localhost", 8886);
         server.start();
         Scanner sc = new Scanner(System.in);
         String input = sc.next();
