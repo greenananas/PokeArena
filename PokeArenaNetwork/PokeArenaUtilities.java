@@ -1,6 +1,7 @@
 package PokeArenaNetwork;
 
 import Model.Action;
+import Model.ChangePkmn;
 import Model.Move;
 import Model.Team;
 import com.google.gson.Gson;
@@ -28,7 +29,8 @@ public class PokeArenaUtilities {
             .registerSubtype(PokeArenaTextPacket.class, "TEXT")
             .registerSubtype(PokeArenaMovePacket.class, "MOVE")
             .registerSubtype(PokeArenaTeamPacket.class, "TEAM")
-            .registerSubtype(PokeArenaActionPacket.class, "ACTION");
+            .registerSubtype(PokeArenaActionPacket.class, "ACTION")
+            .registerSubtype(PokeArenaChangePokemonPacket.class, "CHANGEPOKEMON");
 
     /**
      * Objet utilisé pour la sérialisation des paquets PokeArenaPacket.
@@ -76,6 +78,9 @@ public class PokeArenaUtilities {
                 break;
             case MOVE:
                 packet = new PokeArenaMovePacket((Move) packetData);
+                break;
+            case CHANGEPOKEMON:
+                packet = new PokeArenaChangePokemonPacket((ChangePkmn) packetData);
                 break;
             case TEAM:
                 packet = new PokeArenaTeamPacket((Team) packetData);

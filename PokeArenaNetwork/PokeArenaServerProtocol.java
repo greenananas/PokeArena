@@ -104,6 +104,34 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case MOVE: //TODO: A enlever
                 response = processActionPacket(ws, request);
                 break;
+            case CHANGEPOKEMON:
+                switch (server.getState()) {
+                    case WAITING_FOR_CLIENT1_CHANGEPKMN:
+                        if (ws == server.getClient1WS()) {
+                            battle.trainer1.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
+                            response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update());
+                        } else {
+                            response = null;
+                        }
+                        break;
+                    case WAITING_FOR_CLIENT2_CHANGEPKMN:
+                        if (ws == server.getClient2WS()) {
+                            battle.trainer2.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
+                            response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update());
+                        } else {
+                            response = null;
+                        }
+                        break;
+                    case WAITING_FOR_CLIENT_1_ACTION:
+                    case WAITING_FOR_CLIENT_2_ACTION:
+                    case WAITING_FOR_CLIENTS_ACTIONS:
+                        response = processActionPacket(ws, request);
+                        break;
+                    default:
+                        response = null;
+                        break;
+                }
+                break;
             case ACTION:
                 response = processActionPacket(ws, request);
                 break;
@@ -146,6 +174,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 break;
             case ACTION:
                 action = ((PokeArenaActionPacket) request).getAction();
+                break;
+            case CHANGEPOKEMON:
+                action = ((PokeArenaChangePokemonPacket) request).getChangePkmn();
                 break;
             default:
                 action = null;
