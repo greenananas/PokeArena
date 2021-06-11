@@ -126,6 +126,14 @@ public class PokeArenaServer extends WebSocketServer {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
     }
 
+    public void sendPong(WebSocket ws) {
+        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.PONG, null));
+    }
+
+    public void sendText(WebSocket ws, String texte) {
+        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, texte));
+    }
+
     /**
      * Méthode appelée quand le démarrage du serveur est réussi.
      */

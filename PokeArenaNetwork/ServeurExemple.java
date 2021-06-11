@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ServeurExemple {
 
     public static void main(String[] args) {
-        PokeArenaServer server = new PokeArenaServer("localhost", 8889);
+        PokeArenaServer server = new PokeArenaServer("localhost", 8888);
         server.start();
         Scanner sc = new Scanner(System.in);
         String input = sc.next();
@@ -17,28 +17,28 @@ public class ServeurExemple {
             switch (input) {
                 case "ping1":
                     try {
-                        server.sendPacket(server.getClient1WS(), PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
+                        server.sendPing(server.getClient1WS());
                     } catch (NullPointerException e) {
                         System.out.println("Pas de client 1 connecté");
                     }
                     break;
                 case "ping2":
                     try {
-                        server.sendPacket(server.getClient2WS(), PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
+                        server.sendPing(server.getClient2WS());
                     } catch (NullPointerException e) {
                         System.out.println("Pas de client 2 connecté");
                     }
                     break;
                 case "texte1":
                     try {
-                        server.sendPacket(server.getClient1WS(), PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Message texte à destination du client 1"));
+                        server.sendText(server.getClient1WS(), "Message texte à destination du client 1");
                     } catch (NullPointerException e) {
                         System.out.println("Pas de client 1 connecté");
                     }
                     break;
                 case "texte2":
                     try {
-                        server.sendPacket(server.getClient2WS(), PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Message texte à destination du client 2"));
+                        server.sendText(server.getClient2WS(), "Message texte à destination du client 2");
                     } catch (NullPointerException e) {
                         System.out.println("Pas de client 2 connecté");
                     }
