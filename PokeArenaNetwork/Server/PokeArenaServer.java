@@ -11,6 +11,11 @@ import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
 
+/**
+ * Serveur permettant l'échange de messages à des clients PokeArena via l'utilisation de WebSocket.
+ *
+ * @author Louis
+ */
 public class PokeArenaServer extends WebSocketServer {
 
     /**

@@ -13,6 +13,16 @@ import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
+/**
+ * Protocole associé à un client PokeArena.
+ * Le protocole permet de :
+ * <ul>
+ *     <li>Déterminer les actions que le client doit effectuer en fonction de son état et des messages reçus</li>
+ *     <li>Modifier l'état du dresseur en fonction des informations reçues par le client.</li>
+ * </ul>
+ *
+ * @author Louis
+ */
 public class PokeArenaClientProtocol extends PokeArenaProtocol {
 
     /**
@@ -20,12 +30,26 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
      */
     private PokeArenaClient client;
 
+    /**
+     * Dresseur qui est manipulé par le protocole.
+     */
     private Trainer trainer;
 
+    /**
+     * Pokémon au combat de l'adversaire.
+     */
     private Pokemon opponentPokemon;
 
+    /**
+     * Équipe du dresseur, utilisé uniquement lors de l'initialisation de ce dernier.
+     */
     private Team team;
 
+    /**
+     * Créer un protocole qui va manipuler le client rentré en paramètre.
+     *
+     * @param client Client qui va être manipulé par le protocole.
+     */
     public PokeArenaClientProtocol(PokeArenaClient client) {
         this.client = client;
     }
@@ -93,14 +117,29 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
         }
     }
 
+    /**
+     * Modifier l'équipe de Pokémon.
+     *
+     * @param team Nouvelle valeur de l'équipe de Pokémon.
+     */
     public void setTeam(Team team) {
         this.team = team;
     }
 
+    /**
+     * Obtenir le dresseur manipulé par le protocole.
+     *
+     * @return Dresseur manipulé par le protocole.
+     */
     public Trainer getTrainer() {
         return trainer;
     }
 
+    /**
+     * Obtenir le pokémon au combat de l'adversaire.
+     *
+     * @return Pokémon au combat de l'adversaire.
+     */
     public Pokemon getOpponentPokemon() {
         return opponentPokemon;
     }

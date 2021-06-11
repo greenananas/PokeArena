@@ -10,6 +10,11 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Client permettant l'échange de messages à un serveur PokeArena via l'utilisation de WebSocket.
+ *
+ * @author Louis
+ */
 public class PokeArenaClient extends WebSocketClient {
 
     /**

@@ -8,12 +8,25 @@ import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
+/**
+ * Protocole associé à un serveur PokeArena.
+ * Le protocole permet de :
+ * <ul>
+ *     <li>Déterminer les actions que le serveur doit effectuer en fonction de son état et des messages reçus</li>
+ *     <li>Modifier l'état du combat en fonction des informations reçues par le serveur.</li>
+ * </ul>
+ */
 public class PokeArenaServerProtocol extends PokeArenaProtocol {
 
     /**
      * Serveur PokeArena qui utilise le protocole.
      */
     private PokeArenaServer server;
+
+    /**
+     * Combat sur lequel le protocole va agir.
+     */
+    private Battle battle;
 
     /**
      * Dernière action envoyée par le client 1.
@@ -122,8 +135,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     case WAITING_FOR_CLIENT_1_CHANGEPKMN:
                         if (ws == server.getClient1WS()) {
                             battle.trainer1.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update()); // Message d'update au client 1
-                            server.sendUpdate(server.getClient2WS(), getClient2Update()); // Envoie de l'update au client 2
+                            response = createPacket(PokeArenaPacketType.UPDATE, generateClient1Update()); // Message d'update au client 1
+                            server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
                             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
@@ -132,8 +145,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     case WAITING_FOR_CLIENT_2_CHANGEPKMN:
                         if (ws == server.getClient2WS()) {
                             battle.trainer2.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update()); // Message d'update au client 2
-                            server.sendUpdate(server.getClient1WS(), getClient1Update()); // Envoie de l'update au client 1
+                            response = createPacket(PokeArenaPacketType.UPDATE, generateClient2Update()); // Message d'update au client 2
+                            server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
                             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
@@ -168,9 +181,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             battle = new Battle(client1Trainer, client2Trainer, new BattleGround());
             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
             // Mise à jour des informations du client 1
-            server.sendUpdate(server.getClient1WS(), getClient1Update());
+            server.sendUpdate(server.getClient1WS(), generateClient1Update());
             // Mise à jour des informations du client 2
-            server.sendUpdate(server.getClient2WS(), getClient2Update());
+            server.sendUpdate(server.getClient2WS(), generateClient2Update());
         }
     }
 
@@ -220,8 +233,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
 
                     handleActions(client1Action, client2Action);
 
-                    server.sendUpdate(server.getClient2WS(), getClient2Update()); // Envoie de l'update au client 2
-                    response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update()); // Envoie de l'update au client 1
+                    server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
+                    response = createPacket(PokeArenaPacketType.UPDATE, generateClient1Update()); // Envoie de l'update au client 1
                     break;
                 }
             case WAITING_FOR_CLIENT_2_ACTION:
@@ -231,8 +244,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
 
                     handleActions(client1Action, client2Action);
 
-                    server.sendUpdate(server.getClient1WS(), getClient1Update()); // Envoie de l'update au client 1
-                    response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update()); // Envoie de l'update au client 2
+                    server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
+                    response = createPacket(PokeArenaPacketType.UPDATE, generateClient2Update()); // Envoie de l'update au client 2
                     break;
                 }
             default:
@@ -243,6 +256,18 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
         return response;
     }
 
+    /**
+     * Applique les actions des deux joueurs au combat.
+     * Cela va engendrer :
+     * <ul>
+     *     <li>La modification des informations du combat.</li>
+     *     <li>La modification de l'état du serveur.</li>
+     *     <li>L'envoie de paquet aux clients.</li>
+     * </ul>
+     *
+     * @param T1action Action du joueur 1.
+     * @param T2action Action du joueur 2.
+     */
     public void handleActions(Action T1action, Action T2action) {
         TrainerAction trainer1 = battle.trainer1;
         TrainerAction trainer2 = battle.trainer2;
@@ -295,15 +320,30 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
         }
     }
 
+    /**
+     * Obtenir le combat manipulé par le protocole.
+     *
+     * @return Combat manipulé par le procotole.
+     */
     public Battle getBattle() {
         return battle;
     }
 
-    public Update getClient1Update() {
+    /**
+     * Générer la mise à jour des informations du joueur 1.
+     *
+     * @return Mise à jour des informations du joueur 1.
+     */
+    public Update generateClient1Update() {
         return new Update(battle.trainer1.getTrainer().getPokemonTeam(), battle.trainer2.getTrainer().getLeadingPkmn());
     }
 
-    public Update getClient2Update() {
+    /**
+     * Générer la mise à jour des informations du joueur 2.
+     *
+     * @return Mise à jour des informations du joueur 2.
+     */
+    public Update generateClient2Update() {
         return new Update(battle.trainer2.getTrainer().getPokemonTeam(), battle.trainer1.getTrainer().getLeadingPkmn());
     }
 

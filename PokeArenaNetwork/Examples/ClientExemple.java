@@ -11,7 +11,7 @@ public class ClientExemple {
     public static void main(String[] args) {
         PokeArenaClient client;
         try {
-            client = new PokeArenaClient("localhost", 8886);
+            client = new PokeArenaClient("localhost", 8887);
             client.connect();
             Scanner sc = new Scanner(System.in);
             String input = sc.next();

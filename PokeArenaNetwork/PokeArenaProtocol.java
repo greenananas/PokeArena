@@ -1,15 +1,9 @@
 package PokeArenaNetwork;
 
-import Model.Battle;
 import PokeArenaNetwork.Packets.PokeArenaPacket;
 import org.java_websocket.WebSocket;
 
 abstract public class PokeArenaProtocol {
-
-    /**
-     * Combat sur lequel le protocole va agir.
-     */
-    protected Battle battle;
 
     /**
      * Traite un paquet.

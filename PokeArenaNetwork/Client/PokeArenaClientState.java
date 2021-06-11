@@ -1,5 +1,8 @@
 package PokeArenaNetwork.Client;
 
+/**
+ * États que le client peut prendre.
+ */
 public enum PokeArenaClientState {
     NOT_CONNECTED,
     NEED_TO_SEND_TEAM,
