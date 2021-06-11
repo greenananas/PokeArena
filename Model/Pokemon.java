@@ -702,9 +702,9 @@ public class Pokemon {
      * @return Multiplicateur compris entre 0 et 4
      */
     public double getTypeMultiplier(Move at) {
-        double typeMultiplier = PokeTypes.getTypeAdvantage(this.getType1(), at.getMoveType()).getEffectiveness();
+        double typeMultiplier = PokeTypes.getTypeAdvantage(at.getMoveType(), this.getType1()).getEffectiveness();
         if (this.getType2() != null) {
-            typeMultiplier *= PokeTypes.getTypeAdvantage(this.getType2(), at.getMoveType()).getEffectiveness();
+            typeMultiplier *= PokeTypes.getTypeAdvantage(at.getMoveType(), this.getType2()).getEffectiveness();
         }
         return typeMultiplier;
     }
