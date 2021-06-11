@@ -1,5 +1,6 @@
 package PokeArenaNetwork;
 
+import Model.Battle;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -65,7 +66,7 @@ public class PokeArenaServer extends WebSocketServer {
             case WAITING_FOR_CLIENT2_TO_JOIN:
                 client2WS = ws;
                 sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 2"));
-                state = PokeArenaServerState.WAITING_FOR_START;
+                state = PokeArenaServerState.WAITING_FOR_CLIENTS_TEAM;
                 break;
             default:
                 ws.close();
@@ -130,6 +131,13 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
+     * Lancer le combat.
+     */
+    public void startBattle() {
+        protocol.startBattle();
+    }
+
+    /**
      * Obtenir le nom d'hôte ou adresse IP du serveur.
      *
      * @return Nom d'hôte ou adresse IP du serveur
@@ -182,4 +190,9 @@ public class PokeArenaServer extends WebSocketServer {
     protected WebSocket getClient2WS() {
         return client2WS;
     }
+
+    public Battle getBattle() {
+       return protocol.getBattle();
+    }
+
 }

@@ -47,14 +47,14 @@ public class PokeArena {
         Pokemon pingoleon1=new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL,50,84,86,88,111,101,60,surf,hydrocanon,luminocanon,laserglace);
 
         Team team1=new Team();
-        team1.setPokemon(elekable);
-        team1.setPokemon(togekiss);
-        team1.setPokemon(tyranocif);
+        team1.addPokemon(elekable);
+        team1.addPokemon(togekiss);
+        team1.addPokemon(tyranocif);
 
         Team team2=new Team();
-        team2.setPokemon(elekable1);
-        team2.setPokemon(togekiss1);
-        team2.setPokemon(tyranocif1);
+        team2.addPokemon(elekable1);
+        team2.addPokemon(togekiss1);
+        team2.addPokemon(tyranocif1);
 
         Trainer t1 = new Trainer("Mathis", team1);
         Trainer t2 = new Trainer("Maël", team2);

@@ -1,8 +1,6 @@
 package PokeArenaNetwork;
 
-import Model.Move;
-import Model.Pokemon;
-import Model.Team;
+import Model.*;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -55,7 +53,7 @@ public class PokeArenaClient extends WebSocketClient {
     public void onOpen(ServerHandshake serverHandshake) {
         if (state == PokeArenaClientState.NOT_CONNECTED) {
             System.out.println("Ouverture de la connexion");
-            state = PokeArenaClientState.WAITING_FOR_START;
+            state = PokeArenaClientState.NEED_TO_SEND_TEAM;
         } else {
             //TODO: Lever une erreur
         }
@@ -121,15 +119,6 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
     /**
-     * Envoyer une attaque au serveur.
-     *
-     * @param move Attaque qui va être envoyée au serveur.
-     */
-    public void sendMove(Move move) {
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
-    }
-
-    /**
      * Envoyer un message texte au serveur.
      *
      * @param text Texte du message qui va être envoyé au serveur.
@@ -144,16 +133,38 @@ public class PokeArenaClient extends WebSocketClient {
      * @param team Équipe qui va être envoyée au serveur.
      */
     public void sendTeam(Team team) {
+        if (state == PokeArenaClientState.NEED_TO_SEND_TEAM) {
+            state = PokeArenaClientState.WAITING_FOR_START;
+        }
+        protocol.setTeam(team);
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEAM, team));
     }
 
+
+    public void sendAction(Action action) {
+       if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
+           state = PokeArenaClientState.ACTION_SENT;
+       }
+       sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.ACTION, action));
+    }
+
     /**
-     * Envoyer un changement de pokemon au serveur.
+     * Envoyer une attaque au serveur.
      *
-     * @param pokemon Pokemon à changer qui va être envoyé au serveur.
+     * @param move Attaque qui va être envoyée au serveur.
      */
-    public void sendChangePokemon(Pokemon pokemon) {
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.CHANGEPOKEMON, pokemon));
+    public void sendMove(Move move) {
+        if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
+            state = PokeArenaClientState.ACTION_SENT;
+        }
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
+    }
+
+    public void sendChangePkmn(ChangePkmn changePkmn) {
+        if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
+            state = PokeArenaClientState.ACTION_SENT;
+        }
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.CHANGEPOKEMON, changePkmn));
     }
 
     /**
@@ -177,7 +188,16 @@ public class PokeArenaClient extends WebSocketClient {
      *
      * @param state État du client.
      */
-    public void setStatus(PokeArenaClientState state) {
+    public void setState(PokeArenaClientState state) {
         this.state = state;
     }
+
+    public Trainer getTrainer() {
+       return protocol.getTrainer();
+    }
+
+    public Pokemon getOpponentPokemon() {
+        return protocol.getOpponentPokemon();
+    }
+
 }
