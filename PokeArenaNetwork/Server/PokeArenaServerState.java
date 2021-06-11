@@ -2,6 +2,8 @@ package PokeArenaNetwork.Server;
 
 /**
  * États que le serveur peut prendre.
+ *
+ * @author Louis
  */
 public enum PokeArenaServerState {
     /**

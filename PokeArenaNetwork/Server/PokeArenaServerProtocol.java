@@ -48,6 +48,11 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      */
     private Trainer client2Trainer;
 
+    /**
+     * Créer un protocole qui va manipuler le serveur rentré en paramètre.
+     *
+     * @param server Serveur qui va être manipulé par le protocole.
+     */
     public PokeArenaServerProtocol(PokeArenaServer server) {
         this.server = server;
     }

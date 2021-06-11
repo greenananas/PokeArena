@@ -6,6 +6,11 @@ import PokeArenaNetwork.Server.PokeArenaServer;
 
 import java.util.Scanner;
 
+/**
+ * Exemple d'implémentation d'un serveur PokeArena en ligne de commande.
+ *
+ * @author Louis
+ */
 public class ServeurExemple {
 
     public static void main(String[] args) {

@@ -2,6 +2,11 @@ package PokeArenaNetwork.Packets;
 
 import Model.ChangePkmn;
 
+/**
+ * Modélise le format des paquets utilisés pour envoyer des changements de Pokémon.
+ *
+ * @author Louis
+ */
 public class PokeArenaChangePokemonPacket extends PokeArenaPacket {
 
     private ChangePkmn changePkmn = null;

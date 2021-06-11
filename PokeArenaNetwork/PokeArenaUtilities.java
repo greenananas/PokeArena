@@ -9,6 +9,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Classe regroupant des utilitaires servant pour la manipulation des paquets.
+ *
+ * @author Louis
+ */
 public class PokeArenaUtilities {
 
     /**
