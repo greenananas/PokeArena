@@ -1,6 +1,10 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Server;
 
 import Model.Battle;
+import PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArenaNetwork.PokeArenaUtilities;
+import PokeArenaNetwork.Update;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -202,7 +206,7 @@ public class PokeArenaServer extends WebSocketServer {
      *
      * @return Connexion associé au client 1.
      */
-    protected WebSocket getClient1WS() {
+    public WebSocket getClient1WS() {
         return client1WS;
     }
 
@@ -211,7 +215,7 @@ public class PokeArenaServer extends WebSocketServer {
      *
      * @return Connexion associée au client 2.
      */
-    protected WebSocket getClient2WS() {
+    public WebSocket getClient2WS() {
         return client2WS;
     }
 

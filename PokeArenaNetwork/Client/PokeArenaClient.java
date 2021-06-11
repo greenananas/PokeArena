@@ -1,6 +1,9 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Client;
 
 import Model.*;
+import PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArenaNetwork.PokeArenaUtilities;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 

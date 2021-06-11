@@ -1,8 +1,14 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Client;
 
 import Model.Pokemon;
 import Model.Team;
 import Model.Trainer;
+import PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArenaNetwork.Packets.PokeArenaTextPacket;
+import PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
+import PokeArenaNetwork.PokeArenaProtocol;
+import PokeArenaNetwork.Update;
 import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;

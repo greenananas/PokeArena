@@ -1,4 +1,4 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Client;
 
 public enum PokeArenaClientState {
     NOT_CONNECTED,

@@ -1,7 +1,6 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Packets;
 
 import Model.ChangePkmn;
-import Model.Pokemon;
 
 public class PokeArenaChangePokemonPacket extends PokeArenaPacket {
 

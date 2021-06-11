@@ -1,6 +1,8 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Packets;
 
 import Model.Team;
+import PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArenaNetwork.Packets.PokeArenaPacketType;
 
 public class PokeArenaTeamPacket extends PokeArenaPacket {
 

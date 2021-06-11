@@ -4,6 +4,7 @@ import Model.Action;
 import Model.ChangePkmn;
 import Model.Move;
 import Model.Team;
+import PokeArenaNetwork.Packets.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

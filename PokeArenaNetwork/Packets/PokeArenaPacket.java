@@ -1,4 +1,6 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Packets;
+
+import PokeArenaNetwork.Packets.PokeArenaPacketType;
 
 public abstract class PokeArenaPacket {
 

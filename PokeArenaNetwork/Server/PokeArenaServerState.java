@@ -1,4 +1,4 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Server;
 
 public enum PokeArenaServerState {
     WAITING_FOR_CLIENT1_TO_JOIN,

@@ -1,10 +1,8 @@
 package PokeArenaNetwork;
 
 import Model.Battle;
-import Model.Action;
+import PokeArenaNetwork.Packets.PokeArenaPacket;
 import org.java_websocket.WebSocket;
-
-import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
 abstract public class PokeArenaProtocol {
 

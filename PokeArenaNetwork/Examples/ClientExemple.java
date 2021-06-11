@@ -1,8 +1,8 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Examples;
 
 import Model.*;
+import PokeArenaNetwork.Client.PokeArenaClient;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ public class ClientExemple {
     public static void main(String[] args) {
         PokeArenaClient client;
         try {
-            client = new PokeArenaClient("localhost", 8887);
+            client = new PokeArenaClient("localhost", 8886);
             client.connect();
             Scanner sc = new Scanner(System.in);
             String input = sc.next();

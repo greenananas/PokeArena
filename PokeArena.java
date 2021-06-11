@@ -1,11 +1,9 @@
 import Model.*;
-import PokeArenaNetwork.ClientExemple;
-import PokeArenaNetwork.PokeArenaClient;
-import PokeArenaNetwork.ServeurExemple;
+import PokeArenaNetwork.Client.PokeArenaClient;
+import PokeArenaNetwork.Examples.ServeurExemple;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class PokeArena {
     public static void main(String[] args) {

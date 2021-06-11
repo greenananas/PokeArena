@@ -1,4 +1,4 @@
-package PokeArenaNetwork;
+package PokeArenaNetwork.Packets;
 
 public class PokeArenaLosePacket extends PokeArenaPacket {
 
