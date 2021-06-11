@@ -53,12 +53,12 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 if (client.getState() == PokeArenaClientState.WAITING_FOR_START) {
                     client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
                 }
+                Update update = ((PokeArenaUpdatePacket) request).getUpdate();
+                this.opponentPokemon = update.getOpponentPokemon();
                 if (trainer == null) {
                     trainer = new Trainer("Nom Joueur", team);
                 } else {
-                    Update update = ((PokeArenaUpdatePacket) request).getUpdate();
                     trainer.setPokemonTeam(update.getTeam());
-                    this.opponentPokemon = update.getOpponentPokemon();
                 }
                 response = null;
                 break;
