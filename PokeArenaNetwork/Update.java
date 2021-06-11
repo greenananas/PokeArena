@@ -3,18 +3,27 @@ package PokeArenaNetwork;
 import Model.Pokemon;
 import Model.Team;
 
+/**
+ * Modélise la mise à jour des informations du combat à envoyer aux clients.
+ */
 public class Update {
 
     /**
      * Équipe du dresseur.
      */
-    private Team team;
+    private final Team team;
 
     /**
      * Pokémon en combat du dresseur adverse.
      */
-    private Pokemon opponentPokemon;
+    private final Pokemon opponentPokemon;
 
+    /**
+     * Créer un objet de mise à jour.
+     *
+     * @param team            Équipe du dresseur.
+     * @param opponentPokemon Pokémon au combat du dresseur adverse.
+     */
     public Update(Team team, Pokemon opponentPokemon) {
         this.team = team;
         this.opponentPokemon = opponentPokemon;

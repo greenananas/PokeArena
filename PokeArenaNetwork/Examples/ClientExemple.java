@@ -6,6 +6,11 @@ import PokeArenaNetwork.Client.PokeArenaClient;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
+/**
+ * Exemple d'implémentation d'un client PokeArena en ligne de commande.
+ *
+ * @author Louis
+ */
 public class ClientExemple {
 
     public static void main(String[] args) {

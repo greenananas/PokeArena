@@ -3,6 +3,11 @@ package PokeArenaNetwork;
 import PokeArenaNetwork.Packets.PokeArenaPacket;
 import org.java_websocket.WebSocket;
 
+/**
+ * Définit un protocole utilisé par les clients et serveurs PokeArena.
+ *
+ * @author Louis
+ */
 abstract public class PokeArenaProtocol {
 
     /**
