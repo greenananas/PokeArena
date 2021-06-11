@@ -63,6 +63,16 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                         ? createPacket(PokeArenaPacketType.UPDATE, new Update(trainerTeam, opponentPokemon))
                         : null;
                 break;
+            case FORFEIT:
+                if (ws == server.getClient1WS()) {
+                    server.sendWin(server.getClient2WS());
+                    server.setState(PokeArenaServerState.CLIENT_2_WON);
+                } else if (ws == server.getClient2WS()) {
+                    server.sendWin(server.getClient1WS());
+                    server.setState(PokeArenaServerState.CLIENT_1_WON);
+                }
+                response = createPacket(PokeArenaPacketType.LOSE, null);
+                break;
             case TEAM:
                 Team team = ((PokeArenaTeamPacket) request).getTeam();
                 System.out.println("Équipe reçue :");

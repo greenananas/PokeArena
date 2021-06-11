@@ -152,6 +152,9 @@ public class ClientExemple {
                         case "state":
                             System.out.println("État du client : " + client.getState());
                             break;
+                        case "ff":
+                            client.sendForfeit();
+                            break;
                         default:
                             System.out.println("Commande non reconnue");
                             break;

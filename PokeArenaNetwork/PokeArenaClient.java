@@ -172,6 +172,7 @@ public class PokeArenaClient extends WebSocketClient {
      */
     public void sendForfeit() {
         // Envoie d'un message de forfait
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.FORFEIT, null));
     }
 
     /**

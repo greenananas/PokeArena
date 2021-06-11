@@ -8,6 +8,7 @@ public enum PokeArenaPacketType {
     REFRESH,
     MOVE,
     CHANGEPOKEMON,
+    FORFEIT,
     ITEM,
     WIN,
     LOSE,

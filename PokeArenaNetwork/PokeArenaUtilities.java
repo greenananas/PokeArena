@@ -27,6 +27,7 @@ public class PokeArenaUtilities {
             .registerSubtype(PokeArenaWinPacket.class, "WIN")
             .registerSubtype(PokeArenaLosePacket.class, "LOSE")
             .registerSubtype(PokeArenaRefreshPacket.class, "REFRESH")
+            .registerSubtype(PokeArenaForfeitPacket.class, "FORFEIT")
             .registerSubtype(PokeArenaUpdatePacket.class, "UPDATE")
             .registerSubtype(PokeArenaTextPacket.class, "TEXT")
             .registerSubtype(PokeArenaMovePacket.class, "MOVE")
@@ -80,6 +81,9 @@ public class PokeArenaUtilities {
                 break;
             case REFRESH:
                 packet = new PokeArenaRefreshPacket();
+                break;
+            case FORFEIT:
+                packet = new PokeArenaForfeitPacket();
                 break;
             case UPDATE:
                 packet = new PokeArenaUpdatePacket((Update) packetData);
