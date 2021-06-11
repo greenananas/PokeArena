@@ -272,7 +272,6 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     server.sendLose(server.getClient2WS());
                     server.setState(PokeArenaServerState.CLIENT_1_WON);
                 }
-                server.setState(PokeArenaServerState.BATTLE_ENDED);
             } else {
                 if (secondToAct == trainer1) {
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);

@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ServeurExemple {
 
     public static void main(String[] args) {
-        PokeArenaServer server = new PokeArenaServer("localhost", 8888);
+        PokeArenaServer server = new PokeArenaServer("localhost", 8887);
         server.start();
         Scanner sc = new Scanner(System.in);
         String input = sc.next();
@@ -43,9 +43,11 @@ public class ServeurExemple {
                         System.out.println("Pas de client 2 connecté");
                     }
                     break;
+                case "s":
                 case "state":
                     System.out.println("État du serveur : " + server.getState());
                     break;
+                case "b":
                 case "battleinfo":
                     try {
                         Battle battle = server.getBattle();
