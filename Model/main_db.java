@@ -19,6 +19,5 @@ public class main_db {
         catch (SQLException e){
             System.out.println("mais quoi");
         }
-
     }
 }
