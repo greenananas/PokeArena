@@ -233,7 +233,6 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
         TrainerAction trainer2 = battle.trainer2;
         trainer1.pairWith(T1action);
         trainer2.pairWith(T2action);
-        System.out.println("trainer 1 pokemon attack : "+trainer1.getTrainer().getLeadingPkmn().getAttack());
         TrainerAction firstToAct = battle.calculatePriority();
         TrainerAction secondToAct = (firstToAct == trainer1 ? trainer2 : trainer1);
         battle.apply(firstToAct);
