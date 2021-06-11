@@ -1,4 +1,4 @@
-package Controller;
+package application;
 
 /*
  This program is free software: you can redistribute it and/or modify
@@ -187,6 +187,7 @@ public final class FXRouter {
     public static void goTo(String routeLabel) throws IOException {
         // get corresponding route
         RouteScene route = routes.get(routeLabel);
+    	System.out.println("ggnnn");
         loadNewRoute(route);
     }
 
@@ -214,7 +215,7 @@ public final class FXRouter {
         currentRoute = route;
 
         // create correct file path.  "/" doesn't affect any OS
-        String scenePath = "/" + pathRef + "/" + route.scenePath;
+        String scenePath = "/" + route.scenePath; // changement du chemin
 
         // load .fxml resource
         Parent resource = FXMLLoader.load(new Object() { }.getClass().getResource(scenePath));

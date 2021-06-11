@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.FXRouter;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -78,7 +79,7 @@ public class StartMenuController implements Initializable {
 		returnButton.setVisible(true);
 
 		Parent root;
-		URL url = Main.class.getResource("/application/View/MenuSolo.fxml");
+		URL url = application.Main.class.getResource("/View/MenuSolo.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 
 		try {
@@ -101,7 +102,7 @@ public class StartMenuController implements Initializable {
 //		returnButton.setVisible(true);
 		
 		Parent root;
-		URL url = Main.class.getResource("/application/View/MenuMulti.fxml");
+		URL url = application.Main.class.getResource("/application/View/MenuMulti.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 
 		try {
@@ -137,7 +138,7 @@ public class StartMenuController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		String path = new File("src/ressources/homeScreen.mp4").getAbsolutePath();
+		String path = new File("Resources/homeScreen.mp4").getAbsolutePath();
 		media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 
