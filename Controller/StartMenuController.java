@@ -103,7 +103,7 @@ public class StartMenuController implements Initializable {
 //		returnButton.setVisible(true);
 		
 		Parent root;
-		URL url = application.Main.class.getResource("/application/View/MenuMulti.fxml");
+		URL url = application.Main.class.getResource("/View/MenuMulti.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 
 		try {

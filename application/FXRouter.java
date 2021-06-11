@@ -188,7 +188,6 @@ public final class FXRouter {
     public static void goTo(String routeLabel) throws IOException {
         // get corresponding route
         RouteScene route = routes.get(routeLabel);
-    	System.out.println("ggnnn");
         loadNewRoute(route);
     }
 
