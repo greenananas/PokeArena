@@ -1,0 +1,52 @@
+/**/ 
+
+.button {
+	-fx-font: 16.0px "Avenir Next";
+	-fx-background-color: #8f0500; /* #e30013 */ 
+	-fx-text-fill: #fff;
+
+	-fx-background-radius: 10.0px;	
+	-fx-border-color: white;
+}
+
+.labelTitle {
+	-fx-font: 32.0px "Avenir Next";
+	-fx-text-fill: white;
+}
+
+.labelNormal {
+	-fx-font: 15.0px "Avenir Next";
+	-fx-text-fill: white;
+}
+
+.labelTitleFight {
+	-fx-font: 40.0px "Avenir Next";
+	-fx-text-fill: #8f0500;
+}
+
+.errLabel {
+	-fx-font: 15.0px "Avenir Next";
+	-fx-text-fill: red;
+}
+
+.menuSolo {
+	-fx-background-color: #8f0500;
+	-fx-background-radius: 7.0px;
+}
+
+.namePlayer{
+	-fx-control-inner-background : #e30013;
+	-fx-text-fill: #fff;
+	-fx-border-color: #fff;
+	-fx-border-width: 2px;
+}
+
+.backgroundFight {
+	-fx-background-color: linear-gradient(to top, #8EE66C ,#7AEBF0);
+}
+
+.battleGround{
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+	-fx-background-color: blue;
+	-fx-background-radius: 10px ;
+}

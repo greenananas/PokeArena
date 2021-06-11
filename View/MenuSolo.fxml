@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+
 <AnchorPane fx:id="menuSolo" maxHeight="-Infinity"
 	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
 	prefHeight="400.0" prefWidth="400.0" styleClass="menuSolo"
