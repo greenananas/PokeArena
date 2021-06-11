@@ -60,12 +60,12 @@ public class PokeArenaServer extends WebSocketServer {
         switch (state) {
             case WAITING_FOR_CLIENT1_TO_JOIN:
                 client1WS = ws;
-                sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 1"));
+                sendText(ws, "Bienvenue sur le serveur, vous êtes le joueur 1");
                 state = PokeArenaServerState.WAITING_FOR_CLIENT2_TO_JOIN;
                 break;
             case WAITING_FOR_CLIENT2_TO_JOIN:
                 client2WS = ws;
-                sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, "Bienvenue sur le serveur, vous êtes le joueur 2"));
+                sendText(ws, "Bienvenue sur le serveur, vous êtes le joueur 2");
                 state = PokeArenaServerState.WAITING_FOR_CLIENTS_TEAM;
                 break;
             default:
@@ -132,6 +132,18 @@ public class PokeArenaServer extends WebSocketServer {
 
     public void sendText(WebSocket ws, String texte) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, texte));
+    }
+
+    public void sendUpdate(WebSocket ws, Update update) {
+        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.UPDATE, update));
+    }
+
+    public void sendWin(WebSocket ws) {
+        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.WIN, null));
+    }
+
+    public void sendLose(WebSocket ws) {
+        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.LOSE, null));
     }
 
     /**
