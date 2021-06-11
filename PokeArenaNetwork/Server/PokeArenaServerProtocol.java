@@ -114,7 +114,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 System.out.println(clt + " dit : " + ((PokeArenaTextPacket) request).getText());
                 response = null;
                 break;
-            case MOVE: //TODO: A enlever
+            case MOVE:
                 response = processActionPacket(ws, request);
                 break;
             case CHANGEPOKEMON:

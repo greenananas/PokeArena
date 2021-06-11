@@ -100,7 +100,6 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message reçu : " + message);
-        //TODO: Faire différement en parsant le paquet
         PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
         if (packet != null) protocol.processPacket(ws, packet);
     }
