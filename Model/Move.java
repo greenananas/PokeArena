@@ -1,4 +1,5 @@
 package Model;
+
 /**
  * Class décrivant l'attaque d'un Pokémon.
  */
@@ -49,6 +50,7 @@ public class Move extends Action {
      * @param precision  Précision de l'attaque
      * @param pp         Points de pouvoir de l'attaque
      * @param priority   Priorité d'une attaque
+     * @param critRate   Niveau de critique d'une attaque
      */
     public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority, int critRate) {
         super(priority);
@@ -189,7 +191,7 @@ public class Move extends Action {
 
     @Override
     public String toString() {
-        String mv = (physical?"Phy.":"Spé.");
+        String mv = (physical ? "Phy." : "Spé.");
         return " " + type + " | " + name + " | " + mv + " | Puissance = " + power +
                 " | Précision = " + precision +
                 " | PP = " + pp;

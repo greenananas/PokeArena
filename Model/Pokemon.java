@@ -91,7 +91,7 @@ public class Pokemon {
     /**
      * Points de vie maximum du Pokémon.
      */
-    private int fullhp;
+    private int maxhp;
 
     /**
      * Statistique d'attaque du Pokémon.
@@ -136,7 +136,7 @@ public class Pokemon {
     /**
      * Statut du Pokémon.
      */
-    private PokeStatus.status status = PokeStatus.status.NORMAL;
+    private PokeStatus status = new PokeStatus();
 
     /**
      * État de confusion du Pokémon.
@@ -199,13 +199,13 @@ public class Pokemon {
         this.move3 = a3;
         this.move4 = a4;
 
-        this.fullhp = Math.round(((2 * baseHP + 31 + Math.round(hpEV / 4f)) * level) / 100f) + level + 10;
+        this.maxhp = Math.round(((2 * baseHP + 31 + Math.round(hpEV / 4f)) * level) / 100f) + level + 10;
         this.attack = Math.round(((2 * baseAttack + 31 + Math.round(attackEV / 4f)) * level) / 100f + 5);
         this.defense = Math.round(((2 * baseDefense + 31 + Math.round(defenseEV / 4f)) * level) / 100f + 5);
         this.speAttack = Math.round(((2 * baseSpeAttack + 31 + Math.round(speAttackEV / 4f)) * level) / 100f + 5);
         this.speDefense = Math.round(((2 * baseSpeDefense + 31 + Math.round(speDefenseEV / 4f)) * level) / 100f + 5);
         this.speed = Math.round(((2 * baseSpeed + Math.round(speedEV / 4f)) * level) / 100f + 5);
-        this.hp = fullhp;
+        this.hp = maxhp;
         applyNature(nature);
     }
 
@@ -259,8 +259,8 @@ public class Pokemon {
      *
      * @return Points de vie maximum du Pokémon
      */
-    public int getFullHP() {
-        return this.fullhp;
+    public int getMaxHP() {
+        return this.maxhp;
     }
 
     /**
@@ -376,7 +376,7 @@ public class Pokemon {
      *
      * @return Statut du Pokémon
      */
-    public PokeStatus.status getStatus() {
+    public PokeStatus getStatus() {
         return this.status;
     }
 
@@ -440,7 +440,7 @@ public class Pokemon {
      * @param hp Nouveaux points de vie maximum du Pokémon
      */
     public void setFullHP(int hp) {
-        this.fullhp = hp;
+        this.maxhp = hp;
     }
 
     /**
@@ -547,8 +547,8 @@ public class Pokemon {
      *
      * @param s Nouveau statut du Pokémon
      */
-    public void setStatus(PokeStatus.status s) {
-        this.status = s;
+    public void setStatus(PokeStatus.Status s) {
+        this.status.giveStatus(s);
     }
 
     /**
@@ -561,12 +561,22 @@ public class Pokemon {
     }
 
     /**
+     *  Retourne si oui ou non le pokémon possède un certain type.
+     *
+     * @param type Le type recherché.
+     * @return Le pokémon possède le type.
+     */
+    public boolean hasType(PokeTypes.type type) {
+        return (type1 == type || type2 == type);
+    }
+
+    /**
      * Applique les effets de la nature associée au Pokémon
      *
      * @param nature La nature du Pokémon
      */
     private void applyNature(String nature) {
-        this.nature = Nature.valueOf(nature);
+        this.nature = Nature.valueOf(nature.toUpperCase());
         this.attack = Math.round(this.attack * this.nature.getMultipliers()[0]);
         this.defense = Math.round(this.defense * this.nature.getMultipliers()[1]);
         this.speAttack = Math.round(this.speAttack * this.nature.getMultipliers()[2]);
@@ -617,7 +627,7 @@ public class Pokemon {
      */
     public void attack(Pokemon target, Move at) {
         if (doesHit(target, at)) {
-            if (target.getTypeMultiplier(at) != 0) {
+            if (target.getTypeMultiplier(at.getMoveType()) != 0) {
                 System.out.println("\nL'attaque " + at.getName() + " a touché " + target.getName() + ".");
                 target.getDamaged(this.getHitDamage(target, at));
             } else {
@@ -661,7 +671,7 @@ public class Pokemon {
 
         double randomMultiplier = this.getRandomMultiplier();
 
-        double typeMultiplier = target.getTypeMultiplier(at);
+        double typeMultiplier = target.getTypeMultiplier(at.getMoveType());
         if (typeMultiplier > 1) {
             System.out.println("\nC'est super efficace!");
         } else if (typeMultiplier < 1) {
@@ -679,7 +689,7 @@ public class Pokemon {
         }
 
         double burntMultiplier = 1;
-        if (this.getStatus() == PokeStatus.status.BURNT && at.isPhysical()) {
+        if (this.getStatus().status == PokeStatus.Status.BURNT && at.isPhysical()) {
             burntMultiplier = 0.5;
         }
 
@@ -701,10 +711,10 @@ public class Pokemon {
      * @param at Attaque lancée
      * @return Multiplicateur compris entre 0 et 4
      */
-    public double getTypeMultiplier(Move at) {
-        double typeMultiplier = PokeTypes.getTypeAdvantage(at.getMoveType(), this.getType1()).getEffectiveness();
+    public double getTypeMultiplier(PokeTypes.type at) {
+        double typeMultiplier = PokeTypes.getTypeAdvantage(at, this.getType1()).getEffectiveness();
         if (this.getType2() != null) {
-            typeMultiplier *= PokeTypes.getTypeAdvantage(at.getMoveType(), this.getType2()).getEffectiveness();
+            typeMultiplier *= PokeTypes.getTypeAdvantage(at, this.getType2()).getEffectiveness();
         }
         return typeMultiplier;
     }
@@ -717,16 +727,16 @@ public class Pokemon {
      */
     public boolean isCritical(Move at) {
         double critProb = 1 / 24;
-        if (this.getCritStage(at) == 1) {
+        if (this.getCritStage(at) == 2) {
             critProb = 1 / 8;
         }
-        if (this.getCritStage(at) == 2) {
+        if (this.getCritStage(at) == 3) {
             critProb = 1 / 2;
         }
-        if (this.getCritStage(at) == 3) {
+        if (this.getCritStage(at) == 4) {
             critProb = 1;
         }
-        if (this.getCritStage(at) == -1) {
+        if (this.getCritStage(at) == 0) {
             critProb = 0;
         }
 
@@ -739,10 +749,10 @@ public class Pokemon {
     }
 
     /**
-     * Obtenir le niveau de probabilité d'obtenir un coup critique
+     * Obtenir le niveau de probabilité d'obtenir un coup critique.
      *
-     * @param at Attaque lancée
-     * @return Niveau de probabilité (0, 1, 2 ou 3)
+     * @param at Attaque lancée.
+     * @return Niveau de probabilité (1, 2, 3 ou 4).
      */
     public int getCritStage(Move at) {
         //Tenir compte de nature, objet et changement de stats lorsque implémenté
@@ -750,9 +760,11 @@ public class Pokemon {
     }
 
     public boolean isFaster(Pokemon p) {
-        if (this.getSpeed() > p.getSpeed()) {
+        double ownSpeedMultiplier = (status.status.equals(PokeStatus.Status.PARALYZED) ? 0.5 : 1);
+        double ennemySpeedMultiplier = (p.getStatus().status.equals(PokeStatus.Status.PARALYZED) ? 0.5 : 1);
+        if (this.getSpeed()*ownSpeedMultiplier > p.getSpeed()*ennemySpeedMultiplier) {
             return true;
-        } else if (this.getSpeed() < p.getSpeed()) {
+        } else if (this.getSpeed()*ownSpeedMultiplier < p.getSpeed()*ennemySpeedMultiplier) {
             return false;
         } else {
             if (Math.random() > 0.5) {
@@ -765,7 +777,7 @@ public class Pokemon {
 
     public String showHP() {
         String hpBarString = this.getName() + " : |";
-        int hpBar = (int) Math.ceil(((double) this.getHP() / (double) this.getFullHP()) * 10);
+        int hpBar = (int) Math.ceil(((double) this.getHP() / (double) this.getMaxHP()) * 10);
         String barColor;
         if (hpBar > 5) {
             barColor = TerminalColors.ANSI_GREEN;

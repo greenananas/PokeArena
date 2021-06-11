@@ -75,9 +75,17 @@ public class Trainer {
     }
 
     public void changePokemon(int choice) {
+        if (getLeadingPkmn().getStatus().status == PokeStatus.Status.BADLY_POISONED) getLeadingPkmn().getStatus().resetDuration();
         Collections.swap(pokemonTeam.getPokemons(), 0, choice);
     }
 
+    /**
+     * Méthode permettant le choix de l'action d'un utilisateur dans le cadre d'un combat en ligne de commande. Non
+     * implantée dans l'application.
+     *
+     * @param ennemy Le pokémon adverse.
+     * @return L'action prise par le joueur courant.
+     */
     public Action chooseAction(Pokemon ennemy) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Move> moves = getLeadingPkmn().getMove();

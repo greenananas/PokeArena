@@ -15,13 +15,13 @@ public class FieldTypes {
      * Énumération des différents types de terrains.
      */
     public enum weather {
-        RAIN, SUNNY, HAIL, SANDSTORM
+        RAIN, SUN, HAIL, SANDSTORM
     }
 
     /**
      * Énumération des différents types de terrains.
      */
     public enum traps {
-        SPIKES, ROCKS, POISON_SPIKES
+        SPIKES, STEALTH_ROCKS, POISON_SPIKES
     }
 }

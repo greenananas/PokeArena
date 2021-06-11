@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * Class décrivant un combat Pokémon. Non définitif (à remplacer par une interface sûrement).
+ * Classe décrivant les actions menées pendant un combat Pokémon.
  */
 public class Battle {
     public TrainerAction trainer1;
@@ -15,6 +15,10 @@ public class Battle {
         Battle.bg = bg;
     }
 
+    /*
+     * Actions effectuée pendant un tour de jeu. Utilisée en ligne de commande séquentiel. Non utilisé
+     * dans le programme principal.
+     */
     public void takeTurns (Action T1action, Action T2action) {
         trainer1.pairWith(T1action);
         trainer2.pairWith(T2action);
@@ -28,6 +32,8 @@ public class Battle {
                     endBattle(secondToAct.getTrainer());
                 } else {
                     firstToAct.getTrainer().changePokemon(((ChangePkmn) firstToAct.getAction()).getIndex());
+                    boolean target = (firstToAct == trainer1);
+                    bg.applyTrapsEffect(firstToAct.getTrainer().getLeadingPkmn(), target);
                 }
             }
         }
@@ -36,6 +42,8 @@ public class Battle {
                 endBattle(firstToAct.getTrainer());
             } else {
                 secondToAct.getTrainer().changePokemon(((ChangePkmn) secondToAct.getAction()).getIndex());
+                boolean target = (secondToAct == trainer1);
+                bg.applyTrapsEffect(secondToAct.getTrainer().getLeadingPkmn(), target);
             }
         }
     }
@@ -47,6 +55,8 @@ public class Battle {
         }
         else if (current.getAction() instanceof ChangePkmn) {
             current.getTrainer().changePokemon(((ChangePkmn) current.getAction()).getIndex());
+            boolean target = (current == trainer1);
+            bg.applyTrapsEffect(current.getTrainer().getLeadingPkmn(), target);
         }
     }
 
