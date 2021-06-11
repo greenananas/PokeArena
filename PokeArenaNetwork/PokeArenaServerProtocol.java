@@ -109,7 +109,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     case WAITING_FOR_CLIENT_1_CHANGEPKMN:
                         if (ws == server.getClient1WS()) {
                             battle.trainer1.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update());
+                            response = createPacket(PokeArenaPacketType.UPDATE, getClient1Update()); // Message d'update au client 1
+                            server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.UPDATE, getClient2Update())); // Envoie de l'update au client 2
                             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
@@ -118,7 +119,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     case WAITING_FOR_CLIENT_2_CHANGEPKMN:
                         if (ws == server.getClient2WS()) {
                             battle.trainer2.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update());
+                            response = createPacket(PokeArenaPacketType.UPDATE, getClient2Update()); // Message d'update au client 2
+                            server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.UPDATE, getClient1Update())); // Envoie de l'update au client 1
                             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;

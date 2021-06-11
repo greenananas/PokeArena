@@ -42,17 +42,8 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 response = null;
                 break;
             case UPDATE:
-                switch (client.getState()) {
-                    case WAITING_FOR_START:
-                    case ACTION_SENT:
-                        client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
-                        break;
-                    default:
-                        break;
-                }
-                if (client.getState() == PokeArenaClientState.WAITING_FOR_START) {
-                    client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
-                }
+
+                // Mise à jour des informations du combat
                 Update update = ((PokeArenaUpdatePacket) request).getUpdate();
                 this.opponentPokemon = update.getOpponentPokemon();
                 if (trainer == null) {
@@ -60,6 +51,24 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 } else {
                     trainer.setPokemonTeam(update.getTeam());
                 }
+
+                // Changement de l'état du cient
+                switch (client.getState()) {
+                    case WAITING_FOR_START:
+                        client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
+                        break;
+                    case ACTION_SENT:
+                    case NEED_TO_SEND_CHANGEPKMN:
+                        if (client.getTrainer().getLeadingPkmn().isKO()) {
+                            client.setState(PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN);
+                        } else {
+                            client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
                 response = null;
                 break;
             default:
@@ -75,10 +84,10 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
     }
 
     public Trainer getTrainer() {
-       return trainer;
+        return trainer;
     }
 
-    public Pokemon getOpponentPokemon () {
+    public Pokemon getOpponentPokemon() {
         return opponentPokemon;
     }
 

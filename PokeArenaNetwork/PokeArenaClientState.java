@@ -5,6 +5,7 @@ public enum PokeArenaClientState {
     NEED_TO_SEND_TEAM,
     WAITING_FOR_START,
     NEED_TO_SEND_ACTION,
+    NEED_TO_SEND_CHANGEPKMN,
     ACTION_SENT,
     IN_BATTLE,
     BATTLE_ENDED,
