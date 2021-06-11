@@ -199,13 +199,13 @@ public class Pokemon {
         this.move3 = a3;
         this.move4 = a4;
 
-        this.hp = Math.round(((2 * baseHP + 31 + Math.round(hpEV / 4f)) * level) / 100f) + level + 10;
+        this.fullhp = Math.round(((2 * baseHP + 31 + Math.round(hpEV / 4f)) * level) / 100f) + level + 10;
         this.attack = Math.round(((2 * baseAttack + 31 + Math.round(attackEV / 4f)) * level) / 100f + 5);
         this.defense = Math.round(((2 * baseDefense + 31 + Math.round(defenseEV / 4f)) * level) / 100f + 5);
         this.speAttack = Math.round(((2 * baseSpeAttack + 31 + Math.round(speAttackEV / 4f)) * level) / 100f + 5);
         this.speDefense = Math.round(((2 * baseSpeDefense + 31 + Math.round(speDefenseEV / 4f)) * level) / 100f + 5);
         this.speed = Math.round(((2 * baseSpeed + Math.round(speedEV / 4f)) * level) / 100f + 5);
-
+        this.hp = fullhp;
         applyNature(nature);
     }
 
