@@ -117,34 +117,67 @@ public class PokeArenaServer extends WebSocketServer {
     }
 
     /**
-     * Envoyer un paquet au client.
+     * Envoyer un paquet sur la connexion.
      *
+     * @param ws     Connexion sur laquelle on va envoyer le paquet.
      * @param packet Paquet qui va être envoyé.
      */
     public void sendPacket(WebSocket ws, PokeArenaPacket packet) {
         ws.send(PokeArenaUtilities.toJson(packet));
     }
 
+    /**
+     * Envoyer un ping sur la connexion.
+     *
+     * @param ws Connexion sur laquelle le ping va être envoyé.
+     */
     public void sendPing(WebSocket ws) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
     }
 
+    /**
+     * Envoyer un pong sur la connexion.
+     *
+     * @param ws Connexion sur laquelle le pong va être envoyé.
+     */
     public void sendPong(WebSocket ws) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.PONG, null));
     }
 
+    /**
+     * Envoyer un message texte sur la connexion.
+     *
+     * @param ws    Connexion sur laquelle le message texte va être envoyé.
+     * @param texte Message texte qui va être envoyé.
+     */
     public void sendText(WebSocket ws, String texte) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, texte));
     }
 
+    /**
+     * Envoyer une update sur la connexion.
+     *
+     * @param ws     Connexion sur laquelle l'update va être envoyée.
+     * @param update Update qui va être envoyée.
+     */
     public void sendUpdate(WebSocket ws, Update update) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.UPDATE, update));
     }
 
+    /**
+     * Envoyer une annonce de victoire sur la connexion.
+     *
+     * @param ws Connexion sur laquelle l'annonce va être envoyée.
+     */
     public void sendWin(WebSocket ws) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.WIN, null));
     }
 
+    /**
+     * Envoyer une annonce de défaite sur la connexion.
+     *
+     * @param ws Connexion sur laquelle l'annonce va être envoyée.
+     */
     public void sendLose(WebSocket ws) {
         sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.LOSE, null));
     }
@@ -218,8 +251,13 @@ public class PokeArenaServer extends WebSocketServer {
         return client2WS;
     }
 
+    /**
+     * Obtenir le combat qui est manipulé par le protocole.
+     *
+     * @return Combat manipulé par le protocole.
+     */
     public Battle getBattle() {
-       return protocol.getBattle();
+        return protocol.getBattle();
     }
 
 }

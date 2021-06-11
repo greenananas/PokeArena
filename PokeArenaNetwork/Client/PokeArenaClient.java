@@ -17,6 +17,9 @@ public class PokeArenaClient extends WebSocketClient {
      */
     private PokeArenaClientState state = PokeArenaClientState.NOT_CONNECTED;
 
+    /**
+     * Protocole utilisé pour traiter les paquets et gérer l'état du client.
+     */
     private final PokeArenaClientProtocol protocol = new PokeArenaClientProtocol(this);
 
     /**
@@ -144,11 +147,16 @@ public class PokeArenaClient extends WebSocketClient {
     }
 
 
+    /**
+     * Envoyer une action au serveur.
+     *
+     * @param action Action qui va être envoyée au serveur.
+     */
     public void sendAction(Action action) {
-       if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
-           state = PokeArenaClientState.ACTION_SENT;
-       }
-       sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.ACTION, action));
+        if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
+            state = PokeArenaClientState.ACTION_SENT;
+        }
+        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.ACTION, action));
     }
 
     /**
@@ -163,6 +171,11 @@ public class PokeArenaClient extends WebSocketClient {
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
     }
 
+    /**
+     * Envoyer un changement de Pokémon au serveur.
+     *
+     * @param changePkmn Changement de Pokémon qui va être envoyé au serveur.
+     */
     public void sendChangePkmn(ChangePkmn changePkmn) {
         if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
             state = PokeArenaClientState.ACTION_SENT;
@@ -174,7 +187,6 @@ public class PokeArenaClient extends WebSocketClient {
      * Envoyer une déclaration de forfait au serveur.
      */
     public void sendForfeit() {
-        // Envoie d'un message de forfait
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.FORFEIT, null));
     }
 
@@ -196,10 +208,20 @@ public class PokeArenaClient extends WebSocketClient {
         this.state = state;
     }
 
+    /**
+     * Obtenir le trainer qui est manipulé par le protocole.
+     *
+     * @return Trainer qui est manipulé par le protocole.
+     */
     public Trainer getTrainer() {
-       return protocol.getTrainer();
+        return protocol.getTrainer();
     }
 
+    /**
+     * Obtenir le pokémon au combat de l'adversaire.
+     *
+     * @return Pokémon au combat de l'adversaire.
+     */
     public Pokemon getOpponentPokemon() {
         return protocol.getOpponentPokemon();
     }
