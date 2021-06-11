@@ -40,7 +40,7 @@ public class ClientExemple {
             Move laserglace = new Move("Laser Glace", PokeTypes.type.ICE, false, 95, 100, 16, 0, 0);
 
             Pokemon carchacrok = new Pokemon("Carchacrok", PokeTypes.type.DRAGON, PokeTypes.type.GROUND, 50, 108, 130, 95, 80, 85, 102, 0, 0, 0, 0, 0, 0, "SERIOUS", dracocharge, dracogriffe, seisme, lanceflammes);
-            Pokemon metalosse = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95, 90, 70,  0, 0, 0, 0, 0, 0, "SERIOUS", poingmeteor, seisme, poingglace, poingeclair);
+            Pokemon metalosse = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95, 90, 70, 0, 0, 0, 0, 0, 0, "SERIOUS", poingmeteor, seisme, poingglace, poingeclair);
             Pokemon tyranocif = new Pokemon("Tyranocif", PokeTypes.type.ROCK, PokeTypes.type.DARK, 50, 100, 134, 110, 95, 100, 61, 0, 0, 0, 0, 0, 0, "SERIOUS", lamederock, poingfeu, seisme, machouille);
             Pokemon togekiss = new Pokemon("Togekiss", PokeTypes.type.FAIRY, PokeTypes.type.FLYING, 50, 85, 50, 95, 120, 115, 80, 0, 0, 0, 0, 0, 0, "SERIOUS", lamedair, eclatmagique, ballombre, lanceflammes);
             Pokemon elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95, 0, 0, 0, 0, 0, 0, "SERIOUS", poingeclair, poingfeu, poingglace, seisme);
@@ -64,27 +64,56 @@ public class ClientExemple {
             team2.addPokemon(elekable);
 
             while (!input.equals("quit")) {
-                switch (input) {
-                    case "ping":
-                        client.sendPing();
-                        break;
-                    case "refresh":
-                        client.sendRefresh();
-                        break;
-                    case "move":
-                        client.sendMove(client.getTrainer().getLeadingPkmn().getMove1());
-                        break;
-                    case "team1":
-                        client.sendTeam(team1);
-                        break;
-                    case "team2":
-                        client.sendTeam(team2);
-                        break;
-                    case "changepkmn":
-                        client.sendChangePkmn(new ChangePkmn(2));
-                        break;
-                    case "battleinfo":
-                        try {
+                try {
+                    switch (input) {
+                        case "ping":
+                            client.sendPing();
+                            break;
+                        case "refresh":
+                            client.sendRefresh();
+                            break;
+                        case "move1":
+                            client.sendMove(client.getTrainer().getLeadingPkmn().getMove1());
+                            break;
+                        case "move2":
+                            client.sendMove(client.getTrainer().getLeadingPkmn().getMove2());
+                            break;
+                        case "move3":
+                            client.sendMove(client.getTrainer().getLeadingPkmn().getMove3());
+                            break;
+                        case "move4":
+                            client.sendMove(client.getTrainer().getLeadingPkmn().getMove4());
+                            break;
+                        case "moves":
+                            System.out.println("Attaques disponibles :");
+                            for (Move m : client.getTrainer().getLeadingPkmn().getMove()) {
+                                System.out.println(" - " + m);
+                            }
+                        case "team1":
+                            client.sendTeam(team1);
+                            break;
+                        case "team2":
+                            client.sendTeam(team2);
+                            break;
+                        case "changepkmn1":
+                            client.sendChangePkmn(new ChangePkmn(1));
+                            break;
+                        case "changepkmn2":
+                            client.sendChangePkmn(new ChangePkmn(2));
+                            break;
+                        case "changepkmn3":
+                            client.sendChangePkmn(new ChangePkmn(3));
+                            break;
+                        case "changepkmn4":
+                            client.sendChangePkmn(new ChangePkmn(4));
+                            break;
+                        case "changepkmn5":
+                            client.sendChangePkmn(new ChangePkmn(5));
+                            break;
+                        case "changepkmn6":
+                            client.sendChangePkmn(new ChangePkmn(6));
+                            break;
+                        case "battleinfo":
                             Trainer trainer = client.getTrainer();
                             System.out.println("Mes pokémons : ");
                             for (Pokemon pokemon : trainer.getPokemonTeam().getPokemons()) {
@@ -92,19 +121,19 @@ public class ClientExemple {
                             }
                             System.out.println("Pokémon adverse :");
                             System.out.println(client.getOpponentPokemon());
-                        } catch (NullPointerException e) {
-                            System.out.println("Le dresseur ou le pokemon adverse n'a pas été initialisé");
-                        }
-                        break;
-                    case "texte":
-                        client.sendText("Ceci est un message texte");
-                        break;
-                    case "state":
-                        System.out.println("État du client : " + client.getState());
-                        break;
-                    default:
-                        System.out.println("Commande non reconnue");
-                        break;
+                            break;
+                        case "texte":
+                            client.sendText("Ceci est un message texte");
+                            break;
+                        case "state":
+                            System.out.println("État du client : " + client.getState());
+                            break;
+                        default:
+                            System.out.println("Commande non reconnue");
+                            break;
+                    }
+                } catch (NullPointerException e) {
+                    System.out.println("Le dresseur ou le pokemon adverse n'a pas été initialisé");
                 }
                 input = sc.next();
             }
