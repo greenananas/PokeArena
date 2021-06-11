@@ -9,6 +9,8 @@ public enum PokeArenaClientState {
     ACTION_SENT,
     IN_BATTLE,
     BATTLE_ENDED,
+    BATTLE_WON,
+    BATTLE_LOST,
     WAITING_FOR_USER_ACTION,
     WAITING_FOR_SERVER_RESULT,
 }

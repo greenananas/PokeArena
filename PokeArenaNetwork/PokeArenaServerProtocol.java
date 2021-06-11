@@ -242,8 +242,15 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             battle.apply(secondToAct);
             if (firstToAct.getTrainer().getLeadingPkmn().isKO()) {
                 if (!firstToAct.getTrainer().hasPokemonLeft()) {
-                    server.setState(PokeArenaServerState.BATTLE_ENDED);
-                    //TODO: Envoie paquet pour dire que le combat est terminé
+                    if (firstToAct == trainer1) {
+                        server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.LOSE, null));
+                        server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.WIN, null));
+                        server.setState(PokeArenaServerState.CLIENT_2_WON);
+                    } else {
+                        server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.WIN, null));
+                        server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.LOSE, null));
+                        server.setState(PokeArenaServerState.CLIENT_1_WON);
+                    }
                 } else {
                     if (firstToAct == trainer1) {
                         server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
@@ -256,8 +263,16 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             }
         } else {
             if (!secondToAct.getTrainer().hasPokemonLeft()) {
+                if (secondToAct == trainer1) {
+                    server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.LOSE, null));
+                    server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.WIN, null));
+                    server.setState(PokeArenaServerState.CLIENT_2_WON);
+                } else {
+                    server.sendPacket(server.getClient1WS(), createPacket(PokeArenaPacketType.WIN, null));
+                    server.sendPacket(server.getClient2WS(), createPacket(PokeArenaPacketType.LOSE, null));
+                    server.setState(PokeArenaServerState.CLIENT_1_WON);
+                }
                 server.setState(PokeArenaServerState.BATTLE_ENDED);
-                //TODO: Envoie paquet pour dire que le combat est terminé
             } else {
                 if (secondToAct == trainer1) {
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);

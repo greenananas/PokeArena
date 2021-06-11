@@ -11,7 +11,7 @@ public class ClientExemple {
     public static void main(String[] args) {
         PokeArenaClient client;
         try {
-            client = new PokeArenaClient("localhost", 8888);
+            client = new PokeArenaClient("localhost", 8889);
             client.connect();
             Scanner sc = new Scanner(System.in);
             String input = sc.next();
@@ -63,6 +63,12 @@ public class ClientExemple {
             team2.addPokemon(togekiss);
             team2.addPokemon(elekable);
 
+            Team soloTeam1 = new Team();
+            soloTeam1.addPokemon(elekable);
+
+            Team soloTeam2 = new Team();
+            soloTeam2.addPokemon(pingoleon);
+
             while (!input.equals("quit")) {
                 try {
                     switch (input) {
@@ -72,15 +78,19 @@ public class ClientExemple {
                         case "refresh":
                             client.sendRefresh();
                             break;
+                        case "m1":
                         case "move1":
                             client.sendMove(client.getTrainer().getLeadingPkmn().getMove1());
                             break;
+                        case "m2":
                         case "move2":
                             client.sendMove(client.getTrainer().getLeadingPkmn().getMove2());
                             break;
+                        case "m3":
                         case "move3":
                             client.sendMove(client.getTrainer().getLeadingPkmn().getMove3());
                             break;
+                        case "m4":
                         case "move4":
                             client.sendMove(client.getTrainer().getLeadingPkmn().getMove4());
                             break;
@@ -95,24 +105,37 @@ public class ClientExemple {
                         case "team2":
                             client.sendTeam(team2);
                             break;
+                        case "st1":
+                            client.sendTeam(soloTeam1);
+                            break;
+                        case "st2":
+                            client.sendTeam(soloTeam2);
+                            break;
+                        case "cp1":
                         case "changepkmn1":
+                            client.sendChangePkmn(new ChangePkmn(0));
+                            break;
+                        case "cp2":
+                        case "changepkmn2":
                             client.sendChangePkmn(new ChangePkmn(1));
                             break;
-                        case "changepkmn2":
+                        case "cp3":
+                        case "changepkmn3":
                             client.sendChangePkmn(new ChangePkmn(2));
                             break;
-                        case "changepkmn3":
+                        case "cp4":
+                        case "changepkmn4":
                             client.sendChangePkmn(new ChangePkmn(3));
                             break;
-                        case "changepkmn4":
+                        case "cp5":
+                        case "changepkmn5":
                             client.sendChangePkmn(new ChangePkmn(4));
                             break;
-                        case "changepkmn5":
+                        case "cp6":
+                        case "changepkmn6":
                             client.sendChangePkmn(new ChangePkmn(5));
                             break;
-                        case "changepkmn6":
-                            client.sendChangePkmn(new ChangePkmn(6));
-                            break;
+                        case "b":
                         case "battleinfo":
                             Trainer trainer = client.getTrainer();
                             System.out.println("Mes pokémons : ");
@@ -125,6 +148,7 @@ public class ClientExemple {
                         case "texte":
                             client.sendText("Ceci est un message texte");
                             break;
+                        case "s":
                         case "state":
                             System.out.println("État du client : " + client.getState());
                             break;

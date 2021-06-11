@@ -41,6 +41,14 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 System.out.println("Serveur dit : " + ((PokeArenaTextPacket) request).getText());
                 response = null;
                 break;
+            case WIN:
+                client.setState(PokeArenaClientState.BATTLE_WON);
+                response = null;
+                break;
+            case LOSE:
+                client.setState(PokeArenaClientState.BATTLE_LOST);
+                response = null;
+                break;
             case UPDATE:
 
                 // Mise à jour des informations du combat

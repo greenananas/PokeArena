@@ -24,6 +24,8 @@ public class PokeArenaUtilities {
             .of(PokeArenaPacket.class, "type")
             .registerSubtype(PokeArenaPingPacket.class, "PING")
             .registerSubtype(PokeArenaPongPacket.class, "PONG")
+            .registerSubtype(PokeArenaWinPacket.class, "WIN")
+            .registerSubtype(PokeArenaLosePacket.class, "LOSE")
             .registerSubtype(PokeArenaRefreshPacket.class, "REFRESH")
             .registerSubtype(PokeArenaUpdatePacket.class, "UPDATE")
             .registerSubtype(PokeArenaTextPacket.class, "TEXT")
@@ -69,6 +71,12 @@ public class PokeArenaUtilities {
                 break;
             case PONG:
                 packet = new PokeArenaPongPacket();
+                break;
+            case WIN:
+                packet = new PokeArenaWinPacket();
+                break;
+            case LOSE:
+                packet = new PokeArenaLosePacket();
                 break;
             case REFRESH:
                 packet = new PokeArenaRefreshPacket();
