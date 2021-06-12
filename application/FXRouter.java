@@ -71,7 +71,8 @@ public final class FXRouter {
         private double sceneWidth;
         private double sceneHeight;
         // route data passed from goTo()
-        private Object data;
+        private Object data1;
+        private Object data2;
 
         private RouteScene(String scenePath) {
             this(scenePath, getWindowTitle(), getWindowWidth(), getWindowHeight());
@@ -193,14 +194,30 @@ public final class FXRouter {
 
     /** Switch between FXRouter route and show corresponding scenes
      * @param routeLabel: Route label identifier
-     * @param data: Data passed to route
+     * @param data1: Data passed to route
      * @throws Exception: throw FXMLLoader exception if file is not loaded correctly
      */
-    public static void goTo(String routeLabel, Object data) throws IOException {
+    public static void goTo(String routeLabel, Object data1) throws IOException {
         // get corresponding route
         RouteScene route = routes.get(routeLabel);
-        // set route data
-        route.data = data;
+        // set route data1
+        route.data1 = data1;
+        loadNewRoute(route);
+    }
+    
+    /** Switch between FXRouter route and show corresponding scenes
+     * @param routeLabel: Route label identifier
+     * @param data1: Data passed to route
+     * @param data2: Data passed to route
+     * @throws Exception: throw FXMLLoader exception if file is not loaded correctly
+     */
+    public static void goTo(String routeLabel, Object data1, Object data2) throws IOException {
+        // get corresponding route
+        RouteScene route = routes.get(routeLabel);
+        // set route data1
+        route.data1 = data1;
+        // set route data2
+        route.data2 = data2;
         loadNewRoute(route);
     }
 
@@ -276,10 +293,16 @@ public final class FXRouter {
         }
     }
 
-    /** Get current route data
+    /** Get current route data1
      */
-    public static Object getData() {
-        return currentRoute.data;
+    public static Object getData1() {
+        return currentRoute.data1;
+    }
+    
+    /** Get current route data1
+     */
+    public static Object getData2() {
+        return currentRoute.data2;
     }
 
 }

@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Model.Pokemon;
+import Model.Trainer;
+import PokeArenaNetwork.Client.PokeArenaClient;
+import PokeArenaNetwork.Server.PokeArenaServer;
+import PokeArenaNetwork.Server.PokeArenaServerState;
 import application.FXRouter;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
@@ -59,10 +64,12 @@ public class FightController implements Initializable {
 	@FXML
 	public void handleQuitButton(ActionEvent event) {
 		try {
+			MenuMultiController.end();
 			FXRouter.goTo("start");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("hyhy");
 		}
 	}
 	
@@ -90,7 +97,39 @@ public class FightController implements Initializable {
 		 * set the 2 pokemon
 		 * set the title with 2 names 
 		 */
+		
+		PokeArenaClient client = (PokeArenaClient) FXRouter.getData1();
+		PokeArenaServer serveur = (PokeArenaServer) FXRouter.getData2();
+
+		Boolean waiting = true;
+		
+//		while(waiting) {
+//			
+//		}
+		
+//		switch(serveur.getState()) {
+//		case WAITING_FOR_START :
+//			System.out.println("Waiting for start");
+//			break;
+//		case WAITING_FOR_CLIENT2_TO_JOIN :
+//			System.out.println("Waiting client 2");
+//			break;
+//			
+//		default :
+//			System.out.println("wut");
+//			
+//		}
+     
+//		if (serveur == null) {
+//			// join
+//			
+//			
+//		} else {
+//			//host
+//			
+//		}
 
 		
 	}
+
 }

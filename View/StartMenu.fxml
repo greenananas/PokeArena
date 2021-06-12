@@ -12,56 +12,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1280.0"
-	stylesheets="@application.css" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="Controller.StartMenuController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="Controller.StartMenuController">
 	<children>
-		<MediaView fx:id="mediaView" AnchorPane.bottomAnchor="0.0"
-			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-			AnchorPane.topAnchor="0.0" />
-		<BorderPane fx:id="mainPane" layoutX="26.0" layoutY="172.0"
-			prefHeight="514.0" prefWidth="1237.0" AnchorPane.bottomAnchor="0.0"
-			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-			AnchorPane.topAnchor="0.0">
+		<MediaView fx:id="mediaView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+		<BorderPane fx:id="mainPane" layoutX="26.0" layoutY="172.0" prefHeight="514.0" prefWidth="1237.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<center>
-				<HBox fx:id="hbox" alignment="CENTER" fillHeight="false"
-					spacing="20.0" BorderPane.alignment="CENTER">
+				<HBox fx:id="hbox" alignment="CENTER" fillHeight="false" spacing="20.0" BorderPane.alignment="CENTER">
 					<children>
-						<Button fx:id="soloButton" mnemonicParsing="false"
-							onAction="#handleSoloButton" prefHeight="100.0" prefWidth="200.0"
-							text="Jeu solo" />
-						<VBox fx:id="vbox" spacing="10.0">
-							<children>
-								<Label alignment="CENTER" prefWidth="200.0"
-									styleClass="labelNormal" text="Nom">
-									<VBox.margin>
-										<Insets />
-									</VBox.margin>
-								</Label>
-								<TextField fx:id="namePlayer" styleClass="namePlayer" />
-								<Label fx:id="errLabel" alignment="CENTER"
-									maxWidth="200.0" styleClass="errLabel"
-									text="Veuillez indiquez un nom." textFill="RED" />
-								<Button fx:id="startButton" mnemonicParsing="false"
-									onAction="#handleStartButton" prefHeight="100.0"
-									prefWidth="200.0" text="Commencer">
-									<VBox.margin>
-										<Insets top="40.0" />
-									</VBox.margin>
-								</Button>
-							</children>
-						</VBox>
-						<Button fx:id="multiButton" mnemonicParsing="false"
-							onAction="#handleMultiButton" prefHeight="100.0"
-							prefWidth="200.0" text="Jeu multi" />
+						<Button fx:id="soloButton" mnemonicParsing="false" onAction="#handleSoloButton" prefHeight="100.0" prefWidth="200.0" text="Jeu solo" />
+                  <VBox fx:id="vbox">
+                     <children>
+      						<VBox fx:id="startVbox" spacing="10.0">
+      							<children>
+      								<Label alignment="CENTER" prefWidth="200.0" styleClass="labelNormal" text="Nom">
+      									<VBox.margin>
+      										<Insets />
+      									</VBox.margin>
+      								</Label>
+      								<TextField fx:id="namePlayer" styleClass="namePlayer" />
+      								<Label fx:id="errLabel" alignment="CENTER" maxWidth="200.0" styleClass="errLabel" text="Veuillez indiquez un nom." textFill="RED" />
+      								<Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="100.0" prefWidth="200.0" text="Commencer">
+      									<VBox.margin>
+      										<Insets bottom="10.0" top="40.0" />
+      									</VBox.margin>
+      								</Button>
+      							</children>
+      						</VBox>
+      						<Button fx:id="teamButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleTeamButton" prefHeight="100.0" prefWidth="200.0" text="Editer les equipes" />
+                     </children>
+                  </VBox>
+						<Button fx:id="multiButton" mnemonicParsing="false" onAction="#handleMultiButton" prefHeight="100.0" prefWidth="200.0" text="Jeu multi" />
 					</children>
 				</HBox>
 			</center>
 			<top>
-				<ImageView fx:id="imageLogo" fitHeight="200.0"
-					fitWidth="500.0" pickOnBounds="true" preserveRatio="true"
-					BorderPane.alignment="BOTTOM_CENTER">
+				<ImageView fx:id="imageLogo" fitHeight="200.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_CENTER">
 					<image>
 						<Image url="@../Resources/logoPokeArena.png" />
 					</image>
@@ -70,15 +55,7 @@
 			<bottom>
 				<VBox alignment="CENTER" BorderPane.alignment="CENTER">
 					<children>
-						<Button fx:id="teamButton" alignment="CENTER"
-							mnemonicParsing="false" onAction="#handleTeamButton"
-							prefHeight="100.0" prefWidth="200.0" text="Editer les equipes">
-							<VBox.margin>
-								<Insets bottom="50.0" />
-							</VBox.margin>
-						</Button>
-						<Button fx:id="returnButton" mnemonicParsing="false"
-							onAction="#handleReturnButton" prefWidth="200.0" text="Retour">
+						<Button fx:id="returnButton" mnemonicParsing="false" onAction="#handleReturnButton" prefWidth="200.0" text="Retour">
 							<VBox.margin>
 								<Insets bottom="20.0" />
 							</VBox.margin>

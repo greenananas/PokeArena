@@ -16,9 +16,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import application.FXRouter;
 import javafx.event.ActionEvent;
@@ -31,6 +33,7 @@ public class StartMenuController implements Initializable {
 	@FXML	private BorderPane mainPane;
 	@FXML	private HBox hbox;
 	@FXML	private VBox vbox;
+	@FXML	private VBox startVbox;
 	@FXML	private Button soloButton;
 	@FXML	private Button startButton;
 	@FXML	private Button multiButton;
@@ -60,7 +63,7 @@ public class StartMenuController implements Initializable {
 			System.out.println("start");
 			//recup name 
 
-			hbox.getChildren().remove(vbox);
+			vbox.getChildren().remove(startVbox);
 
 			soloButton.setVisible(true);
 			multiButton.setVisible(true);
@@ -72,6 +75,15 @@ public class StartMenuController implements Initializable {
 	// Event Listener on Button[#soloButton].onAction
 	@FXML
 	public void handleSoloButton(ActionEvent event) {
+		
+		
+		try {
+			FileWriter myWriter = new FileWriter("Resources/name.txt");
+			myWriter.write(namePlayer.toString());
+			myWriter.close();
+		} catch (IOException e) {
+			System.out.println("Erreur file name.txt missing");
+		}
 
 
 		hbox.getChildren().remove(soloButton);
@@ -96,11 +108,11 @@ public class StartMenuController implements Initializable {
 	// Event Listener on Button[#multiButton].onAction
 	@FXML
 	public void handleMultiButton(ActionEvent event) {
-//		System.out.println("multi");
-//		hbox.getChildren().remove(soloButton);
-//		hbox.getChildren().remove(multiButton);
-//		teamButton.setVisible(false);
-//		returnButton.setVisible(true);
+
+		hbox.getChildren().remove(soloButton);
+		hbox.getChildren().remove(multiButton);
+		teamButton.setVisible(false);
+		returnButton.setVisible(true);
 		
 		Parent root;
 		URL url = application.Main.class.getResource("/View/MenuMulti.fxml");
@@ -130,8 +142,8 @@ public class StartMenuController implements Initializable {
 		
 		try {
 			FXRouter.goTo("start");
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -152,6 +164,17 @@ public class StartMenuController implements Initializable {
 		returnButton.setVisible(false);
 		errLabel.setVisible(false);
 		teamButton.setVisible(false);
+		
+		try {
+			File myObj = new File("Resources/name.txt");
+			Scanner myReader = new Scanner(myObj);
+			namePlayer.setText(myReader.nextLine());
+			myReader.close();
+			
+		} catch (IOException e) { 
+			System.out.println("Erreur file name.txt missing");
+			e.printStackTrace();
+		}
 
 	}
 }
