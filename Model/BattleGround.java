@@ -12,7 +12,7 @@ public class BattleGround {
     private HashMap<FieldTypes.traps, Integer> leftsideTraps;
     private HashMap<FieldTypes.traps, Integer> rightsideTraps;
 
-    BattleGround () {
+    public BattleGround() {
         this.field = null;
         this.weather = null;
         this.leftsideTraps = new HashMap<>();
