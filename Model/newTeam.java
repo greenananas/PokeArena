@@ -391,7 +391,7 @@ public class newTeam {
 
         //Affichage du nom de tous les Pokémons existants dans la BDD.
         try {
-            String sql = "SELECT * FROM pokemon";
+            String sql = "SELECT DISTINCT pretty_name from pokemon,sets WHERE pokemon.id = sets.pokemon";
             Norm_statement = Mycon.createStatement();
 
             Myresults = Norm_statement.executeQuery(sql);
