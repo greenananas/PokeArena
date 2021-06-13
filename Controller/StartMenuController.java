@@ -150,9 +150,8 @@ public class StartMenuController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		String path = new File("Resources/homeScreen.mp4").getAbsolutePath();
-		media = new Media(new File(path).toURI().toString());
+
+		media = new Media(getClass().getClassLoader().getResource("Resources/homeScreen.mp4").toExternalForm());
 		mediaPlayer = new MediaPlayer(media);
 
 		mediaView.setMediaPlayer(mediaPlayer);
