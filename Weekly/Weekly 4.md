@@ -32,4 +32,4 @@ Parmi elles, nous retrouvons notamment la **gestion de sous processus pour le mo
 
 ## Marche à suivre
 
-Notre manière de fonctionner un peu réoganisée, nous pensons reposer sur **des bases solides**. Une future réorganisation sera toutefois prochainement nécessaire, puisque **certaines tâches arriveront bientôt à leur fin**. 
+Notre manière de fonctionner un peu réoganisée, nous pensons reposer sur **des bases solides**. Une future réorganisation sera toutefois prochainement nécessaire, puisque **certaines tâches arriveront bientôt à leur fin**.
