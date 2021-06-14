@@ -1,0 +1,79 @@
+@startuml
+package PokeArenaNetwork {
+
+    package PokeArenaNetwork.Client {
+
+        class PokeArenaClient {
+            -state
+        }
+
+        PokeArenaClient o-- PokeArenaClientState
+
+        PokeArenaClient o-- PokeArenaClientProtocol
+
+        class PokeArenaClientProtocol
+
+        enum PokeArenaClientState
+
+    }
+
+    package PokeArenaNetwork.Server {
+
+        class PokeArenaServer {
+            -state
+        }
+
+        PokeArenaServer o-- PokeArenaServerState
+
+        PokeArenaServer o-- PokeArenaServerProtocol
+
+        class PokeArenaServerProtocol
+
+        enum PokeArenaServerState
+
+    }
+
+    package PokeArenaNetwork.Packets {
+
+        abstract PokeArenaPacket
+
+        class PokeArenaMovePacket extends PokeArenaPacket
+
+        class PokeArenaTeamPacket extends PokeArenaPacket
+
+        class PokeArenaWinPacket extends PokeArenaPacket
+
+    }
+
+    package PokeArenaNetwork.Example {
+
+        class ServerExemple
+
+        ServerExemple o-- PokeArenaServer
+
+        class ClientExemple
+
+        ClientExemple o-- PokeArenaClient
+
+    }
+
+    abstract PokeArenaProtocol
+
+    class PokeArenaClientProtocol extends PokeArenaProtocol
+
+    class PokeArenaServerProtocol extends PokeArenaProtocol
+
+    class PokeArenaUtilities
+
+
+    PokeArenaProtocol -- PokeArenaUtilities
+    PokeArenaClient -- PokeArenaUtilities
+    PokeArenaServer -- PokeArenaUtilities
+
+    PokeArenaPacket -- PokeArenaUtilities
+    PokeArenaPacket -- PokeArenaClient
+    PokeArenaPacket -- PokeArenaServer
+    PokeArenaPacket -- PokeArenaProtocol
+
+}
+@enduml
