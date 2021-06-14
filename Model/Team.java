@@ -11,11 +11,17 @@ public class Team {
     private ArrayList<Pokemon> pokemonTeam;
 
     /**
+     * Nom de l'équipe donné par le joueur
+     */
+    private String name;
+
+    /**
      * Créer une team vide
      *
      */
-    public Team() {
+    public Team(String n) {
         this.pokemonTeam = new ArrayList<>();
+        this.name = n;
     }
 
     /**
@@ -44,6 +50,15 @@ public class Team {
      */
     public Pokemon get(int n) {
         return this.pokemonTeam.get(n);
+    }
+
+    /**
+     * Obtenir le nom de l'équipe
+     *
+     * @return le nom de l'équipe
+     */
+    public String getName() {
+        return name;
     }
 
     /**

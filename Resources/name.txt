@@ -1,1 +1,1 @@
-Cakou
+TextField[id=namePlayer, styleClass=text-input text-field namePlayer]

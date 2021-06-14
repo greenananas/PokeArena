@@ -1,26 +1,39 @@
 package Model;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class main_db {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MultipleSamePokemonException, UnknownPokemonException, TeamNameAlreadyExistsException {
+        List <Team> all_teams3 = new ArrayList<>();
+        List <Team> all_teams6 = new ArrayList<>();
+        List<String> wanted_pokemons = new ArrayList<>();
+        wanted_pokemons.add("Florizarre");
+        wanted_pokemons.add("Dardargnan");
+        wanted_pokemons.add("Papilusion");
         newTeam nt = new newTeam();
-        Team New_team = nt.create();
-        System.out.println("Équipe terminée, voici les pokémons :");
-        for(Pokemon pok : New_team.getPokemons()){
-            System.out.println("Nom : " + pok.getName());
-            System.out.println("Stats :");
-            System.out.println(" HP  : " + pok.getHP() +
-                    " Attaque : " + pok.getAttack() +
-                    " Défense : " + pok.getDefense() +
-                    " Attaque Spéciale : " + pok.getSpeAttack() +
-                    " Défense Spéciale : " + pok.getSpeDefense() +
-                    " Vitesse : " + pok.getSpeed());
-            System.out.println("Moves :");
-            System.out.println(" Attaque 1 : " + pok.getMove1().getName() +
-                            " Attaque 2 : " + pok.getMove2().getName() +
-                            " Attaque 3 : " + pok.getMove3().getName() +
-                            " Attaque 4 : " + pok.getMove4().getName());
-            System.out.println("----------------------------------------------");
+        Team team;
+        team = nt.create(wanted_pokemons,"pokecrew");
+        all_teams6.add(team);
+        System.out.println("Équipe " + all_teams6.get(0).getName()+ " terminée, voici les pokémons :");
+        for(Team t : all_teams6){
+            for(Pokemon pok : t.getPokemons()){
+                System.out.println("Nom : " + pok.getName());
+                System.out.println("Stats :");
+                System.out.println(" HP  : " + pok.getHP() +
+                        " Attaque : " + pok.getAttack() +
+                        " Défense : " + pok.getDefence() +
+                        " Attaque Spéciale : " + pok.getSpeAttack() +
+                        " Défense Spéciale : " + pok.getSpeDefence() +
+                        " Vitesse : " + pok.getSpeed());
+                System.out.println("Moves :");
+                System.out.println(" Attaque 1 : " + pok.getMove1().getName() +
+                        " Attaque 2 : " + pok.getMove2().getName() +
+                        " Attaque 3 : " + pok.getMove3().getName() +
+                        " Attaque 4 : " + pok.getMove4().getName());
+                System.out.println("----------------------------------------------");
+            }
         }
     }
 }
+

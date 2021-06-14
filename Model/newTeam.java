@@ -8,34 +8,6 @@ import java.util.Scanner;
 
 public class newTeam {
 
-    public int menu() {
-        System.out.println("Salut, veux-tu créer une équipé de 3 ou 6 pokémons ?");
-        System.out.println("1 - Equipe de 3");
-        System.out.println("2 - Equipe de 6");
-        System.out.println("3 - Quitter");
-
-        Scanner sc = new Scanner(System.in);
-        int choix = sc.nextInt();
-
-        //Nombre de pokémons restants à ajouter dans l'équipe
-        int nb_pok = 0;
-        switch (choix) {
-            case 1:
-                System.out.println("Team de 3");
-                nb_pok = 3;
-                break;
-            case 2:
-                nb_pok = 6;
-                System.out.println("team de 6");
-                break;
-            default:
-                System.out.println("Aurevoir");
-                System.exit(1);
-                break;
-        }
-        return nb_pok;
-    }
-
     public int ret_set(Connection Mycon, int id_pok) {
 
         PreparedStatement Prep_statement;
@@ -137,65 +109,6 @@ public class newTeam {
                 return null;
         }
     }
-
-    /*public Nature init_nature(String nature) {
-        switch (nature) {
-            case ("bold"):
-                return (Nature.BOLD);
-            case ("quirky"):
-                return (Nature.QUIRKY);
-            case ("brave"):
-                return (Nature.BRAVE);
-            case ("calm"):
-                return (Nature.CALM);
-            case ("quiet"):
-                return (Nature.QUIET);
-            case ("docile"):
-                return (Nature.DOCILE);
-            case ("mild"):
-                return (Nature.MILD);
-            case ("rash"):
-                return (Nature.RASH);
-            case ("gentle"):
-                return (Nature.GENTLE);
-            case ("hardy"):
-                return (Nature.HARDY);
-            case ("jolly"):
-                return (Nature.JOLLY);
-            case ("lax"):
-                return (Nature.LAX);
-            case ("impish"):
-                return (Nature.IMPISH);
-            case ("sassy"):
-                return (Nature.SASSY);
-            case ("naughty"):
-                return (Nature.NAUGHTY);
-            case ("modest"):
-                return (Nature.MODEST);
-            case ("naive"):
-                return (Nature.NAIVE);
-            case ("hasty"):
-                return (Nature.HASTY);
-            case ("careful"):
-                return (Nature.CAREFUL);
-            case ("bashful"):
-                return (Nature.BASHFUL);
-            case ("relaxed"):
-                return (Nature.RELAXED);
-            case ("adamant"):
-                return (Nature.ADAMANT);
-            case ("serious"):
-                return (Nature.SERIOUS);
-            case ("lonely"):
-                return (Nature.LONELY);
-            case ("timid"):
-                return (Nature.TIMID);
-            default:
-                System.out.println("La nature dans la BDD est mal rédigée (AJOUTER UNE EXCPETION !)");
-        }
-        return null;
-    }*/
-
 
     public Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
 
@@ -378,29 +291,50 @@ public class newTeam {
                 hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3)));
     }
 
+    //Méthode de récupération de l'ID d'un Pokémon à partir de son nom
+    public int get_id_pok(Connection Mycon, String pok_name) {
+
+        PreparedStatement Prep_statement;
+        ResultSet Myresults;
+
+        int id_pok = 0;
+        try {
+            Prep_statement = Mycon.prepareStatement("SELECT id FROM pokemon WHERE pretty_name like ? ");
+            Prep_statement.setString(1, pok_name);
+            Myresults = Prep_statement.executeQuery();
+            id_pok = Myresults.getInt(1);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return id_pok;
+    }
 
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
-    public Team create() {
-
-        //Affiche les choix possible et récupere la taille de l'équipe à créer
-        int nb_pok = menu();
+    public Team create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
 
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
-        System.out.println("Voici la liste des Pokémons existants");
         Connection Mycon = dbConnection.connect();
         Statement Norm_statement;
         PreparedStatement Prep_statement = null;
         ResultSet Myresults;
 
+
+        //On récupere maintenant la taille de la liste de Pokémons voulus pour savoir si l'on affaire à une équipe de 3 ou de 6
+        int nb_poks = wanted_pokemons.size();
+
         //Liste stockant le nom de tous les Pokémons ayant un set dans la BDD
-        List <String> poke_with_set = new ArrayList<>();
+        List<String> poke_with_set = new ArrayList<>();
 
         //Liste stockant le nom de tous les Pokémons faisant partie de l'équipe
-        List <String> poke_in_team = new ArrayList<>();
+        List<String> poke_in_team = new ArrayList<>();
 
         //Liste stockant les id de tous les Pokémons faisant partie de l'équipe.
-        List <Integer> poke_ids = new ArrayList<>();
-        //Affichage du nom de tous les Pokémons existants dans la BDD.
+        List<Integer> poke_ids = new ArrayList<>();
+
+        //Liste stockant les id de tous les Pokémons faisant partie de l'équipe.
+        List<String> teams_names = new ArrayList<>();
+
+        //Créer une liste Java contenant tous les noms des Pokémons de notre BDD ayant un set
         try {
             String sql = "SELECT DISTINCT pretty_name from pokemon,sets WHERE pokemon.id = sets.pokemon";
             Norm_statement = Mycon.createStatement();
@@ -415,58 +349,213 @@ public class newTeam {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //Tant que la team n'est pas complétée on demande un nouveau Pokémon à ajouter
-        Scanner sc = new Scanner(System.in);
-        String wanted_pokemon; // Nom du pokémon à ajouter
-        int id_pok = 0; //Id du Pokémon à ajouter
-        Team New_team = new Team(); //Objet de la Team des Pokémons
-        Pokemon New_pokemon; // Objet qui contiendra le Pokémon à ajouter à la Team
-        while (nb_pok > 0) {
-            System.out.println("Quel est le nom du Pokémon à ajouter ?");
-            wanted_pokemon = sc.next();
-            if (poke_with_set.contains(wanted_pokemon)){
-                if (!poke_in_team.contains(wanted_pokemon)){
-                    //Récupération de l'ID du pokémon
-                    System.out.println("Pokémon voulu : " + wanted_pokemon);
-                    try {
-                        Prep_statement = Mycon.prepareStatement("SELECT id FROM pokemon WHERE pretty_name like ? ");
-                        Prep_statement.setString(1, wanted_pokemon);
-                        Myresults = Prep_statement.executeQuery();
-                        id_pok = Myresults.getInt(1);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    System.out.println("Id du pokémon : " + id_pok);
-                    New_pokemon = init_pok(Mycon, wanted_pokemon, id_pok);
-                    poke_ids.add(id_pok);
-                    poke_in_team.add(wanted_pokemon);
-                    New_team.addPokemon(New_pokemon);
-                    nb_pok--;
-                }
-                else {
-                    System.out.println("Ce Pokémon fait déjà partie de votre équipe !");
-                }
-            }
-            else {
-                System.out.println("Veuillez entrer le nom d'un des Pokémons listé !");
-            }
+
+        String table = null;
+        if(nb_poks == 3){
+            table = "Team3";
         }
-        System.out.println("Sauvegarde de l'équipe...");
-        if (poke_ids.size() == 3){
-            String sql = "INSERT INTO Team3 (P1, P2, P3) VALUES (?, ?, ?)";
+        else if(nb_poks == 6){
+            table = "Team6";
+        }
+
+
+        try {
+            Norm_statement = Mycon.createStatement();
+            Myresults = Norm_statement.executeQuery("SELECT name from " + table);
+            while (Myresults.next()){
+                teams_names.add(Myresults.getString("name"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        if(teams_names.contains(team_name)){
+            throw new TeamNameAlreadyExistsException("Il existe déjà une équipe portant ce nom !");
+        }
+
+
+        //Vérifier que les noms des Pokémons soient corrects et qu'il n'y ait pas de doublons
+        //Permet égalment de faire une liste d'entier contenant les ID des pokémons voulus
+        int loc_wrong_pok = 0;
+        int id_pok;
+        for (String wp : wanted_pokemons) {
+            loc_wrong_pok++;
+            if (!poke_with_set.contains(wp)) {
+                throw new UnknownPokemonException("Le Pokémon n'est pas connu dans la BDD", loc_wrong_pok);
+            }
+            if (poke_in_team.contains(wp)) {
+                throw new MultipleSamePokemonException("Le Pokémon fait déjà partie de votre équipe !", loc_wrong_pok);
+            }
+            poke_in_team.add(wp);
+            id_pok = get_id_pok(Mycon, wp);
+            poke_ids.add(id_pok);
+        }
+
+        //On ajoute les ids des pokémons à la table Team3 pour une équipe de 3 Pokémons
+        if (nb_poks == 3) {
+            String sql = "INSERT INTO Team3 ('name', 'P1', 'P2', 'P3')VALUES (?, ?, ?, ?)";
             try {
-                Prep_statement= Mycon.prepareStatement(sql);
-                int j = 0;
-                for(int i=1; i<=4; i++){
-                    Prep_statement.setInt(i, poke_ids.get(j));
-                    j++;
-                }
-                int row = Prep_statement.executeUpdate();
-                System.out.println("Ligne affectée : " + row);
-            } catch (SQLException throwables){
+                Prep_statement = Mycon.prepareStatement(sql);
+                Prep_statement.setString(1, team_name);
+                Prep_statement.setInt(2, poke_ids.get(0));
+                Prep_statement.setInt(3, poke_ids.get(1));
+                Prep_statement.setInt(4, poke_ids.get(2));
+            } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
-        return (New_team);
+        //On ajoute les ids des pokémons à la table Team6 pour une équipe de 3 Pokémons
+        else if (nb_poks == 6) {
+            String sql = "INSERT INTO Team6 ('name', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6') VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try {
+                Prep_statement = Mycon.prepareStatement(sql);
+                Prep_statement.setString(1, team_name);
+                Prep_statement.setInt(2, poke_ids.get(0));
+                Prep_statement.setInt(3, poke_ids.get(1));
+                Prep_statement.setInt(4, poke_ids.get(2));
+                Prep_statement.setInt(5, poke_ids.get(3));
+                Prep_statement.setInt(6, poke_ids.get(4));
+                Prep_statement.setInt(7, poke_ids.get(5));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        //Exécution de la requête d'insertion
+        int row = 0;
+        try {
+            row = Prep_statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("Ligne modifiée : " + row);
+
+        //Création et attribution de l'équipe à la liste des équipes
+        Team New_team = new Team(team_name); //Objet de la Team des Pokémons
+        Pokemon New_pokemon; // Objet qui contiendra le Pokémon à ajouter à la Team
+        for (int i = 0; i < nb_poks; i++) {
+            New_pokemon = init_pok(Mycon, wanted_pokemons.get(i), poke_ids.get(i));
+            New_team.addPokemon(New_pokemon);
+        }
+        return New_team;
+    }
+
+    public void load_teams(List<Team> at3, List<Team> at6) {
+        //Création des variables de connexion et d'accès à la BDD de nos Pokémons
+        Connection Mycon = dbConnection.connect();
+        Statement Norm_statement;
+        PreparedStatement Prep_statement = null;
+        ResultSet Myresults = null;
+        ResultSet Myresultsid = null;
+
+        String sql = "SELECT * from Team6";
+
+        try {
+            Norm_statement = Mycon.createStatement();
+            Myresults = Norm_statement.executeQuery(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Team temp_team;
+        String team_name;
+        Pokemon temp_pokemon;
+        int id_pok;
+        String pok_name;
+        try {
+            while (Myresults.next()) {
+                team_name = Myresults.getString("name");
+                temp_team = new Team(team_name);
+                for (int i = 3; i <= 8; i++) {
+                     id_pok = Myresults.getInt(i);
+                     Prep_statement = Mycon.prepareStatement("SELECT pretty_name from pokemon where id = ?");
+
+                     Prep_statement.setInt(1,id_pok);
+                     Myresultsid = Prep_statement.executeQuery();
+                     pok_name = Myresultsid.getString("pretty_name");
+                     temp_pokemon = init_pok(Mycon, pok_name, id_pok);
+                     temp_team.addPokemon(temp_pokemon);
+                }
+                at6.add(temp_team);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        sql = "SELECT * from Team3";
+
+        try {
+            Norm_statement = Mycon.createStatement();
+            Myresults = Norm_statement.executeQuery(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            while (Myresults.next()) {
+                team_name = Myresults.getString("name");
+                temp_team = new Team(team_name);
+                for (int i = 3; i <= 5; i++) {
+                    id_pok = Myresults.getInt(i);
+                    Prep_statement = Mycon.prepareStatement("SELECT pretty_name from pokemon where id = ?");
+
+                    Prep_statement.setInt(1,id_pok);
+                    Myresultsid = Prep_statement.executeQuery();
+                    pok_name = Myresultsid.getString("pretty_name");
+                    temp_pokemon = init_pok(Mycon, pok_name, id_pok);
+                    temp_team.addPokemon(temp_pokemon);
+                }
+                at3.add(temp_team);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void remove_team(String team_name, int size) throws UnknownTeamException {
+        //Création des variables de connexion et d'accès à la BDD de nos Pokémons
+        Connection Mycon = dbConnection.connect();
+        PreparedStatement pstmt = null;
+        Statement nstmt = null;
+        ResultSet rslts = null;
+
+        String sql = null;
+
+        if(size == 3 ){
+            sql = "SELECT name from Team3";
+        }
+        else if(size == 6){
+            sql = "SELECT name from Team3";
+        }
+
+        List<String> teams_names = new ArrayList<>();
+        try {
+            nstmt = Mycon.createStatement();
+            rslts = nstmt.executeQuery(sql);
+            while (rslts.next()){
+                teams_names.add(rslts.getString("name"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        if(!teams_names.contains(team_name)){
+            throw new UnknownTeamException("L'équipe que vous essayez de supprimer n'existe pas !");
+        }
+
+        if(size == 3 ){
+            sql = "DELETE from Team3 WHERE name like ?";
+        }
+        else if(size == 6){
+            sql = "DELETE from Team6 WHERE name like ?";
+        }
+
+        try {
+            pstmt = Mycon.prepareStatement(sql);
+            pstmt.setString(1,team_name);
+            pstmt.executeUpdate();
+            System.out.println("C'est supprimé !");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
