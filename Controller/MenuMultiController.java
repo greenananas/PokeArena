@@ -1,12 +1,15 @@
 package Controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import Model.*;
 import PokeArenaNetwork.Client.PokeArenaClient;
@@ -23,15 +26,15 @@ import javafx.scene.control.ChoiceBox;
 
 //
 
-public class MenuMultiController {
+public class MenuMultiController implements Initializable{
 	@FXML
 	private AnchorPane menuSolo;
 	@FXML
 	private Label labelChooseTeam;
 	@FXML
-	private ChoiceBox<?> modeList;
+	private ChoiceBox<String> modeList;
 	@FXML
-	private ChoiceBox<?> teamList;
+	private ChoiceBox<Team> teamList;
 	@FXML
 	private Button hostButton;
 	@FXML
@@ -39,19 +42,20 @@ public class MenuMultiController {
 	@FXML
 	private Button joinButton;
 	
-	private static PokeArenaServer server;
+	public static PokeArenaServer server;
 
 	// Event Listener on Button[#hostButton].onAction
 	@FXML
 	public void handleHostButton(ActionEvent event) {
 		// TODO
-		// verifier equipe + mode
+		
+
 		server = new PokeArenaServer("localhost", 8887);
 		server.start();
 
 		PokeArenaClient client;
 
-		// TEMPORAIRE A MODIFIER --- Initialisation d'objets pour l'exemple
+		// TEMPORAIRE A SUPPRIMER --- Initialisation d'objets pour l'exemple
 		Move dracocharge = new Move("Dracocharge", PokeTypes.type.DRAGON, true, 100, 70, 16, 0, 0);
 		Move dracogriffe = new Move("Dracogriffe", PokeTypes.type.DRAGON, true, 80, 100, 24, 0, 0);
 		Move seisme = new Move("Séisme", PokeTypes.type.GROUND, true, 100, 100, 16, 0, 0);
@@ -68,17 +72,23 @@ public class MenuMultiController {
 		Pokemon metalosse = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95, 90, 70, 0, 0, 0, 0, 0, 0, "HARDY", poingmeteor, seisme, poingglace, poingeclair);
 		Pokemon pingoleon = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111, 101, 60, 0, 0, 0, 0, 0, 0, "HARDY", surf, hydrocanon, luminocanon, laserglace);
 
-		Team team1 = new Team();
-		team1.addPokemon(carchacrok);
-		team1.addPokemon(metalosse);
-		team1.addPokemon(pingoleon);
+		Team team = new Team();
+		team.addPokemon(carchacrok);
+		team.addPokemon(metalosse);
+		team.addPokemon(pingoleon);
+		/////////////////////////////////////////////////////
+		
+		// A DECOMMENTER :
+		//Team team = teamList.getValue();
 
 		try {
 			client = new PokeArenaClient("localhost", 8887);
 			client.connect();
-			// client.sendTeam(team1); // remplacer team1 par teamList.getValue()
 
-			FXRouter.goTo("lobby", client, server);
+			
+			while(!client.isOpen()) {}
+				
+			FXRouter.goTo("lobby", client, team); 
 
 		} catch (URISyntaxException e) {
 
@@ -96,7 +106,7 @@ public class MenuMultiController {
 	@FXML
 	public void handleJoinButton(ActionEvent event) {
 		// TODO
-		// msg erreur si ip pb
+		// check ipField -> affiche msg si erreur
 
 		PokeArenaClient client;
 		
@@ -116,17 +126,20 @@ public class MenuMultiController {
 		Pokemon togekiss = new Pokemon("Togekiss", PokeTypes.type.FAIRY, PokeTypes.type.FLYING, 50, 85, 50, 95, 120, 115, 80, 0, 0, 0, 0, 0, 0, "HARDY", lamedair, eclatmagique, ballombre, lanceflammes);
 		Pokemon elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95, 0, 0, 0, 0, 0, 0, "HARDY", poingeclair, poingfeu, poingglace, seisme);
 		
-		Team team2 = new Team();
-		team2.addPokemon(tyranocif);
-		team2.addPokemon(togekiss);
-		team2.addPokemon(elekable);
+		Team team = new Team();
+		team.addPokemon(tyranocif);
+		team.addPokemon(togekiss);
+		team.addPokemon(elekable);
+		//////////////////////////////////////////////
+
+		// A DECOMMENTER :
+		//Team team = teamList.getValue();
 
 		try {
 			client = new PokeArenaClient(ipField.getText(), 8887);
 			client.connect();
-			// client.sendTeam(team2); // remplacer team2 par teamList.getValue()
 
-			FXRouter.goTo("lobby", client);
+			FXRouter.goTo("lobby", client, team);
 
 		} catch (URISyntaxException e) {
 
@@ -145,8 +158,15 @@ public class MenuMultiController {
 				server.stop();
 			} catch (InterruptedException e) {
 				System.out.println("pg");
-				//e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO 
+		// remplir choices box
+
+		
 	}
 }

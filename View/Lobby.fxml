@@ -41,7 +41,7 @@
 										<Image url="@../Resources/Buttons/Others/gray.png" />
 									</image>
 								</ImageView>
-                        <Label styleClass="labelTitleFight" text="CONNECTÉ" visible="false" />
+                        <Label fx:id="j2Connected" styleClass="labelTitleFight" text="CONNECTÉ" visible="false" />
 							</children>
 							<HBox.margin>
 								<Insets left="2.0" right="10.0" />

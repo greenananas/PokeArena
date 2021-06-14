@@ -60,7 +60,7 @@
 										<Insets />
 									</opaqueInsets>
 								</Label>
-								<ChoiceBox fx:id="teamList" prefWidth="150.0"
+								<ChoiceBox fx:id="modeList" prefWidth="150.0"
 									GridPane.columnIndex="1" />
 								<Label styleClass="labelNormal" text="Equipe"
 									GridPane.rowIndex="1">
@@ -68,7 +68,7 @@
 										<Insets />
 									</opaqueInsets>
 								</Label>
-								<ChoiceBox fx:id="modeList" prefWidth="150.0"
+								<ChoiceBox fx:id="teamList" prefWidth="150.0"
 									GridPane.columnIndex="1" GridPane.rowIndex="1" />
 							</children>
 							<VBox.margin>
