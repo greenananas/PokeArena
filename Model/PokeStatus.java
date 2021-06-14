@@ -39,27 +39,40 @@ public class PokeStatus {
      *
      * @return Si le pokémon peut agir.
      */
-    public boolean applyStatusEffect () {
+    public boolean applyStatusEffect (Pokemon pkmn) {
         boolean b;
         switch (status) {
             case ASLEEP:
                 if (duration > 0) {
                     b = false;
+                    System.out.println(pkmn.getName() + " est endormi...");
                     duration -= 1;
                 } else {
                     b = true;
+                    System.out.println(pkmn.getName() + " se réveille !");
                     giveStatus(Status.NORMAL);
                 }
                 break;
             case PARALYZED:
-                b = (!(Math.random() < 0.25));
+                if (Math.random() < 0.25) {
+                    System.out.println(pkmn.getName() + " est paralysé, il ne peut pas attaquer !");
+                    b = false;
+                }
+                else {
+                    b = true;
+                }
+
                 break;
             case FROZEN:
                 if (Math.random() < 0.20){
                     b = true;
+                    System.out.println(pkmn.getName() + " dégèle !");
                     giveStatus(Status.NORMAL);
                 }
-                else b = false;
+                else {
+                    System.out.println(pkmn.getName() + " est gelé.");
+                    b = false;
+                }
                 break;
             default:
                 b = true;

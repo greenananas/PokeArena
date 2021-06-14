@@ -12,7 +12,7 @@ public class BattleGround {
     private HashMap<FieldTypes.traps, Integer> leftsideTraps;
     private HashMap<FieldTypes.traps, Integer> rightsideTraps;
 
-    public BattleGround() {
+    public BattleGround () {
         this.field = null;
         this.weather = null;
         this.leftsideTraps = new HashMap<>();
@@ -44,7 +44,7 @@ public class BattleGround {
         return (left ? leftsideTraps : rightsideTraps);
     }
 
-    public void addTraps(Move mv, boolean left) {
+    public void addTraps(Move mv, boolean left) { //Utiliser l'id
         HashMap<FieldTypes.traps, Integer> traps = (left ? leftsideTraps : rightsideTraps);
         switch (mv.getName().toUpperCase()) {
             case "PICOTS" :

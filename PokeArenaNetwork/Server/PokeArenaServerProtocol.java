@@ -280,9 +280,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
         trainer2.pairWith(T2action);
         TrainerAction firstToAct = battle.calculatePriority();
         TrainerAction secondToAct = (firstToAct == trainer1 ? trainer2 : trainer1);
-        battle.apply(firstToAct);
+        battle.apply(firstToAct, secondToAct, true);
         if (!secondToAct.getTrainer().getLeadingPkmn().isKO()) {
-            battle.apply(secondToAct);
+            battle.apply(secondToAct, firstToAct, false);
             if (firstToAct.getTrainer().getLeadingPkmn().isKO()) {
                 if (!firstToAct.getTrainer().hasPokemonLeft()) {
                     if (firstToAct == trainer1) {

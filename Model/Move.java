@@ -6,6 +6,11 @@ package Model;
 public class Move extends Action {
 
     /**
+     * Identifiant de l'attaque
+     */
+    private final int id;
+
+    /**
      * Nom de l'attaque
      */
     private String name;
@@ -43,6 +48,7 @@ public class Move extends Action {
     /**
      * Créer une attaque
      *
+     * @param id         Identifiant de référence de l'attaque
      * @param name       Nom de l'attaque
      * @param type       Type de l'attaque
      * @param isPhysical Attaque physique ou spéciale
@@ -52,8 +58,9 @@ public class Move extends Action {
      * @param priority   Priorité d'une attaque
      * @param critRate   Niveau de critique d'une attaque
      */
-    public Move(String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority, int critRate) {
+    public Move(int id, String name, PokeTypes.type type, boolean isPhysical, int power, int precision, int pp, int priority, int critRate) {
         super(priority);
+        this.id = id;
         this.name = name;
         this.type = type;
         this.physical = isPhysical;
@@ -61,6 +68,15 @@ public class Move extends Action {
         this.precision = precision;
         this.pp = pp;
         this.critRate = critRate;
+    }
+
+    /**
+     * Obtenir l'identifiant de l'attaque
+     *
+     * @return Numero d'identification
+     */
+    public int getId() {
+        return id;
     }
 
     /**

@@ -91,7 +91,7 @@ public class newTeam {
 
         //MOVE PHYSICAL OR SPECIAL
         physical = damage_class.equals("physical");
-        return (new Move(string_name, move_type, physical, power, accuracy, pp, prio, crit_rate));
+        return (new Move(id_move, string_name, move_type, physical, power, accuracy, pp, prio, crit_rate));
     }
 
     public PokeTypes.type init_poketype(String type) {

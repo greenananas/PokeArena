@@ -36,7 +36,7 @@ public class Pokemon {
     /**
      * Statistique de défense de base du Pokémon.
      */
-    private int baseDefense;
+    private int baseDefence;
 
     /**
      * Statistique d'attaque spéciale de base du Pokémon.
@@ -46,7 +46,7 @@ public class Pokemon {
     /**
      * Statistique de défense spéciale de base du Pokémon.
      */
-    private int baseSpeDefense;
+    private int baseSpeDefence;
 
     /**
      * Statistique de vitesse de base du Pokémon.
@@ -66,7 +66,7 @@ public class Pokemon {
     /**
      * Points d'effort de défense du Pokémon.
      */
-    private int defenseEV;
+    private int defenceEV;
 
     /**
      * Points d'effort d'attaque spéciale du Pokémon.
@@ -76,7 +76,7 @@ public class Pokemon {
     /**
      * Point d'effort de défense spéciale du Pokémon.
      */
-    private int speDefenseEV;
+    private int speDefenceEV;
 
     /**
      * Points d'efforts de vitesse du Pokémon.
@@ -101,7 +101,7 @@ public class Pokemon {
     /**
      * Statistique de défense du Pokémon.
      */
-    private int defense;
+    private int defence;
 
     /**
      * Statistique d'attaque spéciale du Pokémon.
@@ -111,12 +111,37 @@ public class Pokemon {
     /**
      * Statistique de défense spéciale du Pokémon.
      */
-    private int speDefense;
+    private int speDefence;
 
     /**
      * Statistique de vitesse du Pokémon.
      */
     private int speed;
+
+    /**
+     * Modificateur d'attaque du Pokémon.
+     */
+    private int attackMod = 0;
+
+    /**
+     * Modificateur de défense du Pokémon.
+     */
+    private int defenceMod = 0;
+
+    /**
+     * Modificateur d'attaque spéciale du Pokémon.
+     */
+    private int speAttackMod = 0;
+
+    /**
+     * Modificateur de défense spéciale du Pokémon.
+     */
+    private int speDefenceMod = 0;
+
+    /**
+     * Modificateur de vitesse du Pokémon.
+     */
+    private int speedMod = 0;
 
     /**
      * Nature du Pokémon.
@@ -157,14 +182,14 @@ public class Pokemon {
      * @param l            Niveau du Pokémon
      * @param hp           Points de vie du Pokémon
      * @param attack       Statistique d'attaque du Pokémon
-     * @param defense      Statistique de défense du Pokémon
+     * @param defence      Statistique de défense du Pokémon
      * @param speAttack    Statistique d'attaque spéciale du Pokémon
-     * @param speDefense   Statistique de défense spéciale du Pokémon
+     * @param speDefence   Statistique de défense spéciale du Pokémon
      * @param speed        Statistique de vitesse du Pokémon
      * @param attackev     Statistique d'attaque du Pokémon
-     * @param defenseev    Statistique de défense du Pokémon
+     * @param defenceev    Statistique de défense du Pokémon
      * @param speattackev  Statistique d'attaque spéciale du Pokémon
-     * @param spedefenseev Statistique de défense spéciale du Pokémon
+     * @param spedefenceev Statistique de défense spéciale du Pokémon
      * @param speedev      Statistique de vitesse du Pokémon
      * @param nature       Nature du Pokémon
      * @param a1           Première attaque du Pokémon
@@ -173,8 +198,8 @@ public class Pokemon {
      * @param a4           Quatrième attaque du Pokémon
      */
     public Pokemon(String n, PokeTypes.type t1, PokeTypes.type t2, int l,
-                   int hp, int attack, int defense, int speAttack, int speDefense, int speed,
-                   int hpev, int attackev, int defenseev, int speattackev, int spedefenseev, int speedev,
+                   int hp, int attack, int defence, int speAttack, int speDefence, int speed,
+                   int hpev, int attackev, int defenceev, int speattackev, int spedefenceev, int speedev,
                    String nature, Move a1, Move a2, Move a3, Move a4) {
         this.name = n;
         this.type1 = t1;
@@ -183,15 +208,15 @@ public class Pokemon {
 
         this.baseHP = hp;
         this.baseAttack = attack;
-        this.baseDefense = defense;
+        this.baseDefence = defence;
         this.baseSpeAttack = speAttack;
-        this.baseSpeDefense = speDefense;
+        this.baseSpeDefence = speDefence;
         this.baseSpeed = speed;
         this.hpEV = hpev;
         this.attackEV = attackev;
-        this.defenseEV = defenseev;
+        this.defenceEV = defenceev;
         this.speAttackEV = speattackev;
-        this.speDefenseEV = spedefenseev;
+        this.speDefenceEV = spedefenceev;
         this.speedEV = speedev;
 
         this.move1 = a1;
@@ -201,9 +226,9 @@ public class Pokemon {
 
         this.maxhp = Math.round(((2 * baseHP + 31 + Math.round(hpEV / 4f)) * level) / 100f) + level + 10;
         this.attack = Math.round(((2 * baseAttack + 31 + Math.round(attackEV / 4f)) * level) / 100f + 5);
-        this.defense = Math.round(((2 * baseDefense + 31 + Math.round(defenseEV / 4f)) * level) / 100f + 5);
+        this.defence = Math.round(((2 * baseDefence + 31 + Math.round(defenceEV / 4f)) * level) / 100f + 5);
         this.speAttack = Math.round(((2 * baseSpeAttack + 31 + Math.round(speAttackEV / 4f)) * level) / 100f + 5);
-        this.speDefense = Math.round(((2 * baseSpeDefense + 31 + Math.round(speDefenseEV / 4f)) * level) / 100f + 5);
+        this.speDefence = Math.round(((2 * baseSpeDefence + 31 + Math.round(speDefenceEV / 4f)) * level) / 100f + 5);
         this.speed = Math.round(((2 * baseSpeed + Math.round(speedEV / 4f)) * level) / 100f + 5);
         this.hp = maxhp;
         applyNature(nature);
@@ -212,7 +237,7 @@ public class Pokemon {
     /**
      * Obtenir le nom du Pokémon.
      *
-     * @return Nom du Pokémon
+     * @return Nom du Pokémon.
      */
     public String getName() {
         return this.name;
@@ -221,7 +246,7 @@ public class Pokemon {
     /**
      * Obtenir le premier type du Pokémon.
      *
-     * @return Type du Pokémon
+     * @return Type du Pokémon.
      */
     public PokeTypes.type getType1() {
         return this.type1;
@@ -230,7 +255,7 @@ public class Pokemon {
     /**
      * Obtenir le second type du Pokémon.
      *
-     * @return Type du Pokémon
+     * @return Type du Pokémon.
      */
     public PokeTypes.type getType2() {
         return this.type2;
@@ -239,7 +264,7 @@ public class Pokemon {
     /**
      * Obtenir le niveau du Pokémon.
      *
-     * @return Niveau du Pokémon
+     * @return Niveau du Pokémon.
      */
     public int getLevel() {
         return this.level;
@@ -248,7 +273,7 @@ public class Pokemon {
     /**
      * Obtenir les points de vie du Pokémon.
      *
-     * @return Points de vie du Pokémon
+     * @return Points de vie du Pokémon.
      */
     public int getHP() {
         return this.hp;
@@ -257,7 +282,7 @@ public class Pokemon {
     /**
      * Obtenir le nombre de points de vie maximum du Pokémon.
      *
-     * @return Points de vie maximum du Pokémon
+     * @return Points de vie maximum du Pokémon.
      */
     public int getMaxHP() {
         return this.maxhp;
@@ -266,7 +291,7 @@ public class Pokemon {
     /**
      * Obtenir la statistique d'attaque du Pokémon.
      *
-     * @return Attaque du Pokémon
+     * @return Attaque du Pokémon.
      */
     public int getAttack() {
         return this.attack;
@@ -275,16 +300,16 @@ public class Pokemon {
     /**
      * Obtenir la statistique de défense du Pokémon.
      *
-     * @return Défense du Pokémon
+     * @return Défense du Pokémon.
      */
-    public int getDefense() {
-        return this.defense;
+    public int getDefence() {
+        return this.defence;
     }
 
     /**
      * Obtenir la statistique d'attaque spéciale du Pokémon.
      *
-     * @return Attaque Spéciale du Pokémon
+     * @return Attaque Spéciale du Pokémon.
      */
     public int getSpeAttack() {
         return this.speAttack;
@@ -293,25 +318,70 @@ public class Pokemon {
     /**
      * Obtenir la statistique de défense spéciale du Pokémon.
      *
-     * @return Défense spéciale du Pokémon
+     * @return Défense spéciale du Pokémon.
      */
-    public int getSpeDefense() {
-        return this.speDefense;
+    public int getSpeDefence() {
+        return this.speDefence;
     }
 
     /**
      * Obtenir la statistique de vitesse du Pokémon.
      *
-     * @return Vitesse du Pokémon
+     * @return Vitesse du Pokémon.
      */
     public int getSpeed() {
         return this.speed;
     }
 
     /**
+     * Obtenir le modificateur d'attaque du Pokémon.
+     *
+     * @return Modificateur d'attaque du Pokémon.
+     */
+    public int getAttackModifier() {
+        return attackMod;
+    }
+
+    /**
+     * Obtenir le modificateur de défense du Pokémon.
+     *
+     * @return Modificateur de défense du Pokémon.
+     */
+    public int getDefenceModifier() {
+        return defenceMod;
+    }
+
+    /**
+     * Obtenir le modificateur d'attaque spéciale du Pokémon.
+     *
+     * @return Modificateur d'attaque spéciale du Pokémon.
+     */
+    public int getSpeAttackModifier() {
+        return speAttackMod;
+    }
+
+    /**
+     * Obtenir le modificateur de défense spéciale du Pokémon.
+     *
+     * @return Modificateur de défense spéciale du Pokémon.
+     */
+    public int getSpeDefenceModifier() {
+        return speDefenceMod;
+    }
+
+    /**
+     * Obtenir le modificateur de vitesse du Pokémon.
+     *
+     * @return Modificateur de vitesse du Pokémon.
+     */
+    public int getSpeedModifier() {
+        return speedMod;
+    }
+
+    /**
      * Obtenir la première attaque du Pokémon.
      *
-     * @return Attaque 1 du Pokémon
+     * @return Attaque 1 du Pokémon.
      */
     public Move getMove1() {
         return this.move1;
@@ -320,7 +390,7 @@ public class Pokemon {
     /**
      * Obtenir la deuxième attaque du Pokémon.
      *
-     * @return Attaque 2 du Pokémon
+     * @return Attaque 2 du Pokémon.
      */
     public Move getMove2() {
         return this.move2;
@@ -329,7 +399,7 @@ public class Pokemon {
     /**
      * Obtenir la troisième attaque du Pokémon.
      *
-     * @return Attaque 3 du Pokémon
+     * @return Attaque 3 du Pokémon.
      */
     public Move getMove3() {
         return this.move3;
@@ -338,7 +408,7 @@ public class Pokemon {
     /**
      * Obtenir la quatrième attaque du Pokémon.
      *
-     * @return Attaque 4 du Pokémon
+     * @return Attaque 4 du Pokémon.
      */
     public Move getMove4() {
         return this.move4;
@@ -347,7 +417,7 @@ public class Pokemon {
     /**
      * Obtenir la précision du Pokémon.
      *
-     * @return Précision du Pokémon
+     * @return Précision du Pokémon.
      */
     public int getPrecision() {
         return this.precision;
@@ -356,7 +426,7 @@ public class Pokemon {
     /**
      * Obtenir l'esquive du Pokémon.
      *
-     * @return Esquive du Pokémon
+     * @return Esquive du Pokémon.
      */
     public int getEvasion() {
         return this.evasion;
@@ -374,7 +444,7 @@ public class Pokemon {
     /**
      * Obtenir le statut du Pokémon.
      *
-     * @return Statut du Pokémon
+     * @return Statut du Pokémon.
      */
     public PokeStatus getStatus() {
         return this.status;
@@ -383,7 +453,7 @@ public class Pokemon {
     /**
      * Vérifier que le Pokémon est confus.
      *
-     * @return Pokémon confus
+     * @return Pokémon confus.
      */
     public boolean isConfused() {
         return this.confused;
@@ -392,7 +462,7 @@ public class Pokemon {
     /**
      * Modifier le nom du Pokémon.
      *
-     * @param n Nouveau nom du Pokémon
+     * @param n Nouveau nom du Pokémon.
      */
     public void setName(String n) {
         this.name = n;
@@ -401,7 +471,7 @@ public class Pokemon {
     /**
      * Modifier le premier type du Pokémon.
      *
-     * @param t Nouveau type du Pokémon
+     * @param t Nouveau type du Pokémon.
      */
     public void setType1(PokeTypes.type t) {
         this.type1 = t;
@@ -410,7 +480,7 @@ public class Pokemon {
     /**
      * Modifier le second type du Pokémon.
      *
-     * @param t Nouveau type du Pokémon
+     * @param t Nouveau type du Pokémon.
      */
     public void setType2(PokeTypes.type t) {
         this.type2 = t;
@@ -419,7 +489,7 @@ public class Pokemon {
     /**
      * Modifier le niveau du Pokémon.
      *
-     * @param l Nouveau niveau du Pokémon
+     * @param l Nouveau niveau du Pokémon.
      */
     public void setLevel(int l) {
         this.level = l;
@@ -428,7 +498,7 @@ public class Pokemon {
     /**
      * Modifier les points de vie du Pokémon.
      *
-     * @param hp Nouveaux points de vie du Pokémon
+     * @param hp Nouveaux points de vie du Pokémon.
      */
     public void setHP(int hp) {
         this.hp = hp;
@@ -437,7 +507,7 @@ public class Pokemon {
     /**
      * Modifier les points de vie maximum du Pokémon.
      *
-     * @param hp Nouveaux points de vie maximum du Pokémon
+     * @param hp Nouveaux points de vie maximum du Pokémon.
      */
     public void setFullHP(int hp) {
         this.maxhp = hp;
@@ -446,7 +516,7 @@ public class Pokemon {
     /**
      * Modifier la statistique d'attaque du Pokémon.
      *
-     * @param a Nouvelle statistique d'attaque du Pokémon
+     * @param a Nouvelle statistique d'attaque du Pokémon.
      */
     public void setAttack(int a) {
         this.attack = a;
@@ -455,16 +525,16 @@ public class Pokemon {
     /**
      * Modifier la statistique de défense du Pokémon.
      *
-     * @param a Nouvelle statistique de défense du Pokémon
+     * @param a Nouvelle statistique de défense du Pokémon.
      */
-    public void setDefense(int a) {
-        this.defense = a;
+    public void setDefence(int a) {
+        this.defence = a;
     }
 
     /**
      * Modifier la statistique d'attaque spéciale du Pokémon.
      *
-     * @param a Nouvelle statistique d'attaque spéciale du Pokémon
+     * @param a Nouvelle statistique d'attaque spéciale du Pokémon.
      */
     public void setSpeAttack(int a) {
         this.speAttack = a;
@@ -473,19 +543,64 @@ public class Pokemon {
     /**
      * Modifier la statistique de défense spéciale du Pokémon.
      *
-     * @param a Nouvelle statistique de défense spéciale du Pokémon
+     * @param a Nouvelle statistique de défense spéciale du Pokémon.
      */
-    public void setSpeDefense(int a) {
-        this.speDefense = a;
+    public void setSpeDefence(int a) {
+        this.speDefence = a;
     }
 
     /**
      * Modifier la statistique de vitesse du Pokémon.
      *
-     * @param a Nouvelle statistique de vitesse du Pokémon
+     * @param a Nouvelle statistique de vitesse du Pokémon.
      */
     public void setSpeed(int a) {
         this.speed = a;
+    }
+
+    /**
+     * Obtenir le modificateur d'attaque du Pokémon.
+     *
+     * @return Nouveau modificateur d'attaque du Pokémon.
+     */
+    public void setAttackModifier(int attackMod) {
+        this.attackMod = attackMod;
+    }
+
+    /**
+     * Modifier le modificateur de défense du Pokémon.
+     *
+     * @param defenceMod Nouveau modificateur de défense du Pokémon.
+     */
+    public void setDefenceModifier(int defenceMod) {
+        this.defenceMod = defenceMod;
+    }
+
+    /**
+     * Modifier le modificateur d'attaque spéciale du Pokémon.
+     *
+     * @param speAttackMod Nouveau modificateur d'attaque spéciale du Pokémon.
+     */
+    public void setSpeAttackModifier(int speAttackMod) {
+        this.speAttackMod = speAttackMod;
+    }
+
+    /**
+     * Modifier le modificateur de défense spéciale du Pokémon.
+     *
+     * @param speDefenceMod Nouveau modificateur de défense spéciale du Pokémon.
+     */
+    public void setSpeDefenceModifier(int speDefenceMod) {
+        this.speDefenceMod = speDefenceMod;
+    }
+
+    /**
+     * Modifier le modificateur de vitesse du Pokémon.
+     *
+     * @param speedMod Nouveau modificateur de vitesse du Pokémon.
+     */
+    public void setSpeedModifier(int speedMod) {
+        this.speedMod = speedMod;
     }
 
     /**
@@ -578,9 +693,9 @@ public class Pokemon {
     private void applyNature(String nature) {
         this.nature = Nature.valueOf(nature.toUpperCase());
         this.attack = Math.round(this.attack * this.nature.getMultipliers()[0]);
-        this.defense = Math.round(this.defense * this.nature.getMultipliers()[1]);
+        this.defence = Math.round(this.defence * this.nature.getMultipliers()[1]);
         this.speAttack = Math.round(this.speAttack * this.nature.getMultipliers()[2]);
-        this.speDefense = Math.round(this.speDefense * this.nature.getMultipliers()[3]);
+        this.speDefence = Math.round(this.speDefence * this.nature.getMultipliers()[3]);
         this.speed = Math.round(this.speed * this.nature.getMultipliers()[4]);
     }
 
@@ -626,32 +741,13 @@ public class Pokemon {
      * @param at     Attaque lancée
      */
     public void attack(Pokemon target, Move at) {
-        if (doesHit(target, at)) {
-            if (target.getTypeMultiplier(at.getMoveType()) != 0) {
-                System.out.println("\nL'attaque " + at.getName() + " a touché " + target.getName() + ".");
-                target.getDamaged(this.getHitDamage(target, at));
-            } else {
-                System.out.println("\nÇa n'affecte pas " + target.getName() + "...");
-            }
+        if (target.getTypeMultiplier(at.getMoveType()) != 0) {
+            System.out.println("\nL'attaque " + at.getName() + " a touché " + target.getName() + ".");
+            target.getDamaged(this.getHitDamage(target, at));
         } else {
-            System.out.println("\nL'attaque " + at.getName() + " a échoué.");
+            System.out.println("\nÇa n'affecte pas " + target.getName() + "...");
         }
         at.setPP(at.getPP() - 1);
-    }
-
-    /**
-     * L'attaque du Pokémon va-t-elle atteindre sa cible.
-     *
-     * @param target Cible de l'attaque
-     * @param at     Attaque lancée
-     * @return L'attaque lancée touche l'ennemi
-     */
-    public boolean doesHit(Pokemon target, Move at) {
-        int precision = (int) Math.floor(Math.random() * 100);
-        if (precision <= at.getPrecision()) {
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -661,12 +757,12 @@ public class Pokemon {
      * @param at     Attaque lancée
      * @return Le nombre de points de vie infligés à la cible
      */
-    public int getHitDamage(Pokemon target, Move at) {
+    public int getHitDamage(Pokemon target, Move at) { //Prendre en compte les changements de stats
         double damageAlgo;
         if (at.isPhysical()) {
-            damageAlgo = ((((2 * (double) this.getLevel()) / 5) + 2) * at.getPower() * ((double) this.getAttack() / (double) target.getDefense())) / 50;
+            damageAlgo = ((((2 * (double) this.getLevel()) / 5) + 2) * at.getPower() * ((double) this.getAttack() / (double) target.getDefence())) / 50;
         } else {
-            damageAlgo = ((((2 * (double) this.getLevel()) / 5) + 2) * at.getPower() * ((double) this.getSpeAttack() / (double) target.getSpeDefense())) / 50;
+            damageAlgo = ((((2 * (double) this.getLevel()) / 5) + 2) * at.getPower() * ((double) this.getSpeAttack() / (double) target.getSpeDefence())) / 50;
         }
 
         double randomMultiplier = this.getRandomMultiplier();
@@ -727,17 +823,14 @@ public class Pokemon {
      */
     public boolean isCritical(Move at) {
         double critProb = 1 / 24;
-        if (this.getCritStage(at) == 2) {
+        if (this.getCritStage(at) == 1) {
             critProb = 1 / 8;
         }
-        if (this.getCritStage(at) == 3) {
+        if (this.getCritStage(at) == 2) {
             critProb = 1 / 2;
         }
-        if (this.getCritStage(at) == 4) {
+        if (this.getCritStage(at) >= 3) {
             critProb = 1;
-        }
-        if (this.getCritStage(at) == 0) {
-            critProb = 0;
         }
 
         double critRandom = (int) Math.floor(Math.random());
