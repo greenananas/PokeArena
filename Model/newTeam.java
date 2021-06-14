@@ -315,6 +315,7 @@ public class newTeam {
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
         Statement Norm_statement;
+        Statement stmt;
         PreparedStatement Prep_statement = null;
         ResultSet Myresults;
 
@@ -335,11 +336,12 @@ public class newTeam {
         List<String> teams_names = new ArrayList<>();
 
         //Créer une liste Java contenant tous les noms des Pokémons de notre BDD ayant un set
+
         try {
             String sql = "SELECT DISTINCT pretty_name from pokemon,sets WHERE pokemon.id = sets.pokemon";
-            Norm_statement = Mycon.createStatement();
+            stmt = Mycon.createStatement();
 
-            Myresults = Norm_statement.executeQuery(sql);
+            Myresults = stmt.executeQuery(sql);
             System.out.println("Liste des Pokémons :");
             while (Myresults.next()) {
                 String name = Myresults.getString("pretty_name");

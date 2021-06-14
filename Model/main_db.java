@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class main_db {
-    public static void main(String[] args) throws MultipleSamePokemonException, UnknownPokemonException, TeamNameAlreadyExistsException {
-        List <Team> all_teams3 = new ArrayList<>();
+    public static void main(String[] args) throws MultipleSamePokemonException, UnknownPokemonException, TeamNameAlreadyExistsException, UnknownTeamException {
+
+        //Test_ajout
+
+       /* List <Team> all_teams3 = new ArrayList<>();
         List <Team> all_teams6 = new ArrayList<>();
         List<String> wanted_pokemons = new ArrayList<>();
         wanted_pokemons.add("Florizarre");
@@ -33,7 +36,11 @@ public class main_db {
                         " Attaque 4 : " + pok.getMove4().getName());
                 System.out.println("----------------------------------------------");
             }
-        }
+        }*/
+
+        //Test Suppression
+        newTeam nt = new newTeam();
+        nt.remove_team("pokecrew",3);
     }
 }
 
