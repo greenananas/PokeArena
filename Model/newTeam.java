@@ -196,6 +196,7 @@ public class newTeam {
         return null;
     }*/
 
+
     public Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
 
 
@@ -377,6 +378,8 @@ public class newTeam {
                 hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3)));
     }
 
+
+    //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
     public Team create() {
 
         //Affiche les choix possible et récupere la taille de l'équipe à créer
@@ -386,9 +389,17 @@ public class newTeam {
         System.out.println("Voici la liste des Pokémons existants");
         Connection Mycon = dbConnection.connect();
         Statement Norm_statement;
-        PreparedStatement Prep_statement;
+        PreparedStatement Prep_statement = null;
         ResultSet Myresults;
 
+        //Liste stockant le nom de tous les Pokémons ayant un set dans la BDD
+        List <String> poke_with_set = new ArrayList<>();
+
+        //Liste stockant le nom de tous les Pokémons faisant partie de l'équipe
+        List <String> poke_in_team = new ArrayList<>();
+
+        //Liste stockant les id de tous les Pokémons faisant partie de l'équipe.
+        List <Integer> poke_ids = new ArrayList<>();
         //Affichage du nom de tous les Pokémons existants dans la BDD.
         try {
             String sql = "SELECT DISTINCT pretty_name from pokemon,sets WHERE pokemon.id = sets.pokemon";
@@ -398,12 +409,12 @@ public class newTeam {
             System.out.println("Liste des Pokémons :");
             while (Myresults.next()) {
                 String name = Myresults.getString("pretty_name");
+                poke_with_set.add(name);
                 System.out.println("Nom : " + name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         //Tant que la team n'est pas complétée on demande un nouveau Pokémon à ajouter
         Scanner sc = new Scanner(System.in);
         String wanted_pokemon; // Nom du pokémon à ajouter
@@ -413,22 +424,49 @@ public class newTeam {
         while (nb_pok > 0) {
             System.out.println("Quel est le nom du Pokémon à ajouter ?");
             wanted_pokemon = sc.next();
-            //Récupération de l'ID du pokémon
-            System.out.println("Pokémon voulu : " + wanted_pokemon);
+            if (poke_with_set.contains(wanted_pokemon)){
+                if (!poke_in_team.contains(wanted_pokemon)){
+                    //Récupération de l'ID du pokémon
+                    System.out.println("Pokémon voulu : " + wanted_pokemon);
+                    try {
+                        Prep_statement = Mycon.prepareStatement("SELECT id FROM pokemon WHERE pretty_name like ? ");
+                        Prep_statement.setString(1, wanted_pokemon);
+                        Myresults = Prep_statement.executeQuery();
+                        id_pok = Myresults.getInt(1);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    System.out.println("Id du pokémon : " + id_pok);
+                    New_pokemon = init_pok(Mycon, wanted_pokemon, id_pok);
+                    poke_ids.add(id_pok);
+                    poke_in_team.add(wanted_pokemon);
+                    New_team.addPokemon(New_pokemon);
+                    nb_pok--;
+                }
+                else {
+                    System.out.println("Ce Pokémon fait déjà partie de votre équipe !");
+                }
+            }
+            else {
+                System.out.println("Veuillez entrer le nom d'un des Pokémons listé !");
+            }
+        }
+        System.out.println("Sauvegarde de l'équipe...");
+        if (poke_ids.size() == 3){
+            String sql = "INSERT INTO Team3 (P1, P2, P3) VALUES (?, ?, ?)";
             try {
-                Prep_statement = Mycon.prepareStatement("SELECT id FROM pokemon WHERE pretty_name like ? ");
-                Prep_statement.setString(1, wanted_pokemon);
-                Myresults = Prep_statement.executeQuery();
-                id_pok = Myresults.getInt(1);
-            } catch (SQLException throwables) {
+                Prep_statement= Mycon.prepareStatement(sql);
+                int j = 0;
+                for(int i=1; i<=4; i++){
+                    Prep_statement.setInt(i, poke_ids.get(j));
+                    j++;
+                }
+                int row = Prep_statement.executeUpdate();
+                System.out.println("Ligne affectée : " + row);
+            } catch (SQLException throwables){
                 throwables.printStackTrace();
             }
-            System.out.println("Id du pokémon : " + id_pok);
-            New_pokemon = init_pok(Mycon, wanted_pokemon, id_pok);
-            New_team.addPokemon(New_pokemon);
-            nb_pok--;
         }
         return (New_team);
     }
-
 }
