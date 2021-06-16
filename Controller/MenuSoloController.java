@@ -37,9 +37,10 @@ public class MenuSoloController implements Initializable {
 		try {
 			FXRouter.goTo("fight");
 
-		} catch (IOException e) {
-			System.out.println("Erreur go to Fight");
-		}
+		} catch (IOException e) {			
+			System.out.println("Erreur chargement menu solo.");
+			e.printStackTrace();;
+		}	
 	}
 
 	@Override

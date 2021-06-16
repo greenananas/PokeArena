@@ -19,7 +19,7 @@
 }
 
 .labelTitleFight {
-	-fx-font: 40.0px "Avenir Next";
+	-fx-font: 20.0px "Avenir Next";
 	-fx-text-fill: #8f0500;
 }
 
@@ -65,5 +65,24 @@
 	-fx-padding: 10px;
 	-fx-text-fill: white;
 	-fx-border-color: white;
+}
+
+.fight.label{
+	
+	-fx-font: 20px "American Typewriter Light";
+	-fx-text-fill: white;
+}
+
+.bulleInfoPkm {
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+	-fx-background-color: #8f0500;
+	-fx-background-radius: 10px ;
+	
+}
+
+.labelPkm {
+	-fx-background-color: #4fc3f7;	
+	-fx-font: 20.0px "Avenir Next";
+	-fx-text-fill: #b3e4fb;
 }
 
