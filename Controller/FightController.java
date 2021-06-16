@@ -266,7 +266,7 @@ public class FightController implements Initializable  {
 			});
 		
 		ArrayList<Pokemon> listPkms = cli.getTrainer().getPokemonTeam().getPokemons();
-		if(listPkms.size()>3) {	
+		if(listPkms.size()<4) {	
 			sp4.getChildren().remove(nameP4);
 			sp5.getChildren().remove(nameP5);
 			sp6.getChildren().remove(nameP6);
@@ -356,7 +356,7 @@ public class FightController implements Initializable  {
 		nameP2.setText(name2);
 		nameP3.setText(name3);
 		
-		if(listPkms.size()<=3) {
+		if(listPkms.size()>3) {
 				
 			String name4 = listPkms.get(3).getName();
 			String name5 = listPkms.get(4).getName();

@@ -10,17 +10,15 @@ import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 
-public class FilteredComboBox {
+public class FilteredComboBox extends HBox {
     // Data list.
     ObservableList<String> items;
 
     ComboBox<String> cb;
 
-    HBox root;
-
     public FilteredComboBox() {
-        root = new HBox();
-        cb = new ComboBox<>();
+
+    	cb = new ComboBox<>();
         cb.setEditable(true);
 
         // Create a FilteredList wrapping the ObservableList.
@@ -56,7 +54,7 @@ public class FilteredComboBox {
 
         cb.setItems(filteredItems);
 
-        root.getChildren().add(cb);
+        this.getChildren().add(cb);
     }
 
     public void clear() {
