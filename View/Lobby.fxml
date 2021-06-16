@@ -8,68 +8,72 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="lobby" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LobbyController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0"
+	styleClass="lobby" stylesheets="@application.css"
+	xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="Controller.LobbyController">
 	<children>
-		<BorderPane styleClass="backgroundFight" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<BorderPane styleClass="backgroundFight"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<center>
 				<HBox alignment="CENTER" BorderPane.alignment="CENTER">
 					<children>
-						<StackPane>
-							<children>
-								<ImageView fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
-									</image>
-								</ImageView>
-                        <Label styleClass="labelTitleFight" text="CONNECTÉ" />
-							</children>
+						<ImageView fx:id="j1Connected" fitWidth="500.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image
+									url="@../Resources/Buttons/Others/connectedBlue.png" />
+							</image>
 							<HBox.margin>
-								<Insets left="10.0" right="2.0" />
+								<Insets right="5.0" />
 							</HBox.margin>
-						</StackPane>
-						<StackPane>
-							<children>
-								<ImageView fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@../Resources/Buttons/Others/pokeballconRed.png" />
-									</image>
-								</ImageView>
-								<ImageView fx:id="j2Gray" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@../Resources/Buttons/Others/gray.png" />
-									</image>
-								</ImageView>
-                        <Label fx:id="j2Connected" styleClass="labelTitleFight" text="CONNECTÉ" visible="false" />
-							</children>
+						</ImageView>
+						<ImageView fx:id="j2Connected" fitWidth="500.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../Resources/Buttons/Others/disconnected.png" />
+							</image>
 							<HBox.margin>
-								<Insets left="2.0" right="10.0" />
+								<Insets left="5.0" />
 							</HBox.margin>
-						</StackPane>
+						</ImageView>
 					</children>
 				</HBox>
 			</center>
 			<bottom>
-				<Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="75.0" prefWidth="300.0" styleClass="lobby" stylesheets="@application.css" text="Commencer" BorderPane.alignment="CENTER">
+				<Button fx:id="startButton" mnemonicParsing="false"
+					onAction="#handleStartButton" prefHeight="75.0" prefWidth="300.0"
+					styleClass="lobby" stylesheets="@application.css" text="Commencer"
+					BorderPane.alignment="CENTER">
 					<BorderPane.margin>
 						<Insets bottom="70.0" />
 					</BorderPane.margin>
 				</Button>
 			</bottom>
 			<top>
-				<Label fx:id="statusLabel" onMouseClicked="#updateStatus" styleClass="lobby" text="STATUS : EN ATTENTE DE JOUEUR 2" BorderPane.alignment="CENTER">
+				<Label fx:id="statusLabel" onMouseClicked="#updateStatus"
+					styleClass="lobby" text="STATUS : EN ATTENTE DE JOUEUR 2"
+					BorderPane.alignment="CENTER">
 					<BorderPane.margin>
 						<Insets top="50.0" />
 					</BorderPane.margin>
 				</Label>
 			</top>
 		</BorderPane>
-		<ImageView fx:id="imageLogo" fitHeight="111.0" fitWidth="177.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+		<ImageView fx:id="imageLogo" fitHeight="111.0"
+			fitWidth="177.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true"
+			preserveRatio="true" AnchorPane.leftAnchor="20.0"
+			AnchorPane.topAnchor="20.0">
 			<image>
 				<Image url="@../Resources/logoPokeArena.png" />
 			</image>
 		</ImageView>
-		<Button fx:id="quitButton" layoutX="-7.0" layoutY="714.0" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="52.0" prefWidth="190.0" stylesheets="@application.css" text="Quitter" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+		<Button fx:id="quitButton" layoutX="-7.0" layoutY="714.0"
+			mnemonicParsing="false" onAction="#handleQuitButton"
+			prefHeight="52.0" prefWidth="190.0" stylesheets="@application.css"
+			text="Quitter" AnchorPane.bottomAnchor="20.0"
+			AnchorPane.leftAnchor="20.0" />
 	</children>
 </AnchorPane>
