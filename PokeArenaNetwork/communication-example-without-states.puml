@@ -1,0 +1,25 @@
+@startuml
+!pragma teoz true
+'https://plantuml.com/sequence-diagram
+
+participant "Client 1" as c1
+participant Serveur as s
+participant "Client 2" as c2
+
+c1 -> s : connect
+c2 -> s : connect
+c2 -> s : sendTeam
+c1 -> s : sendTeam
+s -> c1 : update
+& s -> c2 : update
+c1 -> s : sendMove
+c2 -> s : sendChangePkmn
+s -> c1 : update
+& s -> c2 : update
+c1 -> s : sendChangePkmn
+s -> c1 : update
+& s -> c2 : update
+... Déroulement du combat ...
+s -> c1 : sendWin
+& s -> c2 : sendLose
+@enduml
