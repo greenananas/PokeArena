@@ -4,7 +4,9 @@ import Controller.FightController;
 import Model.*;
 import PokeArenaNetwork.Packets.PokeArenaPacket;
 import PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
 import PokeArenaNetwork.PokeArenaUtilities;
+import PokeArenaNetwork.Update;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -80,8 +82,19 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onMessage(String message) {
-        System.out.println("Message reçu : " + message);
         PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet.getType() == PokeArenaPacketType.UPDATE) {
+            Update up = ((PokeArenaUpdatePacket) packet).getUpdate();
+            System.out.println("Équipe :");
+            for (Pokemon poke : up.getTeam().getPokemons()) {
+                System.out.println("- " + poke.getName());
+            }
+            System.out.println("Pokémon adverse : " + up.getOpponentPokemon());
+            System.out.println("Dernière attaque adverse : " + up.getOppenentMove());
+        } else {
+            System.out.println(message);
+            System.out.println("Message reçu : " + message);
+        }
         if (packet != null) protocol.processPacket(getConnection(), packet);
     }
 

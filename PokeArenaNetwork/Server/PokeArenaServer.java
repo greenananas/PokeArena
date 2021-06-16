@@ -106,18 +106,8 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onMessage(WebSocket ws, String message) {
+        System.out.println("Message reçu : " + message);
         PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
-        if (packet instanceof PokeArenaUpdatePacket) {
-            Update up = ((PokeArenaUpdatePacket) packet).getUpdate();
-            System.out.println("Equipe");
-            for (Pokemon poke : up.getTeam().getPokemons()) {
-                System.out.println("- " + poke.getName());
-            }
-            System.out.println("Pokémon adverse : " + up.getOpponentPokemon());
-            System.out.println("Dernière attaque adverse : " + up.getOppenentMove());
-        } else {
-            System.out.println(message);
-        }
         if (packet != null) protocol.processPacket(ws, packet);
     }
 
