@@ -176,12 +176,12 @@ public class Pokemon {
     /**
      * Lien local vers l'image de face du Pokémon.
      */
-    private String font_sprite;
+    private String frontSprite;
 
      /**
      * Lien local vers l'image de dos du Pokémon.
      */
-    private String back_sprite;
+    private String backSprite;
 
     /**
      * Créer un Pokémon.
@@ -243,8 +243,8 @@ public class Pokemon {
         this.hp = maxhp;
         applyNature(nature);
 
-        this.font_sprite = fs;
-        this.back_sprite = bs;
+        this.frontSprite = fs;
+        this.backSprite = bs;
     }
 
     /**
@@ -468,7 +468,7 @@ public class Pokemon {
      *
      * @return Lien du sprite de face du Pokémon.
      */
-    public String getFont_sprite() {
+    public String getFront_sprite() {
         return font_sprite;
     }
 
