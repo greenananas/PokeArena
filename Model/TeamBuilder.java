@@ -36,7 +36,7 @@ public class TeamBuilder {
      * @param id_move ID du Move
      * @return un Move correspond à l'id_move
      */
-    public static Move init_move(Connection Mycon, int id_move) throws WrongTypeBDDException {
+    public static Move init_move(Connection Mycon, int id_move){
 
         PreparedStatement Prep_statement;
         ResultSet Myresults;
@@ -79,7 +79,7 @@ public class TeamBuilder {
      * @param type Chaîne de caractères représentant le type
      * @return Un objet issu de l'énumération type de la classe PokeTypes
      */
-    public static PokeTypes.type init_poketype(String type) throws WrongTypeBDDException {
+    public static PokeTypes.type init_poketype(String type){
         switch (type) {
             case ("grass"):
                 return (PokeTypes.type.GRASS);
@@ -129,7 +129,7 @@ public class TeamBuilder {
      * @param id_pok Identifiant BDD du Pokémon à instancier
      * @return L'objet Pokemon instancié
      */
-    public static Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) throws WrongTypeBDDException {
+    public static Pokemon init_pok(Connection Mycon, String name_pok, int id_pok){
 
 
         //Récupération du numéro du set du Pokémon
@@ -396,7 +396,7 @@ public class TeamBuilder {
      * @param team_name Le nom à attribuer à l'équipe à créer
      */
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
-    public void create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException, WrongTypeBDDException {
+    public void create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException{
 
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
@@ -543,7 +543,7 @@ public class TeamBuilder {
      * Procédure de chargement de toutes les Teams de notre BDD dans l'objet Liste de Teams.
      * Cette procédure sera exécutée à chaque lancement du jeu.
      */
-    public static void load_teams() throws WrongTypeBDDException {
+    public static void load_teams(){
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
         Statement Norm_statement;
@@ -568,7 +568,7 @@ public class TeamBuilder {
             while (Myresults.next()) {
                 team_name = Myresults.getString("name");
                 temp_team = new Team(team_name);
-                for (int i = 3; i <= 8; i++) {
+                for (int i = 2; i <= 7; i++) {
                      id_pok = Myresults.getInt(i);
                      Prep_statement = Mycon.prepareStatement("SELECT pretty_name from pokemon where id = ?");
 
