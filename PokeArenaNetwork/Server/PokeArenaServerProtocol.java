@@ -39,6 +39,16 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
     private Action client2Action;
 
     /**
+     * Dernière attaque envoyé par le client 1.
+     */
+    private Move lastClient1Move;
+
+    /**
+     * Dernière attaque envoyé par le client 2.
+     */
+    private Move lastClient2Move;
+
+    /**
      * Trainer du client 1, utilisée uniquement pour créer l'objet Battle lors de l'initialisation du combat.
      */
     private Trainer client1Trainer;
@@ -73,15 +83,18 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case REFRESH:
                 Team trainerTeam = null;
                 Pokemon opponentPokemon = null;
+                Move opponentMove = null;
                 if (ws == server.getClient1WS()) {
                     trainerTeam = battle.trainer1.getTrainer().getPokemonTeam();
                     opponentPokemon = battle.trainer2.getTrainer().getLeadingPkmn();
+                    opponentMove = lastClient2Move;
                 } else if (ws == server.getClient2WS()) {
                     trainerTeam = battle.trainer2.getTrainer().getPokemonTeam();
                     opponentPokemon = battle.trainer1.getTrainer().getLeadingPkmn();
+                    opponentMove = lastClient1Move;
                 }
                 response = (trainerTeam != null && opponentPokemon != null)
-                        ? createPacket(PokeArenaPacketType.UPDATE, new Update(trainerTeam, opponentPokemon))
+                        ? createPacket(PokeArenaPacketType.UPDATE, new Update(trainerTeam, opponentPokemon, opponentMove))
                         : null;
                 break;
             case FORFEIT:
@@ -221,10 +234,12 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case WAITING_FOR_CLIENTS_ACTIONS:
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
+                    if (action instanceof Move) lastClient1Move = (Move) action;
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_ACTION);
                     response = null;
                     break;
                 } else if (ws == server.getClient2WS()) {
+                    if (action instanceof Move) lastClient2Move = (Move) action;
                     client2Action = action;
                     server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_ACTION);
                     response = null;
@@ -234,6 +249,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case WAITING_FOR_CLIENT_1_ACTION:
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
+                    if (action instanceof Move) lastClient1Move = (Move) action;
                     server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
 
                     handleActions(client1Action, client2Action);
@@ -245,6 +261,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case WAITING_FOR_CLIENT_2_ACTION:
                 if (ws == server.getClient2WS()) {
                     client2Action = action;
+                    if (action instanceof Move) lastClient2Move = (Move) action;
                     server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
 
                     handleActions(client1Action, client2Action);
@@ -340,7 +357,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      * @return Mise à jour des informations du joueur 1.
      */
     public Update generateClient1Update() {
-        return new Update(battle.trainer1.getTrainer().getPokemonTeam(), battle.trainer2.getTrainer().getLeadingPkmn());
+        return new Update(battle.trainer1.getTrainer().getPokemonTeam(), battle.trainer2.getTrainer().getLeadingPkmn(), lastClient2Move);
     }
 
     /**
@@ -349,7 +366,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      * @return Mise à jour des informations du joueur 2.
      */
     public Update generateClient2Update() {
-        return new Update(battle.trainer2.getTrainer().getPokemonTeam(), battle.trainer1.getTrainer().getLeadingPkmn());
+        return new Update(battle.trainer2.getTrainer().getPokemonTeam(), battle.trainer1.getTrainer().getLeadingPkmn(), lastClient1Move);
     }
 
 }
