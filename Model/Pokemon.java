@@ -174,6 +174,16 @@ public class Pokemon {
     private Move move1, move2, move3, move4;
 
     /**
+     * Lien local vers l'image de face du Pokémon.
+     */
+    private String font_sprite;
+
+    /**
+     * Lien local vers l'image de dos du Pokémon.
+     */
+    private String back_sprite;
+
+    /**
      * Créer un Pokémon.
      *
      * @param n            Nom du Pokémon
@@ -200,7 +210,7 @@ public class Pokemon {
     public Pokemon(String n, PokeTypes.type t1, PokeTypes.type t2, int l,
                    int hp, int attack, int defence, int speAttack, int speDefence, int speed,
                    int hpev, int attackev, int defenceev, int speattackev, int spedefenceev, int speedev,
-                   String nature, Move a1, Move a2, Move a3, Move a4) {
+                   String nature, Move a1, Move a2, Move a3, Move a4, String fs, String bs) {
         this.name = n;
         this.type1 = t1;
         this.type2 = t2;
@@ -232,6 +242,9 @@ public class Pokemon {
         this.speed = Math.round(((2 * baseSpeed + Math.round(speedEV / 4f)) * level) / 100f + 5);
         this.hp = maxhp;
         applyNature(nature);
+
+        this.font_sprite = fs;
+        this.back_sprite = bs;
     }
 
     /**
@@ -448,6 +461,24 @@ public class Pokemon {
      */
     public PokeStatus getStatus() {
         return this.status;
+    }
+
+    /**
+     * Obtenir le lien du sprite de face du Pokémon.
+     *
+     * @return Lien du sprite de face du Pokémon.
+     */
+    public String getFont_sprite() {
+        return font_sprite;
+    }
+
+    /**
+     * Obtenir le lien du sprite de dos du Pokémon.
+     *
+     * @return Lien du sprite de dos du Pokémon.
+     */
+    public String getBack_sprite() {
+        return back_sprite;
     }
 
     /**

@@ -113,6 +113,10 @@ public class newTeam {
     public Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
 
 
+        String fs = "Resources\\Sprites\\frontFrame2\\" + id_pok;
+        String bs = "Resources\\Sprites\\back\\" + id_pok;
+
+
         //Récupération du numéro du set du Pokémon
         int id_set = ret_set(Mycon, id_pok);
 
@@ -287,8 +291,10 @@ public class newTeam {
             throwables.printStackTrace();
         }
 
+
         return (new Pokemon(name_pok, type1, type2, 50, hp, attaque, defense, att_spe, def_spe, vitesse,
-                hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3)));
+                hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3),
+                fs, bs));
     }
 
     //Méthode de récupération de l'ID d'un Pokémon à partir de son nom
