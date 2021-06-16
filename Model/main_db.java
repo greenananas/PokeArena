@@ -7,18 +7,16 @@ public class main_db {
     public static void main(String[] args) throws MultipleSamePokemonException, UnknownPokemonException, TeamNameAlreadyExistsException, UnknownTeamException {
 
         //Test_ajout
-        List <Team> all_teams3 = new ArrayList<>();
-        List <Team> all_teams6 = new ArrayList<>();
         List<String> wanted_pokemons = new ArrayList<>();
+        newTeam.load_teams();
+        wanted_pokemons.add("Tortank");
+        wanted_pokemons.add("Dracaufeu");
         wanted_pokemons.add("Florizarre");
-        wanted_pokemons.add("Dardargnan");
-        wanted_pokemons.add("Papilusion");
         newTeam nt = new newTeam();
-        Team team;
-        team = nt.create(wanted_pokemons,"mathis_crew");
-        all_teams6.add(team);
-        System.out.println("Équipe " + all_teams6.get(0).getName()+ " terminée, voici les pokémons :");
-        for(Team t : all_teams6){
+        nt.create(wanted_pokemons,"last4_crew");
+        System.out.println("Équipe " + newTeam.allTeams3.get(0).getName()+ " terminée, voici les pokémons :");
+        for(Team t : newTeam.allTeams3){
+            System.out.println("Équipe " + t.getName()+ " existante, voici les pokémons :");
             for(Pokemon pok : t.getPokemons()){
                 System.out.println("Nom : " + pok.getName());
                 System.out.println("Stats :");
@@ -40,8 +38,7 @@ public class main_db {
         }
 
         //Test Suppression
-      /*  newTeam nt = new newTeam();
-        nt.remove_team("nathan_crew",3);*/
+        newTeam.remove_team("last3_crew",3);
     }
 }
 
