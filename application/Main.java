@@ -21,7 +21,7 @@ public class Main extends Application {
 			FXRouter.startFrom("start");
 
 		} catch (Exception e) {
-			System.out.println("balec");
+			System.out.println("oups");
 			e.printStackTrace();
 		}
 	}

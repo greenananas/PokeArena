@@ -43,7 +43,7 @@ public class LobbyController implements Initializable {
 	// Event Listener on Button[#startButton].onAction
 	@FXML
 	public void handleStartButton(ActionEvent event) {
-		
+				
 		if (this.srv != null) {
 			// In the hosting client (client 1)
 			if (this.srv.getState() == PokeArenaServerState.WAITING_FOR_START) {

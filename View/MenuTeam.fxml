@@ -2,8 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,35 +13,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="menuSet" maxHeight="-Infinity"
-	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-	prefWidth="500.0" styleClass="menuSolo" stylesheets="@application.css"
-	xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="Controller.MenuTeamController">
+<AnchorPane fx:id="menuSet" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="500.0" styleClass="menuSolo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuTeamController">
 	<children>
-		<BorderPane prefHeight="200.0" prefWidth="200.0"
-			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<top>
-				<Label alignment="CENTER" styleClass="labelTitle"
-					text="Menu edition equipes" textAlignment="CENTER"
-					textOverrun="CENTER_WORD_ELLIPSIS" BorderPane.alignment="CENTER">
+				<Label alignment="CENTER" styleClass="labelTitle" text="Menu edition equipes" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" BorderPane.alignment="CENTER">
 					<BorderPane.margin>
 						<Insets top="5.0" />
 					</BorderPane.margin>
 				</Label>
 			</top>
 			<center>
-				<VBox prefHeight="200.0" prefWidth="100.0"
-					BorderPane.alignment="CENTER">
+				<VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
 					<children>
 						<AnchorPane>
 							<children>
-								<Label alignment="CENTER"
-									maxWidth="1.7976931348623157E308" styleClass="labelNormal"
-									text="Nouvelle equipe" AnchorPane.bottomAnchor="0.0"
-									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-									AnchorPane.topAnchor="0.0">
+								<Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="labelNormal" text="Nouvelle equipe" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 									<opaqueInsets>
 										<Insets />
 									</opaqueInsets>
@@ -50,14 +37,11 @@
 						</AnchorPane>
 						<GridPane>
 							<columnConstraints>
-								<ColumnConstraints halignment="CENTER"
-									hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
 							<rowConstraints>
-								<RowConstraints minHeight="50.0"
-									prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
 								<Label styleClass="labelNormal" text="Nombre de pokémon">
@@ -65,8 +49,16 @@
 										<Insets />
 									</opaqueInsets>
 								</Label>
-								<ChoiceBox fx:id="nbList" prefWidth="150.0"
-									GridPane.columnIndex="1" />
+                        <RadioButton fx:id="team3" mnemonicParsing="false" styleClass="labelNormal" text="3 Pokemons" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" styleClass="labelNormal" text="6 Pokemons" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </RadioButton>
 							</children>
 							<VBox.margin>
 								<Insets left="20.0" right="20.0" />
@@ -74,24 +66,17 @@
 						</GridPane>
 						<GridPane>
 							<columnConstraints>
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
 							<rowConstraints>
-								<RowConstraints maxHeight="30.0" minHeight="30.0"
-									prefHeight="30.0" vgrow="SOMETIMES" />
-								<RowConstraints maxHeight="30.0" minHeight="30.0"
-									prefHeight="30.0" vgrow="SOMETIMES" />
-								<RowConstraints maxHeight="30.0" minHeight="30.0"
-									prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Label styleClass="labelNormal" text="Pokemons"
-									GridPane.halignment="CENTER" GridPane.rowIndex="1">
+								<Label styleClass="labelNormal" text="Pokemons" GridPane.halignment="CENTER" GridPane.rowIndex="1">
 									<opaqueInsets>
 										<Insets />
 									</opaqueInsets>
@@ -99,22 +84,12 @@
 										<Insets />
 									</GridPane.margin>
 								</Label>
-								<TextField fx:id="p1" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="1" />
-								<TextField fx:id="p2" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="1"
-									GridPane.rowIndex="1" />
-								<TextField fx:id="p3" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="1"
-									GridPane.rowIndex="2" />
-								<TextField fx:id="p4" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="2" />
-								<TextField fx:id="p5" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="2"
-									GridPane.rowIndex="1" />
-								<TextField fx:id="p6" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="2"
-									GridPane.rowIndex="2" />
+								<TextField fx:id="p1" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" />
+								<TextField fx:id="p2" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+								<TextField fx:id="p3" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+								<TextField fx:id="p4" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" />
+								<TextField fx:id="p5" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+								<TextField fx:id="p6" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
 							</children>
 							<VBox.margin>
 								<Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
@@ -122,29 +97,17 @@
 						</GridPane>
 						<AnchorPane>
 							<children>
-								<Button fx:id="addButton" alignment="CENTER"
-									contentDisplay="CENTER" minHeight="-Infinity"
-									minWidth="-Infinity" mnemonicParsing="false"
-									onAction="#handleAddButton" text="AJOUTER"
-									AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0"
-									AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0" />
+								<Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAddButton" text="AJOUTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0" />
 							</children>
 						</AnchorPane>
 						<AnchorPane>
 							<children>
-								<Line endX="460.0" stroke="WHITE"
-									AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0"
-									AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0" />
+								<Line endX="460.0" stroke="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0" />
 							</children>
 						</AnchorPane>
 						<AnchorPane>
 							<children>
-								<Label alignment="CENTER" contentDisplay="CENTER"
-									layoutX="168.0" maxWidth="1.7976931348623157E308"
-									styleClass="labelNormal" text="Supprimer une equipe"
-									textAlignment="CENTER" AnchorPane.bottomAnchor="0.0"
-									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-									AnchorPane.topAnchor="0.0">
+								<Label alignment="CENTER" contentDisplay="CENTER" layoutX="168.0" maxWidth="1.7976931348623157E308" styleClass="labelNormal" text="Supprimer une equipe" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 									<opaqueInsets>
 										<Insets />
 									</opaqueInsets>
@@ -153,14 +116,11 @@
 						</AnchorPane>
 						<GridPane prefHeight="50.0" prefWidth="400.0">
 							<columnConstraints>
-								<ColumnConstraints halignment="CENTER"
-									hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES"
-									minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
 							<rowConstraints>
-								<RowConstraints minHeight="50.0"
-									prefHeight="50.0" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
 								<Label styleClass="labelNormal" text="Nom de l'equipe">
@@ -168,8 +128,7 @@
 										<Insets />
 									</opaqueInsets>
 								</Label>
-								<TextField fx:id="teamNameField" maxWidth="150.0"
-									prefWidth="150.0" GridPane.columnIndex="1" />
+								<TextField fx:id="teamNameField" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" />
 							</children>
 							<padding>
 								<Insets left="20.0" right="20.0" />
@@ -177,10 +136,7 @@
 						</GridPane>
 						<AnchorPane>
 							<children>
-								<Button fx:id="suppButton" mnemonicParsing="false"
-									onAction="#handleSuppButton" text="SUPPRIMER"
-									AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0"
-									AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0" />
+								<Button fx:id="suppButton" mnemonicParsing="false" onAction="#handleSuppButton" text="SUPPRIMER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0" />
 							</children>
 						</AnchorPane>
 					</children>

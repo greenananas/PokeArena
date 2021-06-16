@@ -20,6 +20,7 @@ import PokeArenaNetwork.Client.PokeArenaClient;
 import PokeArenaNetwork.Client.PokeArenaClientState;
 import PokeArenaNetwork.Server.PokeArenaServer;
 import application.FXRouter;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
 import javafx.scene.layout.AnchorPane;
@@ -86,7 +87,6 @@ public class FightController implements Initializable  {
 	private PokeArenaClient cli;
 	private PokeArenaServer srv;
 	private float oldHP;
-	
 	
 	// Event Listener on Button[#darkModeButton].onAction
 	@FXML
@@ -257,6 +257,14 @@ public class FightController implements Initializable  {
 		this.cli = (PokeArenaClient) FXRouter.getData1();
 		this.srv = (PokeArenaServer) FXRouter.getData2();
 		
+		FightController fightCtrlr = this;
+		
+		Platform.runLater(new Runnable() {
+			 @Override public void run() {
+			     cli.setCtrl(fightCtrlr);
+			 }
+			});
+		
 		// TODO
 		// cli.getTrainer().getLeadingPkmn();
 		// recup sprites et mettre dans imageCurrPkm et imageOppPkm
@@ -271,6 +279,7 @@ public class FightController implements Initializable  {
 
 		this.oldHP = cli.getTrainer().getLeadingPkmn().getMaxHP();
 		updateAll();	
+		
 		
 //		this.cli.getState().toString().addLi
 //		
@@ -304,17 +313,17 @@ public class FightController implements Initializable  {
 		
 		pvCurrPkm.setProgress(currHP/maxHP);
 		
-		if(this.oldHP >= currHP) {
-			imageCurrPkm.setTranslateX(-2);
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			imageCurrPkm.setTranslateX(2);
-			
-		}
+//		if(this.oldHP >= currHP) {
+//			imageCurrPkm.setTranslateX(-2);
+//			try {
+//				TimeUnit.SECONDS.sleep(1);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			imageCurrPkm.setTranslateX(2);
+//			
+//		}
 		
 		oldHP = currHP;
 		

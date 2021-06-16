@@ -136,6 +136,9 @@ public class MenuMultiController implements Initializable{
 		team.addPokemon(tyranocif);
 		team.addPokemon(togekiss);
 		team.addPokemon(elekable);
+		
+		//Team team = newTeam.allt
+		
 		//////////////////////////////////////////////
 
 		// A DECOMMENTER :
