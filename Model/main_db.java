@@ -8,13 +8,16 @@ public class main_db {
         //Test_ajout
         List<String> wanted_pokemons = new ArrayList<>();
         TeamBuilder.load_teams();
-        wanted_pokemons.add("Tortank");
-        wanted_pokemons.add("Dracaufeu");
+        wanted_pokemons.add("Arbok");
+        wanted_pokemons.add("Roucarnage");
+        wanted_pokemons.add("Dardargnan");
+        wanted_pokemons.add("Rattatac");
+        wanted_pokemons.add("Simularbre");
         wanted_pokemons.add("Florizarre");
         TeamBuilder nt = new TeamBuilder();
-        nt.create(wanted_pokemons,"wowowo2_crew");
-        System.out.println("Équipe " + TeamBuilder.allTeams3.get(TeamBuilder.allTeams3.size() - 1).getName()+ " terminée, voici les pokémons :");
-        for(Team t : TeamBuilder.allTeams3){
+        nt.create(wanted_pokemons,"team6-2");
+        System.out.println("Équipe " + TeamBuilder.allTeams6.get(TeamBuilder.allTeams6.size() - 1).getName()+ " terminée, voici les pokémons :");
+        for(Team t : TeamBuilder.allTeams6){
             System.out.println("----------------------------------------------------------");
             for(Pokemon pok : t.getPokemons()){
                 System.out.println("Identifiant du Pokémon : " + pok.getId());
@@ -37,8 +40,8 @@ public class main_db {
 
         //Test Suppression
         /*newTeam.remove_team("last3_crew",3);*/
-        String findTeam = "leny_crew";
-        Team t = TeamBuilder.getTeamByName(findTeam, TeamBuilder.allTeams3);
+        String findTeam = "team6-2";
+        Team t = TeamBuilder.getTeamByName(findTeam, TeamBuilder.allTeams6);
         System.out.println("Team : " + t.getName() + " trouvé !");
     }
 }
