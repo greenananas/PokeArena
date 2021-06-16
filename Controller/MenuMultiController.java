@@ -153,26 +153,18 @@ public class MenuMultiController implements Initializable{
 			System.out.println(team.getName());
 		}
 		
-		modeList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+		modeList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 				List<Team> tl;
-				if (newValue.toString() == "1") {
+				if(modeList.getValue() == "3v3") {
 					// 6 teams
 					tl = TeamBuilder.allTeams6;
 					
 				} else {
 					// 3 teams 
 					tl = TeamBuilder.allTeams3;
-				}
-				
-
-				System.out.println("*********");
-				System.out.println(newValue.toString());
-				System.out.println("*********");
-				for (Team team : tl) {
-					System.out.println(team.getName());
 				}
 				
 				teamList.getItems().clear();
