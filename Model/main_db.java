@@ -13,11 +13,12 @@ public class main_db {
         wanted_pokemons.add("Dracaufeu");
         wanted_pokemons.add("Florizarre");
         newTeam nt = new newTeam();
-        nt.create(wanted_pokemons,"mathis_crew");
+        nt.create(wanted_pokemons,"camille2_crew");
         System.out.println("Équipe " + newTeam.allTeams3.get(0).getName()+ " terminée, voici les pokémons :");
         for(Team t : newTeam.allTeams3){
-            System.out.println("Équipe " + t.getName()+ " existante, voici les pokémons :");
+            System.out.println("----------------------------------------------------------");
             for(Pokemon pok : t.getPokemons()){
+                System.out.println("Identifiant du Pokémon : " + pok.getId());
                 System.out.println("Nom : " + pok.getName());
                 System.out.println("Stats :");
                 System.out.println(" HP  : " + pok.getHP() +
@@ -31,8 +32,6 @@ public class main_db {
                         " Attaque 2 : " + pok.getMove2().getName() +
                         " Attaque 3 : " + pok.getMove3().getName() +
                         " Attaque 4 : " + pok.getMove4().getName());
-                System.out.println("Sprite de face :" + pok.getFont_sprite());
-                System.out.println("Sprite de dos :" + pok.getBack_sprite());
                 System.out.println("----------------------------------------------");
             }
         }

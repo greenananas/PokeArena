@@ -10,6 +10,11 @@ import Model.Utils.Pair;
 public class newTeam {
 
 
+    /**
+     * Fonction de récupération de le l'ID du set du Pokémon passé en paramètre
+     * @param id_pok ID du Pokémon
+     * @return
+     */
     public static int ret_set(Connection Mycon, int id_pok) {
 
         PreparedStatement Prep_statement;
@@ -27,6 +32,7 @@ public class newTeam {
         }
         return (id_set);
     }
+
 
     public static Move init_move(Connection Mycon, int id_move) {
 
@@ -113,10 +119,6 @@ public class newTeam {
     }
 
     public static Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
-
-
-        String fs = "../Resources/Sprites/frontFrame2/" + id_pok + ".png";
-        String bs = "../Resources/Sprites/back/" + id_pok + ".png";
 
 
         //Récupération du numéro du set du Pokémon
@@ -295,8 +297,7 @@ public class newTeam {
 
 
         return (new Pokemon(name_pok, type1, type2, 50, hp, attaque, defense, att_spe, def_spe, vitesse,
-                hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3),
-                fs, bs));
+                hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3), id_pok));
     }
 
     //Méthode de récupération de l'ID d'un Pokémon à partir de son nom

@@ -174,14 +174,9 @@ public class Pokemon {
     private Move move1, move2, move3, move4;
 
     /**
-     * Lien local vers l'image de face du Pokémon.
+     * Identifiant du Pokémon inscrit dans notre BDD.
      */
-    private String frontSprite;
-
-     /**
-     * Lien local vers l'image de dos du Pokémon.
-     */
-    private String backSprite;
+    private int id;
 
     /**
      * Créer un Pokémon.
@@ -206,11 +201,12 @@ public class Pokemon {
      * @param a2           Deuxième attaque du Pokémon
      * @param a3           Troisième attaque du Pokémon
      * @param a4           Quatrième attaque du Pokémon
+     * @param ident        Identifiant du Pokémon inscrit dans la BDD.
      */
     public Pokemon(String n, PokeTypes.type t1, PokeTypes.type t2, int l,
                    int hp, int attack, int defence, int speAttack, int speDefence, int speed,
                    int hpev, int attackev, int defenceev, int speattackev, int spedefenceev, int speedev,
-                   String nature, Move a1, Move a2, Move a3, Move a4, String fs, String bs) {
+                   String nature, Move a1, Move a2, Move a3, Move a4, int ident) {
         this.name = n;
         this.type1 = t1;
         this.type2 = t2;
@@ -243,8 +239,7 @@ public class Pokemon {
         this.hp = maxhp;
         applyNature(nature);
 
-        this.frontSprite = fs;
-        this.backSprite = bs;
+        this.id = ident;
     }
 
     /**
@@ -463,22 +458,14 @@ public class Pokemon {
         return this.status;
     }
 
-    /**
-     * Obtenir le lien du sprite de face du Pokémon.
-     *
-     * @return Lien du sprite de face du Pokémon.
-     */
-    public String getFront_sprite() {
-        return font_sprite;
-    }
 
     /**
-     * Obtenir le lien du sprite de dos du Pokémon.
+     * Obtenir l'identifiant BDD du Pokémon.
      *
-     * @return Lien du sprite de dos du Pokémon.
+     * @return Identifiant BDD du Pokémon.
      */
-    public String getBack_sprite() {
-        return back_sprite;
+    public int getId() {
+        return id;
     }
 
     /**
