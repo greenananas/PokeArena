@@ -317,7 +317,7 @@ public class newTeam {
     }
 
     //Méthode de récupération de l'ID et des noms des Pokémons jouables
-    public static Pair getAvailablePokemons(){
+    public static Pair<List<Integer>, List<String>> getAvailablePokemons(){
 
         Connection mycon = dbConnection.connect();
         Statement stmt;
@@ -338,8 +338,13 @@ public class newTeam {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return (new Pair<List<Integer>, List<String>>(id_available_poks, name_available_poks));
+        return (new Pair<>(id_available_poks, name_available_poks));
     }
+
+    public static getTeamByName(String teamName){
+
+    }
+
 
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
     public Team create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
