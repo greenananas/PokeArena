@@ -298,35 +298,6 @@ public class FightController implements Initializable  {
 	@FXML
 	public void updateAll() {
 		
-		for (Pokemon pokemon : cli.getTrainer().getPokemonTeam().getPokemons()) {
-            System.out.println(" - " + pokemon);
-        }
-        System.out.println("Pokémon adverse :");
-        System.out.println(cli.getOpponentPokemon());
-        
-//        String linkSprite = cli.getTrainer().getLeadingPkmn().getFont_sprite();
-//        imageCurrPkm.setImage(new Image(linkSprite));
-		
-		
-		float maxHP = cli.getTrainer().getLeadingPkmn().getMaxHP();
-		float currHP = cli.getTrainer().getLeadingPkmn().getHP();
-		
-		pvCurrPkm.setProgress(currHP/maxHP);
-		
-//		if(this.oldHP >= currHP) {
-//			imageCurrPkm.setTranslateX(-2);
-//			try {
-//				TimeUnit.SECONDS.sleep(1);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			imageCurrPkm.setTranslateX(2);
-//			
-//		}
-		
-		oldHP = currHP;
-		
 	
 		switch (cli.getState()) {
 		case ACTION_SENT:
@@ -390,6 +361,7 @@ public class FightController implements Initializable  {
 		
 		ArrayList<Pokemon> listPkms = cli.getTrainer().getPokemonTeam().getPokemons();
 
+		
 		String name1 = listPkms.get(0).getName();
 		String name2 = listPkms.get(1).getName();
 		String name3 = listPkms.get(2).getName();
@@ -408,8 +380,41 @@ public class FightController implements Initializable  {
 			nameP5.setText(name5);		
 			nameP6.setText(name6);
 			
-		} 
-					
+		}
+
+		String path = "Resources/Sprites/back/"+ cli.getOpponentPokemon().getId() + ".png";
+		imageCurrPkm.setImage(new Image(path));
+		
+		float maxHP = cli.getTrainer().getLeadingPkmn().getMaxHP();
+		float currHP = cli.getTrainer().getLeadingPkmn().getHP();
+		
+		pvCurrPkm.setProgress(currHP/maxHP);
+		
+		nameCurrPkm.setText(cli.getTrainer().getLeadingPkmn().getName());
+		
+		path = "Resources/Sprites/frontFrame1/"+ cli.getOpponentPokemon().getId() + ".png";
+		imageOppPkm.setImage(new Image(path));
+		
+		maxHP = cli.getOpponentPokemon().getMaxHP();
+		currHP = cli.getOpponentPokemon().getHP();
+		
+		pvOppPkm.setProgress(currHP/maxHP);
+		
+		nameCurrPkm.setText(cli.getOpponentPokemon().getName());
+		
+//		if(this.oldHP >= currHP) {
+//			imageCurrPkm.setTranslateX(-2);
+//			try {
+//				TimeUnit.SECONDS.sleep(1);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			imageCurrPkm.setTranslateX(2);
+//			
+//		}
+		
+//		oldHP = currHP;
 		
 	}
 }

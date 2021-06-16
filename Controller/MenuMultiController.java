@@ -9,13 +9,15 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import Model.*;
 import PokeArenaNetwork.Client.PokeArenaClient;
 import PokeArenaNetwork.Server.PokeArenaServer;
 import application.FXRouter;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
@@ -34,7 +36,7 @@ public class MenuMultiController implements Initializable{
 	@FXML
 	private ChoiceBox<String> modeList;
 	@FXML
-	private ChoiceBox<Team> teamList;
+	private ChoiceBox<String> teamList;
 	@FXML
 	private Button hostButton;
 	@FXML
@@ -54,35 +56,16 @@ public class MenuMultiController implements Initializable{
 		server.start();
 
 		PokeArenaClient client;
-
-		// TEMPORAIRE A SUPPRIMER --- Initialisation d'objets pour l'exemple
-		Move dracocharge = new Move(1, "Dracocharge", PokeTypes.type.DRAGON, true, 100, 70, 16, 0, 0);
-		Move dracogriffe = new Move(1, "Dracogriffe", PokeTypes.type.DRAGON, true, 80, 100, 24, 0, 0);
-		Move seisme = new Move(1, "Séisme", PokeTypes.type.GROUND, true, 100, 100, 16, 0, 0);
-		Move lanceflammes = new Move(1, "Lance-Flammes", PokeTypes.type.FIRE, false, 90, 100, 24, 0, 0);
-		Move poingmeteor = new Move(1, "Poing Météore", PokeTypes.type.STEEL, true, 90, 90, 16, 0, 0);
-		Move poingglace = new Move(1, "Poing Glace", PokeTypes.type.ICE, true, 75, 100, 24, 0, 0);
-		Move poingeclair = new Move(1, "Poing Éclair", PokeTypes.type.ELECTRIC, true, 75, 100, 24, 0, 0);
-		Move surf = new Move(1, "Surf", PokeTypes.type.WATER, false, 95, 100, 24, 0, 0);
-		Move hydrocanon = new Move(1, "Hydrocanon", PokeTypes.type.WATER, false, 120, 80, 8, 0, 0);
-		Move luminocanon = new Move(1, "Luminocanon", PokeTypes.type.STEEL, false, 80, 100, 16, 0, 0);
-		Move laserglace = new Move(1, "Laser Glace", PokeTypes.type.ICE, false, 95, 100, 16, 0, 0);
-
-		Pokemon carchacrok = new Pokemon("Carchacrok", PokeTypes.type.DRAGON, PokeTypes.type.GROUND, 50, 108, 130, 95,
-				80, 85, 102, 0, 0, 0, 0, 0, 0, "HARDY", dracocharge, dracogriffe, seisme, lanceflammes,"","");
-		Pokemon metalosse = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95,
-				90, 70, 0, 0, 0, 0, 0, 0, "HARDY", poingmeteor, seisme, poingglace, poingeclair,"","");
-		Pokemon pingoleon = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111,
-				101, 60, 0, 0, 0, 0, 0, 0, "HARDY", surf, hydrocanon, luminocanon, laserglace,"","");
-
-		Team team = new Team("teamUno");
-		team.addPokemon(carchacrok);
-		team.addPokemon(metalosse);
-		team.addPokemon(pingoleon);
-		/////////////////////////////////////////////////////
+		Team team;
 		
-		// A DECOMMENTER :
-		//Team team = teamList.getValue();
+		if(modeList.getValue()=="3v3") {
+			team = TeamBuilder.getTeamByName(teamList.getValue(),TeamBuilder.allTeams3);
+		
+		} else {
+			team = TeamBuilder.getTeamByName(teamList.getValue(),TeamBuilder.allTeams6);
+
+		}
+		
 
 		try {
 			client = new PokeArenaClient("localhost", 8887);
@@ -112,37 +95,17 @@ public class MenuMultiController implements Initializable{
 		// check ipField -> affiche msg si erreur
 
 		PokeArenaClient client;
+		Team team;
 		
-		// TEMPORAIRE A MODIFIER --- Initialisation d'objets pour l'exemple		
-		Move lamederock = new Move(1, "Lame de Roc", PokeTypes.type.ROCK, true, 100, 80, 8, 0, 0);
-		Move poingfeu = new Move(1, "Poing Feu", PokeTypes.type.FIRE, true, 75, 100, 24, 0, 0);
-		Move machouille = new Move(1, "Machouille", PokeTypes.type.DARK, true, 80, 100, 24, 0, 0);
-		Move lamedair = new Move(1, "Lame d'Air", PokeTypes.type.FLYING, false, 75, 95, 24, 0, 0);
-		Move eclatmagique = new Move(1, "Éclat Magique", PokeTypes.type.FAIRY, false, 80, 100, 16, 0, 0);
-		Move ballombre = new Move(1, "Ball'Ombre", PokeTypes.type.GHOST, false, 80, 100, 24, 0, 0);
-		Move seisme = new Move(1, "Séisme", PokeTypes.type.GROUND, true, 100, 100, 16, 0, 0);
-		Move lanceflammes = new Move(1, "Lance-Flammes", PokeTypes.type.FIRE, false, 90, 100, 24, 0, 0);
-		Move poingglace = new Move(1, "Poing Glace", PokeTypes.type.ICE, true, 75, 100, 24, 0, 0);
-		Move poingeclair = new Move(1, "Poing Éclair", PokeTypes.type.ELECTRIC, true, 75, 100, 24, 0, 0);
-
-		Pokemon tyranocif = new Pokemon("Tyranocif", PokeTypes.type.ROCK, PokeTypes.type.DARK, 50, 100, 134, 110, 95,
-				100, 61, 0, 0, 0, 0, 0, 0, "HARDY", lamederock, poingfeu, seisme, machouille, "", "");
-		Pokemon togekiss = new Pokemon("Togekiss", PokeTypes.type.FAIRY, PokeTypes.type.FLYING, 50, 85, 50, 95, 120,
-				115, 80, 0, 0, 0, 0, 0, 0, "HARDY", lamedair, eclatmagique, ballombre, lanceflammes,"","");
-		Pokemon elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95, 0, 0, 0,
-				0, 0, 0, "HARDY", poingeclair, poingfeu, poingglace, seisme,"","");
-
-		Team team = new Team("teamDos");
-		team.addPokemon(tyranocif);
-		team.addPokemon(togekiss);
-		team.addPokemon(elekable);
 		
-		//Team team = newTeam.allt
+		if(modeList.getValue()=="3v3") {
+			team = TeamBuilder.getTeamByName(teamList.getValue(),TeamBuilder.allTeams3);
 		
-		//////////////////////////////////////////////
+		} else {
+			team = TeamBuilder.getTeamByName(teamList.getValue(),TeamBuilder.allTeams6);
 
-		// A DECOMMENTER :
-		//Team team = teamList.getValue();
+		}
+		
 
 		try {
 			client = new PokeArenaClient(ipField.getText(), 8887);
@@ -173,9 +136,39 @@ public class MenuMultiController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO 
-		// remplir choices box
+		
+		try {
+			TeamBuilder.load_teams();
+		} catch (WrongTypeBDDException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
+		
+		modeList.getItems().clear();
+		modeList.getItems().addAll("3v3", "6v6");
+		modeList.getSelectionModel().select("3v3");
+		
+		modeList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				List<Team> tl;
+				if (newValue.toString() == "1") {
+					// 6 teams
+					tl = TeamBuilder.allTeams6;
+				} else {
+					// 3 teams 
+					tl = TeamBuilder.allTeams3;
+				}
+				teamList.getItems().clear();
+				for (Team team : tl) {
+					teamList.getItems().addAll(team.getName());
+				}
+				modeList.getSelectionModel().select(tl.get(1).getName());
+			}
+		});
 		
 	}
 }

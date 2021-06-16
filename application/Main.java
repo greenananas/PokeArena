@@ -18,7 +18,7 @@ public class Main extends Application {
 			FXRouter.when("fight", "View/Fight.fxml");
 			FXRouter.when("lobby", "View/Lobby.fxml");
 
-			FXRouter.startFrom("start");
+			FXRouter.startFrom("start"); 
 
 		} catch (Exception e) {
 			System.out.println("oups");

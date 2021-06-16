@@ -116,7 +116,7 @@ public class StartMenuController implements Initializable {
 		}
 
 	}
-
+	
 	// Event Listener on Button[#multiButton].onAction
 	@FXML
 	public void handleMultiButton(ActionEvent event) {
@@ -137,7 +137,6 @@ public class StartMenuController implements Initializable {
 		} catch (IOException e) {
 			System.out.println("Erreur chargement menu solo.");
 			e.printStackTrace();
-			;
 		}
 	}
 
