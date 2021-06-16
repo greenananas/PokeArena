@@ -45,19 +45,12 @@ public class ClientExemple {
             Move luminocanon = new Move(15,"Luminocanon", PokeTypes.type.STEEL, false, 80, 100, 16, 0, 0);
             Move laserglace = new Move(16,"Laser Glace", PokeTypes.type.ICE, false, 95, 100, 16, 0, 0);
 
-            Pokemon carchacrok = new Pokemon("Carchacrok", PokeTypes.type.DRAGON, PokeTypes.type.GROUND, 50, 108, 130, 95, 80, 85, 102,0,0,0,0,0,0,"HARDY", dracocharge, dracogriffe, seisme, lanceflammes, "", "");
-            Pokemon metalosse = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95, 90, 70,0,0,0,0,0,0,"HARDY", poingmeteor, seisme, poingglace, poingeclair, "", "");
-            Pokemon tyranocif = new Pokemon("Tyranocif", PokeTypes.type.ROCK, PokeTypes.type.DARK, 50, 100, 134, 110, 95, 100, 61,0,0,0,0,0,0,"HARDY", lamederock, poingfeu, seisme, machouille, "", "");
-            Pokemon togekiss = new Pokemon("Togekiss", PokeTypes.type.FAIRY, PokeTypes.type.FLYING, 50, 85, 50, 95, 120, 115, 80,0,0,0,0,0,0,"HARDY", lamedair, eclatmagique, ballombre, lanceflammes, "", "");
-            Pokemon elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95,0,0,0,0,0,0,"HARDY", poingeclair, poingfeu, poingglace, seisme, "", "");
-            Pokemon pingoleon = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111, 101, 60,0,0,0,0,0,0,"HARDY", surf, hydrocanon, luminocanon, laserglace, "", "");
-
-            Pokemon carchacrok1 = new Pokemon("Carchacrok", PokeTypes.type.DRAGON, PokeTypes.type.GROUND, 50, 108, 130, 95, 80, 85, 102,0,0,0,0,0,0,"HARDY", dracocharge, dracogriffe, seisme, lanceflammes, "", "");
-            Pokemon metalosse1 = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95, 90, 70,0,0,0,0,0,0,"HARDY", poingmeteor, seisme, poingglace, poingeclair, "", "");
-            Pokemon tyranocif1 = new Pokemon("Tyranocif", PokeTypes.type.ROCK, PokeTypes.type.DARK, 50, 100, 134, 110, 95, 100, 61,0,0,0,0,0,0,"HARDY", lamederock, poingfeu, seisme, machouille, "", "");
-            Pokemon togekiss1 = new Pokemon("Togekiss", PokeTypes.type.FAIRY, PokeTypes.type.FLYING, 50, 85, 50, 95, 120, 115, 80,0,0,0,0,0,0,"HARDY", lamedair, eclatmagique, ballombre, lanceflammes, "", "");
-            Pokemon elekable1 = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95,0,0,0,0,0,0,"HARDY", poingeclair, poingfeu, poingglace, seisme, "", "");
-            Pokemon pingoleon1 = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111, 101, 60,0,0,0,0,0,0,"HARDY", surf, hydrocanon, luminocanon, laserglace, "", "");
+            Pokemon carchacrok = new Pokemon("Carchacrok", PokeTypes.type.DRAGON, PokeTypes.type.GROUND, 50, 108, 130, 95, 80, 85, 102,0,0,0,0,0,0,"HARDY", dracocharge, dracogriffe, seisme, lanceflammes, 445);
+            Pokemon metalosse = new Pokemon("Metalosse", PokeTypes.type.STEEL, PokeTypes.type.PSYCHIC, 50, 80, 135, 130, 95, 90, 70,0,0,0,0,0,0,"HARDY", poingmeteor, seisme, poingglace, poingeclair, 376);
+            Pokemon tyranocif = new Pokemon("Tyranocif", PokeTypes.type.ROCK, PokeTypes.type.DARK, 50, 100, 134, 110, 95, 100, 61,0,0,0,0,0,0,"HARDY", lamederock, poingfeu, seisme, machouille, 248);
+            Pokemon togekiss = new Pokemon("Togekiss", PokeTypes.type.FAIRY, PokeTypes.type.FLYING, 50, 85, 50, 95, 120, 115, 80,0,0,0,0,0,0,"HARDY", lamedair, eclatmagique, ballombre, lanceflammes, 468);
+            Pokemon elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95,0,0,0,0,0,0,"HARDY", poingeclair, poingfeu, poingglace, seisme, 446);
+            Pokemon pingoleon = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111, 101, 60,0,0,0,0,0,0,"HARDY", surf, hydrocanon, luminocanon, laserglace, 395);
 
             ArrayList<Pokemon> alTeam1 = new ArrayList<Pokemon>();
             alTeam1.add(carchacrok);
