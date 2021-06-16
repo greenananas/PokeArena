@@ -137,18 +137,21 @@ public class MenuMultiController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		try {
-			TeamBuilder.load_teams();
-		} catch (WrongTypeBDDException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
+		TeamBuilder.load_teams();
 		
 		modeList.getItems().clear();
 		modeList.getItems().addAll("3v3", "6v6");
 		modeList.getSelectionModel().select("3v3");
+		
+		List<Team> listT = TeamBuilder.allTeams3;
+		teamList.getItems().clear();
+		for (Team team : listT) {
+			teamList.getItems().addAll(team.getName());
+		}
+		modeList.getSelectionModel().select(listT.get(1).getName());
+		for (Team team : listT) {
+			System.out.println(team.getName());
+		}
 		
 		modeList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
@@ -158,10 +161,20 @@ public class MenuMultiController implements Initializable{
 				if (newValue.toString() == "1") {
 					// 6 teams
 					tl = TeamBuilder.allTeams6;
+					
 				} else {
 					// 3 teams 
 					tl = TeamBuilder.allTeams3;
 				}
+				
+
+				System.out.println("*********");
+				System.out.println(newValue.toString());
+				System.out.println("*********");
+				for (Team team : tl) {
+					System.out.println(team.getName());
+				}
+				
 				teamList.getItems().clear();
 				for (Team team : tl) {
 					teamList.getItems().addAll(team.getName());
