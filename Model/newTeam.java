@@ -320,7 +320,7 @@ public class newTeam {
     public static Pair getAvailablePokemons(){
 
         Connection mycon = dbConnection.connect();
-        Statement Norm_statement;
+        Statement stmt;
         ResultSet Myresults = null;
 
         List<Integer> id_available_poks = new ArrayList<>();
@@ -329,6 +329,8 @@ public class newTeam {
         String sql = "SELECT * from Sets LEFT JOIN pokemon WHERE Sets.pokemon = pokemon.id";
 
         try {
+            stmt = mycon.createStatement();
+            Myresults = stmt.executeQuery(sql);
             while(Myresults.next()){
                 id_available_poks.add(Myresults.getInt("pokemon"));
                 name_available_poks.add(Myresults.getString("pretty_name"));
