@@ -231,4 +231,12 @@ public class PokeArenaClient extends WebSocketClient {
         return protocol.getOpponentPokemon();
     }
 
+    /**
+     * Obtenir la dernière attaque de l'adversaire.
+     * @return Dernière attaque de l'adversaire.
+     */
+    public Move getOpponentMove() {
+        return protocol.getOpponentMove();
+    }
+
 }

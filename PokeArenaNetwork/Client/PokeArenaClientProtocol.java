@@ -1,5 +1,6 @@
 package PokeArenaNetwork.Client;
 
+import Model.Move;
 import Model.Pokemon;
 import Model.Team;
 import Model.Trainer;
@@ -39,6 +40,11 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
      * Pokémon au combat de l'adversaire.
      */
     private Pokemon opponentPokemon;
+
+    /**
+     * Dernière attaque de l'adversaire.
+     */
+    private Move opponentMove;
 
     /**
      * Équipe du dresseur, utilisé uniquement lors de l'initialisation de ce dernier.
@@ -84,6 +90,7 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 // Mise à jour des informations du combat
                 Update update = ((PokeArenaUpdatePacket) request).getUpdate();
                 this.opponentPokemon = update.getOpponentPokemon();
+                this.opponentMove = update.getOppenentMove();
                 if (trainer == null) {
                     trainer = new Trainer("Nom Joueur", team);
                 } else {
@@ -142,6 +149,10 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
      */
     public Pokemon getOpponentPokemon() {
         return opponentPokemon;
+    }
+
+    public Move getOpponentMove() {
+        return opponentMove;
     }
 
 }

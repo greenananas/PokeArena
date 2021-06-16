@@ -1,5 +1,6 @@
 package PokeArenaNetwork;
 
+import Model.Move;
 import Model.Pokemon;
 import Model.Team;
 
@@ -19,14 +20,20 @@ public class Update {
     private final Pokemon opponentPokemon;
 
     /**
+     * Dernière attaque du dresseur adverse.
+     */
+    private final Move oppenentMove;
+
+    /**
      * Créer un objet de mise à jour.
      *
      * @param team            Équipe du dresseur.
      * @param opponentPokemon Pokémon au combat du dresseur adverse.
      */
-    public Update(Team team, Pokemon opponentPokemon) {
+    public Update(Team team, Pokemon opponentPokemon, Move oppenentMove) {
         this.team = team;
         this.opponentPokemon = opponentPokemon;
+        this.oppenentMove = oppenentMove;
     }
 
     /**
@@ -46,4 +53,10 @@ public class Update {
     public Pokemon getOpponentPokemon() {
         return opponentPokemon;
     }
+
+    public Move getOppenentMove() {
+        return oppenentMove;
+    }
+
 }
+
