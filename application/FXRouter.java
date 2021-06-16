@@ -59,6 +59,8 @@ public final class FXRouter {
     private static AbstractMap<String, RouteScene> routes = new HashMap<>();
     // FXRouter current route
     private static RouteScene currentRoute;
+    
+    public static Parent resource;
 
     /**
      * FXRouter Inner Class used into routes map
@@ -225,7 +227,7 @@ public final class FXRouter {
      * @throws Exception: throw FXMLLoader exception if file is not loaded correctly
      */
     private static void loadNewRoute(RouteScene route) throws IOException {
-        // get Main Class package name to get correct files path
+        // get Main Class package name to get correct files path 
         String pathRef = mainRef.getClass().getPackage().getName();
 
         // set FXRouter current route reference
@@ -235,7 +237,7 @@ public final class FXRouter {
         String scenePath = "/" + route.scenePath; // changement du chemin
 
         // load .fxml resource
-        Parent resource = FXMLLoader.load(new Object() { }.getClass().getResource(scenePath));
+        resource = FXMLLoader.load(new Object() { }.getClass().getResource(scenePath));
 
         // set window title from route settings or default setting
         window.setTitle(route.windowTitle);
