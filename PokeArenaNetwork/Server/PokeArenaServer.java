@@ -1,8 +1,10 @@
 package PokeArenaNetwork.Server;
 
 import Model.Battle;
+import Model.Pokemon;
 import PokeArenaNetwork.Packets.PokeArenaPacket;
 import PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
 import PokeArenaNetwork.PokeArenaUtilities;
 import PokeArenaNetwork.Update;
 import org.java_websocket.WebSocket;
@@ -104,8 +106,18 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onMessage(WebSocket ws, String message) {
-        System.out.println("Message reçu : " + message);
         PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet instanceof PokeArenaUpdatePacket) {
+            Update up = ((PokeArenaUpdatePacket) packet).getUpdate();
+            System.out.println("Equipe");
+            for (Pokemon poke : up.getTeam().getPokemons()) {
+                System.out.println("- " + poke.getName());
+            }
+            System.out.println("Pokémon adverse : " + up.getOpponentPokemon());
+            System.out.println("Dernière attaque adverse : " + up.getOppenentMove());
+        } else {
+            System.out.println(message);
+        }
         if (packet != null) protocol.processPacket(ws, packet);
     }
 
