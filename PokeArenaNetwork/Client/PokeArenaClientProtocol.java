@@ -1,5 +1,6 @@
 package PokeArenaNetwork.Client;
 
+import Controller.FightController;
 import Model.Move;
 import Model.Pokemon;
 import Model.Team;
@@ -113,6 +114,9 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                     default:
                         break;
                 }
+
+                FightController ctrl = client.getCtrl();
+                if (ctrl != null) ctrl.updateAll();
 
                 response = null;
                 break;

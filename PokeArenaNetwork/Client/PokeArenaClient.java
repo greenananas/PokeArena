@@ -1,5 +1,6 @@
 package PokeArenaNetwork.Client;
 
+import Controller.FightController;
 import Model.*;
 import PokeArenaNetwork.Packets.PokeArenaPacket;
 import PokeArenaNetwork.Packets.PokeArenaPacketType;
@@ -21,6 +22,8 @@ public class PokeArenaClient extends WebSocketClient {
      * État du client.
      */
     private PokeArenaClientState state = PokeArenaClientState.NOT_CONNECTED;
+
+    private FightController ctrl = null;
 
     /**
      * Protocole utilisé pour traiter les paquets et gérer l'état du client.
@@ -239,4 +242,11 @@ public class PokeArenaClient extends WebSocketClient {
         return protocol.getOpponentMove();
     }
 
+    public FightController getCtrl() {
+        return ctrl;
+    }
+
+    public void setCtrl(FightController ctrl) {
+        this.ctrl = ctrl;
+    }
 }
