@@ -15,7 +15,7 @@ public class main_db {
         wanted_pokemons.add("Papilusion");
         newTeam nt = new newTeam();
         Team team;
-        team = nt.create(wanted_pokemons,"louis_crew");
+        team = nt.create(wanted_pokemons,"mathis_crew");
         all_teams6.add(team);
         System.out.println("Équipe " + all_teams6.get(0).getName()+ " terminée, voici les pokémons :");
         for(Team t : all_teams6){
