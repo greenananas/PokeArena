@@ -12,8 +12,8 @@ public class Pair<L,R> {
         this.right = right;
     }
 
-    public L getTrainer() { return left; }
-    public R getAction() { return right; }
+    public L getLeft() { return left; }
+    public R getRight() { return right; }
 
     public void pairWith(R newRight) {
         this.right = newRight;
@@ -26,8 +26,8 @@ public class Pair<L,R> {
     public boolean equals(Object o) {
         if (!(o instanceof Pair)) return false;
         Pair pairo = (Pair) o;
-        return this.left.equals(pairo.getTrainer()) &&
-                this.right.equals(pairo.getAction());
+        return this.left.equals(pairo.getLeft()) &&
+                this.right.equals(pairo.getRight());
     }
 
 }

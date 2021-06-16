@@ -113,8 +113,8 @@ public class newTeam {
     public Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
 
 
-        String fs = "Resources\\Sprites\\frontFrame2\\" + id_pok;
-        String bs = "Resources\\Sprites\\back\\" + id_pok;
+        String fs = "../Resources/Sprites/frontFrame2/" + id_pok + ".png";
+        String bs = "../Resources/Sprites/back/" + id_pok + ".png";
 
 
         //Récupération du numéro du set du Pokémon
