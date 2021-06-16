@@ -39,7 +39,7 @@ public class main_db {
         }
 
         //Test Suppression
-        /*newTeam.remove_team("last3_crew",3);*/
+        /*TeamBuilder.remove_team("last3_crew",3);*/
         String findTeam = "team6-2";
         Team t = TeamBuilder.getTeamByName(findTeam, TeamBuilder.allTeams6);
         System.out.println("Team : " + t.getName() + " trouvé !");

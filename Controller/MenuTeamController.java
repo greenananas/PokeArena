@@ -16,45 +16,31 @@ import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class MenuTeamController implements Initializable {
-    @FXML
-    private AnchorPane menuSet;
-    @FXML
-    private RadioButton team3;
-    @FXML
-    private RadioButton team6;
-    @FXML
+    @FXML    private AnchorPane menuSet;
+    @FXML    private RadioButton team3;
+    @FXML    private RadioButton team6;
+
     /* Faire ceci sur la déclaration fxml pour tous les pokémons.
      *
      * p4.setEditable(true);
      * p4.setMouseTransparent(false);
      * p4.setFocusTraversable(true);
      */
-    private PokemonMenuItem p1;
-    @FXML
-    private PokemonMenuItem p2;
-    @FXML
-    private PokemonMenuItem p3;
-    @FXML
-    private PokemonMenuItem p4;
-    @FXML
-    private PokemonMenuItem p5;
-    @FXML
-    private PokemonMenuItem p6;
+    @FXML    private PokemonMenuItem p1;
+    @FXML    private PokemonMenuItem p2;
+    @FXML    private PokemonMenuItem p3;
+    @FXML    private PokemonMenuItem p4;
+    @FXML    private PokemonMenuItem p5;
+    @FXML    private PokemonMenuItem p6;
     private ArrayList<PokemonMenuItem> pkmnCurrentTeam;
-    @FXML
-    private Button addButton;
-    @FXML
-    private TextField teamNameField;
-    @FXML
-    private TextField errorField;
-    @FXML
-    private Button suppButton;
-    @FXML
-    private Button saveButton;
-    @FXML
-    private FilteredComboBox pkmnList;
-    @FXML
-    private FilteredComboBox teamList;
+    
+    @FXML    private Button addButton;
+    @FXML    private TextField teamNameField;
+    @FXML    private TextField errorField;
+    @FXML    private Button suppButton;
+    @FXML    private Button saveButton;
+    @FXML    private FilteredComboBox pkmnList;
+    @FXML    private FilteredComboBox teamList;
 
     // Event Listener on Button[#addButton].onAction
     @FXML

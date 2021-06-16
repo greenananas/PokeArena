@@ -61,10 +61,13 @@
 										<Insets left="5.0" top="30.0" />
 									</GridPane.margin>
 								</ImageView>
-								<ImageView fx:id="imageOppPkm" fitHeight="318.0" fitWidth="374.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+								<ImageView fx:id="imageOppPkm" fitHeight="276.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
 									<image>
 										<Image url="@../Resources/Sprites/frontFrame2/6.png" />
 									</image>
+                           <GridPane.margin>
+                              <Insets right="50.0" />
+                           </GridPane.margin>
 								</ImageView>
 								<ImageView fx:id="imageCurrPkm" fitHeight="234.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
 									<image>
@@ -206,7 +209,7 @@
 									<children>
 										<ImageView fx:id="a2" fitHeight="150.0" fitWidth="250.0" onMouseClicked="#handleA2" pickOnBounds="true" preserveRatio="true">
 											<image>
-												<Image url="@../Resources/Buttons/Types/electrik.png" />
+												<Image url="@../Resources/Buttons/Types/electric.png" />
 											</image>
 										</ImageView>
 										<Label fx:id="nameA2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleA2" styleClass="labelNormal" text="NomAttack">
@@ -226,7 +229,7 @@
 									<children>
 										<ImageView fx:id="a3" fitHeight="150.0" fitWidth="250.0" onMouseClicked="#handleA3" pickOnBounds="true" preserveRatio="true">
 											<image>
-												<Image url="@../Resources/Buttons/Types/electrik.png" />
+												<Image url="@../Resources/Buttons/Types/bug.png" />
 											</image>
 										</ImageView>
 										<Label fx:id="nameA3" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleA3" styleClass="labelNormal" text="NomAttack">

@@ -265,33 +265,19 @@ public class FightController implements Initializable  {
 			 }
 			});
 		
-		// TODO
-		// cli.getTrainer().getLeadingPkmn();
-		// recup sprites et mettre dans imageCurrPkm et imageOppPkm
-		
-		sp4.getChildren().remove(nameP4);
-		sp5.getChildren().remove(nameP5);
-		sp6.getChildren().remove(nameP6);
-		
-		sp4.getChildren().remove(p4);
-		sp5.getChildren().remove(p5);
-		sp6.getChildren().remove(p6);
+		ArrayList<Pokemon> listPkms = cli.getTrainer().getPokemonTeam().getPokemons();
+		if(listPkms.size()>3) {	
+			sp4.getChildren().remove(nameP4);
+			sp5.getChildren().remove(nameP5);
+			sp6.getChildren().remove(nameP6);
+			
+			sp4.getChildren().remove(p4);
+			sp5.getChildren().remove(p5);
+			sp6.getChildren().remove(p6);
+		}
 
 		this.oldHP = cli.getTrainer().getLeadingPkmn().getMaxHP();
 		updateAll();	
-		
-		
-//		this.cli.getState().toString().addLi
-//		
-//		getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//				System.out.println(newValue.toString());
-//				//TODO si value 3Poke alors desactiver et griser p4 à p6
-//
-//			}
-//		});
 
 	}
 	
@@ -343,10 +329,10 @@ public class FightController implements Initializable  {
 		String name4 = cli.getTrainer().getLeadingPkmn().getMove4().getName();
 		
 		try {
-			a1.setImage(new Image("Resources/Buttons/Types/"+type1+".png"));
-			a2.setImage(new Image("Resources/Buttons/Types/"+type2+".png"));
-			a3.setImage(new Image("Resources/Buttons/Types/"+type3+".png"));
-			a4.setImage(new Image("Resources/Buttons/Types/"+type4+".png"));
+			a1.setImage(new Image("Resources/Buttons/Types/" + type1 + ".png"));
+			a2.setImage(new Image("Resources/Buttons/Types/" + type2 + ".png"));
+			a3.setImage(new Image("Resources/Buttons/Types/" + type3 + ".png"));
+			a4.setImage(new Image("Resources/Buttons/Types/" + type4 + ".png"));
 		} catch(Exception e) {
 			System.out.println(type1 +"*"+ type2 +"*"+ type3 +"*"+ type4);
 		}
@@ -370,7 +356,7 @@ public class FightController implements Initializable  {
 		nameP2.setText(name2);
 		nameP3.setText(name3);
 		
-		if(listPkms.size()>3) {
+		if(listPkms.size()<=3) {
 				
 			String name4 = listPkms.get(3).getName();
 			String name5 = listPkms.get(4).getName();
@@ -382,7 +368,7 @@ public class FightController implements Initializable  {
 			
 		}
 
-		String path = "Resources/Sprites/back/"+ cli.getOpponentPokemon().getId() + ".png";
+		String path = "Resources/Sprites/back/"+ cli.getTrainer().getLeadingPkmn().getId() + ".png";
 		imageCurrPkm.setImage(new Image(path));
 		
 		float maxHP = cli.getTrainer().getLeadingPkmn().getMaxHP();
@@ -392,7 +378,9 @@ public class FightController implements Initializable  {
 		
 		nameCurrPkm.setText(cli.getTrainer().getLeadingPkmn().getName());
 		
-		path = "Resources/Sprites/frontFrame1/"+ cli.getOpponentPokemon().getId() + ".png";
+		
+		
+		path = "Resources/Sprites/frontFrame2/"+ cli.getOpponentPokemon().getId() + ".png";
 		imageOppPkm.setImage(new Image(path));
 		
 		maxHP = cli.getOpponentPokemon().getMaxHP();
@@ -400,7 +388,7 @@ public class FightController implements Initializable  {
 		
 		pvOppPkm.setProgress(currHP/maxHP);
 		
-		nameCurrPkm.setText(cli.getOpponentPokemon().getName());
+		nameOppPkm.setText(cli.getOpponentPokemon().getName());
 		
 //		if(this.oldHP >= currHP) {
 //			imageCurrPkm.setTranslateX(-2);
@@ -413,7 +401,7 @@ public class FightController implements Initializable  {
 //			imageCurrPkm.setTranslateX(2);
 //			
 //		}
-		
+//
 //		oldHP = currHP;
 		
 	}

@@ -49,12 +49,12 @@
 										<Insets />
 									</opaqueInsets>
 								</Label>
-                        <RadioButton fx:id="team3" mnemonicParsing="false" styleClass="labelNormal" text="3 Pokemons" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                        <RadioButton fx:id="team3" mnemonicParsing="false" styleClass="labelNormal" text="3 Pkms" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" styleClass="labelNormal" text="6 Pokemons" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                        <RadioButton fx:id="team6" mnemonicParsing="false" styleClass="labelNormal" text="6 Pkms" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
@@ -84,12 +84,14 @@
 										<Insets />
 									</GridPane.margin>
 								</Label>
-								<TextField fx:id="p1" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" />
-								<TextField fx:id="p2" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-								<TextField fx:id="p3" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-								<TextField fx:id="p4" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" />
-								<TextField fx:id="p5" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-								<TextField fx:id="p6" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+								<fx:root type="HBox" fx:id="p1" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" fx:controller="PokemonMenuItem" >
+									<TextField fx:id="pkmnLabel"/>
+<!-- 								<Node fx:id="p2" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" /> -->
+<!-- 								<Node fx:id="p3" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" /> -->
+<!-- 								<Node fx:id="p4" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" /> -->
+<!-- 								<Node fx:id="p5" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" /> -->
+<!-- 								<Node fx:id="p6" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" /> -->
+								</fx:root>
 							</children>
 							<VBox.margin>
 								<Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />

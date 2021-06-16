@@ -1,17 +1,15 @@
 package Controller;
 
-import javafx.scene.Node;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
-public class PokemonMenuItem extends Node {
-    private final HBox hBox;
+public class PokemonMenuItem extends HBox {
     private TextField pkmnLabel;
     private Button deleteButton;
 
     public PokemonMenuItem() {
-        hBox = new HBox();
         pkmnLabel = new TextField();
         deleteButton = new Button("Supprimer");
         deleteButton.setVisible(false);
