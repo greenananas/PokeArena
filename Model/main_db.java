@@ -13,7 +13,7 @@ public class main_db {
         wanted_pokemons.add("Dracaufeu");
         wanted_pokemons.add("Florizarre");
         newTeam nt = new newTeam();
-        nt.create(wanted_pokemons,"last4_crew");
+        nt.create(wanted_pokemons,"mathis_crew");
         System.out.println("Équipe " + newTeam.allTeams3.get(0).getName()+ " terminée, voici les pokémons :");
         for(Team t : newTeam.allTeams3){
             System.out.println("Équipe " + t.getName()+ " existante, voici les pokémons :");
@@ -38,7 +38,10 @@ public class main_db {
         }
 
         //Test Suppression
-        newTeam.remove_team("last3_crew",3);
+        /*newTeam.remove_team("last3_crew",3);*/
+        String findTeam = "leny_crew";
+        Team t = newTeam.getTeamByName(findTeam,newTeam.allTeams3);
+        System.out.println("Team : " + t.getName() + " trouvé !");
     }
 }
 

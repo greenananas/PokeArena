@@ -44,7 +44,7 @@ public class newTeam {
         boolean physical;
         int accuracy = 0;
         try {
-            Prep_statement = Mycon.prepareStatement("SELECT name, type, damage_class, power, pp, priority, crit_rate, accuracy from move where id = ?");
+            Prep_statement = Mycon.prepareStatement("SELECT pretty_name, type, damage_class, power, pp, priority, crit_rate, accuracy from move where id = ?");
             Prep_statement.setInt(1, id_move);
             Myresults = Prep_statement.executeQuery();
             string_name = Myresults.getString(1);
@@ -316,8 +316,8 @@ public class newTeam {
         return id_pok;
     }
 
-    static List<Team> allTeams3 = new ArrayList<>();
-    static List<Team> allTeams6 = new ArrayList<>();
+    public static List<Team> allTeams3 = new ArrayList<>();
+    public static List<Team> allTeams6 = new ArrayList<>();
 
     //Méthode de récupération de l'ID et des noms des Pokémons jouables
     public static Pair<List<Integer>, List<String>> getAvailablePokemons(){
@@ -352,7 +352,6 @@ public class newTeam {
         }
         return t;
     }
-
 
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
     public void create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
