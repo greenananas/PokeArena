@@ -1,19 +1,17 @@
 package Model;
 
 import java.sql.*;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 import Model.Utils.Pair;
 
-public class newTeam {
-
+public class TeamBuilder {
 
     /**
      * Fonction de récupération de le l'ID du set du Pokémon passé en paramètre
      * @param id_pok ID du Pokémon
-     * @return
+     * @return l'identifiant du set
      */
     public static int ret_set(Connection Mycon, int id_pok) {
 
@@ -33,14 +31,16 @@ public class newTeam {
         return (id_set);
     }
 
-
-    public static Move init_move(Connection Mycon, int id_move) {
+    /**
+     * Fonction de création d'un objet Move
+     * @param id_move ID du Move
+     * @return un Move correspond à l'id_move
+     */
+    public static Move init_move(Connection Mycon, int id_move) throws WrongTypeBDDException {
 
         PreparedStatement Prep_statement;
         ResultSet Myresults;
 
-
-        //2.0
         String string_name = null;
         String type = null;
         String damage_class = null;
@@ -74,7 +74,12 @@ public class newTeam {
         return (new Move(id_move, string_name, move_type, physical, power, accuracy, pp, prio, crit_rate));
     }
 
-    public static PokeTypes.type init_poketype(String type) {
+    /**
+     * Fonction de création d'un Type (pour les Pokémons ou les moves)
+     * @param type Chaîne de caractères représentant le type
+     * @return Un objet issu de l'énumération type de la classe PokeTypes
+     */
+    public static PokeTypes.type init_poketype(String type) throws WrongTypeBDDException {
         switch (type) {
             case ("grass"):
                 return (PokeTypes.type.GRASS);
@@ -113,12 +118,18 @@ public class newTeam {
             case ("dark"):
                 return (PokeTypes.type.DARK);
             default:
-                System.out.println("Ajouter une exception (mauvaise écriture du type dans la BDD)");
-                return null;
+                throw new WrongTypeBDDException("Un champ type de la BDD n'est pas correctement inscrit");
         }
     }
 
-    public static Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
+    /**
+     * Fonction de création d'un Pokémon
+     * @param Mycon Connection établie avec notre BDD locale
+     * @param name_pok Nom du Pokémon à instancier
+     * @param id_pok Identifiant BDD du Pokémon à instancier
+     * @return L'objet Pokemon instancié
+     */
+    public static Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) throws WrongTypeBDDException {
 
 
         //Récupération du numéro du set du Pokémon
@@ -300,7 +311,12 @@ public class newTeam {
                 hp_ev, attaque_ev, defense_ev, att_spe_ev, def_spe_ev, vitesse_ev, nat, Moves.get(0), Moves.get(1), Moves.get(2), Moves.get(3), id_pok));
     }
 
-    //Méthode de récupération de l'ID d'un Pokémon à partir de son nom
+    /**
+     * Fonction de récupération de l'ID d'un Pokémon à partir de son nom
+     * @param Mycon Connection établie avec notre BDD locale
+     * @param pok_name Nom du Pokémon à traiter
+     * @return L'identifiant BDD du Pokémon
+     */
     public int get_id_pok(Connection Mycon, String pok_name) {
 
         PreparedStatement Prep_statement;
@@ -318,10 +334,20 @@ public class newTeam {
         return id_pok;
     }
 
+    /**
+     * Liste contenant toutes les équipes de 3 Pokémons
+     */
     public static List<Team> allTeams3 = new ArrayList<>();
+
+    /**
+     * Liste contenant toutes les équipes de 6 Pokémons
+     */
     public static List<Team> allTeams6 = new ArrayList<>();
 
-    //Méthode de récupération de l'ID et des noms des Pokémons jouables
+    /**
+     * Fonction de récupération de tous les Pokémons jouables de notre BDD
+     * @return Une association entre les IDs BDD et les noms des Pokémons jouables
+     */
     public static Pair<List<Integer>, List<String>> getAvailablePokemons(){
 
         Connection mycon = dbConnection.connect();
@@ -345,6 +371,12 @@ public class newTeam {
         return (new Pair<>(id_available_poks, name_available_poks));
     }
 
+    /**
+     * Fonction de récupération d'une équipe Pokémon à partir de son nom
+     * @param teamName Le nom de l'équipe recherchée
+     * @param allTeams La liste d'équipe dans laquelle rechercher l'équipe
+     * @return L'équipe Pokémon associée au nom
+     */
     public static Team getTeamByName(String teamName, List<Team> allTeams){
         int i = 0;
         Team t = allTeams.get(0);
@@ -355,8 +387,16 @@ public class newTeam {
         return t;
     }
 
+
+    /**
+     * Procédure de création d'une équipe Pokémon à partir des noms des Pokémons à y ajouter et du nom de l'équipe.
+     * L'équipe créée sera stockée dans un objet Liste de Teams pour la session courante et sera également stockée dans la BDD
+     * pour être sauvegardée pour les prochaines sessions de jeu.
+     * @param wanted_pokemons Liste des noms des Pokémons à ajouter dans l'équipe à créer
+     * @param team_name Le nom à attribuer à l'équipe à créer
+     */
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
-    public void create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
+    public void create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException, WrongTypeBDDException {
 
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
@@ -487,10 +527,10 @@ public class newTeam {
 
         //Ajout de la nouvelle équipe dans l'objet de liste d'équipes adéquat
         if(nb_poks == 3){
-            newTeam.allTeams3.add(New_team);
+            TeamBuilder.allTeams3.add(New_team);
         }
         else if(nb_poks == 6){
-            newTeam.allTeams6.add(New_team);
+            TeamBuilder.allTeams6.add(New_team);
         }
         try {
             Mycon.close();
@@ -499,7 +539,11 @@ public class newTeam {
         }
     }
 
-    public static void load_teams(/*List<Team> at3, List<Team> at6*/) {
+    /**
+     * Procédure de chargement de toutes les Teams de notre BDD dans l'objet Liste de Teams.
+     * Cette procédure sera exécutée à chaque lancement du jeu.
+     */
+    public static void load_teams() throws WrongTypeBDDException {
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
         Statement Norm_statement;
@@ -534,7 +578,7 @@ public class newTeam {
                      temp_pokemon = init_pok(Mycon, pok_name, id_pok);
                      temp_team.addPokemon(temp_pokemon);
                 }
-                newTeam.allTeams6.add(temp_team);
+                TeamBuilder.allTeams6.add(temp_team);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -563,7 +607,7 @@ public class newTeam {
                     temp_pokemon = init_pok(Mycon, pok_name, id_pok);
                     temp_team.addPokemon(temp_pokemon);
                 }
-                newTeam.allTeams3.add(temp_team);
+                TeamBuilder.allTeams3.add(temp_team);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -575,6 +619,11 @@ public class newTeam {
         }
     }
 
+    /**
+     * Procédure de suppression d'une équipe à partir de son nom.
+     * @param team_name Nom de l'équipe à supprimer
+     * @param size Taille de l'équipe à supprimer
+     */
     public static void remove_team(String team_name, int size) throws UnknownTeamException {
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
