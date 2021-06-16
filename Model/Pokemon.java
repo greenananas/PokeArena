@@ -681,7 +681,10 @@ public class Pokemon {
      * @param s Nouveau statut du Pokémon
      */
     public void setStatus(PokeStatus.Status s) {
-        this.status.giveStatus(s);
+        if (this.status.status.equals(PokeStatus.Status.NORMAL))
+            this.status.giveStatus(s);
+        else
+            System.out.println("Cela n'aura aucun effet...");
     }
 
     /**
