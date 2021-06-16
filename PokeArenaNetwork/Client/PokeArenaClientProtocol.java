@@ -11,6 +11,7 @@ import PokeArenaNetwork.Packets.PokeArenaTextPacket;
 import PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
 import PokeArenaNetwork.PokeArenaProtocol;
 import PokeArenaNetwork.Update;
+import javafx.application.Platform;
 import org.java_websocket.WebSocket;
 
 import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
@@ -116,7 +117,15 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 }
 
                 FightController ctrl = client.getCtrl();
-                if (ctrl != null) ctrl.updateAll();
+                if (ctrl != null) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ctrl.updateAll();
+                            ;
+                        }
+                    });
+                }
 
                 response = null;
                 break;
