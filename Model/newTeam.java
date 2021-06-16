@@ -9,7 +9,7 @@ import Model.Utils.Pair;
 
 public class newTeam {
 
-    public int ret_set(Connection Mycon, int id_pok) {
+    public static int ret_set(Connection Mycon, int id_pok) {
 
         PreparedStatement Prep_statement;
         ResultSet Myresults;
@@ -27,7 +27,7 @@ public class newTeam {
         return (id_set);
     }
 
-    public Move init_move(Connection Mycon, int id_move) {
+    public static Move init_move(Connection Mycon, int id_move) {
 
         PreparedStatement Prep_statement;
         ResultSet Myresults;
@@ -67,7 +67,7 @@ public class newTeam {
         return (new Move(id_move, string_name, move_type, physical, power, accuracy, pp, prio, crit_rate));
     }
 
-    public PokeTypes.type init_poketype(String type) {
+    public static PokeTypes.type init_poketype(String type) {
         switch (type) {
             case ("grass"):
                 return (PokeTypes.type.GRASS);
@@ -111,7 +111,7 @@ public class newTeam {
         }
     }
 
-    public Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
+    public static Pokemon init_pok(Connection Mycon, String name_pok, int id_pok) {
 
 
         String fs = "../Resources/Sprites/frontFrame2/" + id_pok + ".png";
@@ -316,6 +316,9 @@ public class newTeam {
         return id_pok;
     }
 
+    static List<Team> allTeams3 = new ArrayList<>();
+    static List<Team> allTeams6 = new ArrayList<>();
+
     //Méthode de récupération de l'ID et des noms des Pokémons jouables
     public static Pair<List<Integer>, List<String>> getAvailablePokemons(){
 
@@ -326,9 +329,8 @@ public class newTeam {
         List<Integer> id_available_poks = new ArrayList<>();
         List<String> name_available_poks = new ArrayList<>();
 
-        String sql = "SELECT * from Sets LEFT JOIN pokemon WHERE Sets.pokemon = pokemon.id";
-
         try {
+            String sql = "SELECT * from Sets LEFT JOIN pokemon WHERE Sets.pokemon = pokemon.id";
             stmt = mycon.createStatement();
             Myresults = stmt.executeQuery(sql);
             while(Myresults.next()){
@@ -341,13 +343,19 @@ public class newTeam {
         return (new Pair<>(id_available_poks, name_available_poks));
     }
 
-    public static getTeamByName(String teamName){
-
+    public static Team getTeamByName(String teamName, List<Team> allTeams){
+        int i = 0;
+        Team t = allTeams.get(0);
+        while (!teamName.equals(t.getName())){
+            i++;
+            t = allTeams.get(i);
+        }
+        return t;
     }
 
 
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
-    public Team create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
+    public void create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
 
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
@@ -475,10 +483,22 @@ public class newTeam {
             New_pokemon = init_pok(Mycon, wanted_pokemons.get(i), poke_ids.get(i));
             New_team.addPokemon(New_pokemon);
         }
-        return New_team;
+
+        //Ajout de la nouvelle équipe dans l'objet de liste d'équipes adéquat
+        if(nb_poks == 3){
+            newTeam.allTeams3.add(New_team);
+        }
+        else if(nb_poks == 6){
+            newTeam.allTeams6.add(New_team);
+        }
+        try {
+            Mycon.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    public void load_teams(List<Team> at3, List<Team> at6) {
+    public static void load_teams(/*List<Team> at3, List<Team> at6*/) {
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
         Statement Norm_statement;
@@ -513,7 +533,7 @@ public class newTeam {
                      temp_pokemon = init_pok(Mycon, pok_name, id_pok);
                      temp_team.addPokemon(temp_pokemon);
                 }
-                at6.add(temp_team);
+                newTeam.allTeams6.add(temp_team);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -532,7 +552,7 @@ public class newTeam {
             while (Myresults.next()) {
                 team_name = Myresults.getString("name");
                 temp_team = new Team(team_name);
-                for (int i = 3; i <= 5; i++) {
+                for (int i = 2; i <= 4; i++) {
                     id_pok = Myresults.getInt(i);
                     Prep_statement = Mycon.prepareStatement("SELECT pretty_name from pokemon where id = ?");
 
@@ -542,14 +562,19 @@ public class newTeam {
                     temp_pokemon = init_pok(Mycon, pok_name, id_pok);
                     temp_team.addPokemon(temp_pokemon);
                 }
-                at3.add(temp_team);
+                newTeam.allTeams3.add(temp_team);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            Mycon.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void remove_team(String team_name, int size) throws UnknownTeamException {
+    public static void remove_team(String team_name, int size) throws UnknownTeamException {
         //Création des variables de connexion et d'accès à la BDD de nos Pokémons
         Connection Mycon = dbConnection.connect();
         PreparedStatement pstmt = null;
@@ -595,7 +620,10 @@ public class newTeam {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        try {
+            Mycon.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
-
-
 }
