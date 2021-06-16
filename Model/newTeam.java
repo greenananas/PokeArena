@@ -5,6 +5,7 @@ import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import Model.Utils.Pair;
 
 public class newTeam {
 
@@ -315,6 +316,36 @@ public class newTeam {
         return id_pok;
     }
 
+    //Méthode de récupération de l'ID et des noms des Pokémons jouables
+    public static Pair<List<Integer>, List<String>> getAvailablePokemons(){
+
+        Connection mycon = dbConnection.connect();
+        Statement stmt;
+        ResultSet Myresults = null;
+
+        List<Integer> id_available_poks = new ArrayList<>();
+        List<String> name_available_poks = new ArrayList<>();
+
+        String sql = "SELECT * from Sets LEFT JOIN pokemon WHERE Sets.pokemon = pokemon.id";
+
+        try {
+            stmt = mycon.createStatement();
+            Myresults = stmt.executeQuery(sql);
+            while(Myresults.next()){
+                id_available_poks.add(Myresults.getInt("pokemon"));
+                name_available_poks.add(Myresults.getString("pretty_name"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return (new Pair<>(id_available_poks, name_available_poks));
+    }
+
+    public static getTeamByName(String teamName){
+
+    }
+
+
     //6 arguments avec 6 names différents et throw des exceptions si les champs ne sont pas bons (renvoyer le numéro du champ)
     public Team create(List<String> wanted_pokemons, String team_name) throws UnknownPokemonException, MultipleSamePokemonException, TeamNameAlreadyExistsException {
 
@@ -564,6 +595,7 @@ public class newTeam {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
+
+
 }

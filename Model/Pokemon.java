@@ -178,10 +178,10 @@ public class Pokemon {
      */
     private String font_sprite;
 
-    /**
+     /**
      * Lien local vers l'image de dos du Pokémon.
      */
-    private String back_sprite;
+    private String back_sprite;*/
 
     /**
      * Créer un Pokémon.
