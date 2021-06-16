@@ -1,0 +1,51 @@
+@startuml
+!pragma teoz true
+'https://plantuml.com/sequence-diagram
+
+participant "Client 1" as c1
+participant Serveur as s
+participant "Client 2" as c2
+
+rnote over s : WAITING_FOR_CLIENT_1_TO_JOIN
+/rnote over c1 : NOT_CONNECTED
+/rnote over c2 : NOT_CONNECTED
+c1 -> s : connect
+rnote over s : WAITING_FOR_CLIENT_2_TO_JOIN
+/rnote over c1 : NEED_TO_SEND_TEAM
+c2 -> s : connect
+rnote over s : WAITING_FOR_CLIENTS_TEAM
+/rnote over c2 : NEED_TO_SEND_TEAM
+c2 -> s : sendTeam
+rnote over s : WAITING_FOR_CLIENT1_TEAM
+/rnote over c2 : WAITING_FOR_START
+c1 -> s : sendTeam
+rnote over s : WAITING_FOR_START
+/rnote over c1 : WAITING_FOR_START
+s -> c1 : update
+& s -> c2 : update
+rnote over s : WAITING_FOR_CLIENTS_ACTIONS
+/rnote over c1 : NEED_TO_SEND_ACTION
+/rnote over c2 : NEED_TO_SEND_ACTION
+c1 -> s : sendMove
+rnote over s : WAITING_FOR_CLIENT_1_ACTION
+/rnote over c1 : ACTION_SENT
+c2 -> s : sendChangePkmn
+rnote over s : PROCESSING_ACTIONS
+/rnote over c2 : ACTION_SENT
+s -> c1 : update
+& s -> c2 : update
+rnote over s : WAITING_FOR_CLIENT_1_CHANGEPKMN
+/rnote over c1 : NEED_TO_SEND_CHANGEPKMN
+c1 -> s : sendChangePkmn
+s -> c1 : update
+& s -> c2 : update
+rnote over s : WAITING_FOR_CLIENTS_ACTIONS
+/rnote over c1 : NEED_TO_SEND_ACTION
+/rnote over c2 : NEED_TO_SEND_ACTION
+... Déroulement du combat ...
+s -> c1 : sendWin
+& s -> c2 : sendLose
+rnote over s : CLIENT_1_WON
+/rnote over c1 : BATTLE_WON
+/rnote over c2 : BATTLE_LOST
+@enduml
