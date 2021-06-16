@@ -20,8 +20,6 @@ import PokeArenaNetwork.Client.PokeArenaClient;
 import PokeArenaNetwork.Client.PokeArenaClientState;
 import PokeArenaNetwork.Server.PokeArenaServer;
 import application.FXRouter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 
 import javafx.scene.layout.AnchorPane;
@@ -141,7 +139,7 @@ public class FightController implements Initializable  {
 		returnButton.setVisible(true);
 
 	}
-
+	
 
 	// Event Listener on ImageView[#a1].onMouseClicked
 	@FXML
@@ -309,12 +307,12 @@ public class FightController implements Initializable  {
 		if(this.oldHP >= currHP) {
 			imageCurrPkm.setTranslateX(-2);
 			try {
-				TimeUnit.SECONDS.sleep(2);
+				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			imageCurrPkm.setTranslateX(-2);
+			imageCurrPkm.setTranslateX(2);
 			
 		}
 		
