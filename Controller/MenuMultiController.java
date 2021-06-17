@@ -55,7 +55,7 @@ public class MenuMultiController implements Initializable{
 	@FXML
 	public void handleHostButton(ActionEvent event) {
 
-		server = new PokeArenaServer("localhost", 8888);
+		server = new PokeArenaServer(ipField.getText(), 8888);
 		server.start();
 
 		PokeArenaClient client;
