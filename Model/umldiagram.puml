@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractList
+abstract AbstractCollection
+interface List
+interface Collection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class Battle {
+Object[] elementData
+size()
+}
+
+class Trainer {
+Object[] elementData
+size()
+}
+
+class Pokemon {
+Object[] elementData
+size()
+}
+
+class TrainerAction {
+Object[] elementData
+size()
+}
+
+enum Nature {
+DAYS
+HOURS
+MINUTES
+}
+
+@enduml
