@@ -77,6 +77,9 @@ public class MenuTeamController implements Initializable {
     @FXML
     private Label errLabel;
 
+    ArrayList<String> team3list;
+    ArrayList<String> team6list;
+
     // Event Listener on Button[#addButton].onAction
     @FXML
     public void handleAddButton(ActionEvent event) {
@@ -118,16 +121,29 @@ public class MenuTeamController implements Initializable {
         TeamBuilder nt = new TeamBuilder();
         ArrayList<String> team = new ArrayList<>();
         for (Label lbl : pkmnCurrentTeam) {
-            team.add(lbl.getText());
+            if (!lbl.getText().equals("---")) team.add(lbl.getText());
         }
         try {
-            nt.create(team, teamField.getValue());
+            if (teamField.getValue().equals("--Nouvelle équipe--")) {
+                nt.create(team, teamNameField.getText());
+                //errorField.setText("L'équipe a bien été créée.");
+            }
+            else {
+                TeamBuilder.remove_team(teamField.getValue(), (team3.isSelected() ? 3 : 6));
+                nt.create(team, teamNameField.getText());
+                errorField.setText("L'équipe a bien été modifiée.");
+            }
+
         } catch (UnknownPokemonException e) {
             errorField.setText("Un des Pokémons séléctionnés n'existe pas !");
         } catch (MultipleSamePokemonException e) {
             errorField.setText("Vous ne pouvez pas avoir plusieurs fois le même Pokémon !");
         } catch (TeamNameAlreadyExistsException e) {
             errorField.setText("Vous ne pouvez pas avoir deux équipes avec le même nom !");
+        } catch (UnknownTeamException e) {
+            errorField.setText("Vous ne pouvez pas modifier cette équipe.");
+        } finally {
+            reloadLists();
         }
     }
 
@@ -167,14 +183,9 @@ public class MenuTeamController implements Initializable {
         pkmnCurrentTeam.add(p5);
         pkmnCurrentTeam.add(p6);
 
-        ArrayList<String> team3list = new ArrayList<>();
-        ArrayList<String> team6list = new ArrayList<>();
-        for (Team t : TeamBuilder.allTeams3) {
-            team3list.add(t.getName());
-        }
-        for (Team t : TeamBuilder.allTeams6) {
-            team6list.add(t.getName());
-        }
+        team3list = new ArrayList<>();
+        team6list = new ArrayList<>();
+        reloadLists();
 
         group.selectedToggleProperty().addListener((ob, o, n) -> {
             RadioButton rb = (RadioButton) group.getSelectedToggle();
@@ -204,5 +215,14 @@ public class MenuTeamController implements Initializable {
             }
         });
         team6.setSelected(true);
+    }
+
+    public void reloadLists() {
+        for (Team t : TeamBuilder.allTeams3) {
+            team3list.add(t.getName());
+        }
+        for (Team t : TeamBuilder.allTeams6) {
+            team6list.add(t.getName());
+        }
     }
 }
