@@ -66,11 +66,9 @@ public class MenuTeamController implements Initializable {
 	@FXML
 	private Button saveButton;
 	@FXML
-	private FilteredComboBox pkmnList;
+	private ComboBox<String> pkmnList;
 	@FXML
-	private FilteredComboBox teamList;
-	@FXML
-	private HBox hboxtest;
+	private ComboBox<String> teamList;
 
 	// Event Listener on Button[#addButton].onAction
 	@FXML
@@ -80,7 +78,7 @@ public class MenuTeamController implements Initializable {
 			i++;
 		}
 		if (i < 6) {
-			pkmnCurrentTeam.get(i).setText(pkmnList.cb.getValue());
+
 			pkmnCurrentTeam.get(i).setVisible(true);
 		}
 	}
@@ -107,7 +105,7 @@ public class MenuTeamController implements Initializable {
 	// Event Listener on FilteredComboBox[#teamList].onAction
 	@FXML
 	public void handleTeamList(ActionEvent event) {
-		ArrayList<Pokemon> poke = TeamBuilder.getTeamByName(teamList.cb.getValue(),
+		ArrayList<Pokemon> poke = TeamBuilder.getTeamByName(teamList.getValue(),
 				(team3.isSelected() ? TeamBuilder.allTeams3 : TeamBuilder.allTeams6)).getPokemons();
 		for (int p = 0; p < poke.size(); p++) {
 			pkmnCurrentTeam.get(p).setText(poke.get(p).getName());
@@ -117,22 +115,15 @@ public class MenuTeamController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		hboxtest = new FilteredComboBox();
 
-
-
-		
-		
 		Pair<List<Integer>, List<String>> pkmnListItems = TeamBuilder.getAvailablePokemons();
 		ArrayList<String> pkmnListData = new ArrayList<>();
 
 		for (int i = 0; i < pkmnListItems.getLeft().size(); i++) {
 			pkmnListData.add(pkmnListItems.getLeft().get(i) + " - " + pkmnListItems.getRight().get(i));
 		}
-		((FilteredComboBox) hboxtest).setData(pkmnListData);
-		
-		
+		pkmnList.setItems(FXCollections.observableArrayList(pkmnListData));
+
 //		
 //		
 //        ComboBox<String> cb = new ComboBox<String>();

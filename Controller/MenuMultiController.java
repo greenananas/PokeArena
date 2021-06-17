@@ -50,7 +50,6 @@ public class MenuMultiController implements Initializable{
 	@FXML
 	public void handleHostButton(ActionEvent event) {
 		// TODO
-		
 
 		server = new PokeArenaServer("localhost", 8887);
 		server.start();
@@ -153,26 +152,22 @@ public class MenuMultiController implements Initializable{
 			System.out.println(team.getName());
 		}
 		
-		modeList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
+		modeList.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
+			List<Team> tl;
+			if(modeList.getValue() == "3v3") {
+				// 6 teams
+				tl = TeamBuilder.allTeams6;
 
-			@Override
-			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-				List<Team> tl;
-				if(modeList.getValue() == "3v3") {
-					// 6 teams
-					tl = TeamBuilder.allTeams6;
-					
-				} else {
-					// 3 teams 
-					tl = TeamBuilder.allTeams3;
-				}
-				
-				teamList.getItems().clear();
-				for (Team team : tl) {
-					teamList.getItems().addAll(team.getName());
-				}
-				modeList.getSelectionModel().select(tl.get(1).getName());
+			} else {
+				// 3 teams
+				tl = TeamBuilder.allTeams3;
 			}
+
+			teamList.getItems().clear();
+			for (Team team : tl) {
+				teamList.getItems().addAll(team.getName());
+			}
+			modeList.getSelectionModel().select(tl.get(1).getName());
 		});
 		
 	}

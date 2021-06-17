@@ -15,113 +15,137 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="menuSet" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="500.0" styleClass="menuSolo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuTeamController">
-	<children>
-		<BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-			<top>
-				<Label alignment="CENTER" styleClass="labelTitle" text="Menu edition equipes" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" BorderPane.alignment="CENTER">
-					<BorderPane.margin>
-						<Insets top="5.0" />
-					</BorderPane.margin>
-				</Label>
-			</top>
-			<center>
-				<VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-					<children>
-						<AnchorPane>
-							<children>
-								<Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="labelNormal" text="Nouvelle equipe" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-									<opaqueInsets>
-										<Insets />
-									</opaqueInsets>
-								</Label>
-							</children>
-						</AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <HBox spacing="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
-                           <children>
-                              <RadioButton mnemonicParsing="false" styleClass="labelNormal" text="6 Pokemons" />
-                              <RadioButton fx:id="team3" mnemonicParsing="false" styleClass="labelNormal" text="3 Pokemons" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-						<GridPane>
-							<columnConstraints>
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-							</columnConstraints>
-							<rowConstraints>
-								<RowConstraints />
-                        <RowConstraints minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
-							</rowConstraints>
-							<VBox.margin>
-								<Insets left="20.0" right="20.0" />
-							</VBox.margin>
-                     <children>
-      								<Label styleClass="labelNormal" text="Choisir un Pokémon" GridPane.rowIndex="1">
-      									<opaqueInsets>
-      										<Insets />
-      									</opaqueInsets>
-      								</Label>
-                        <HBox fx:id="hboxtest" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <ComboBox prefWidth="150.0" />
-                           </children>
-                        </HBox>
-                     </children>
-						</GridPane>
-						<AnchorPane>
-							<children>
-								<Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAddButton" text="AJOUTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0" />
-							</children>
-						</AnchorPane>
-						<AnchorPane>
-							<children>
-								<Line endX="460.0" stroke="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0" />
-							</children>
-						</AnchorPane>
-						<AnchorPane>
-							<children>
-								<Label alignment="CENTER" contentDisplay="CENTER" layoutX="168.0" maxWidth="1.7976931348623157E308" styleClass="labelNormal" text="Supprimer une equipe" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-									<opaqueInsets>
-										<Insets />
-									</opaqueInsets>
-								</Label>
-							</children>
-						</AnchorPane>
-						<GridPane prefHeight="50.0" prefWidth="400.0">
-							<columnConstraints>
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-							</columnConstraints>
-							<rowConstraints>
-								<RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-							</rowConstraints>
-							<children>
-								<Label styleClass="labelNormal" text="Nom de l'equipe">
-									<opaqueInsets>
-										<Insets />
-									</opaqueInsets>
-								</Label>
-								<TextField fx:id="teamNameField" maxWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" />
-							</children>
-							<padding>
-								<Insets left="20.0" right="20.0" />
-							</padding>
-						</GridPane>
-						<AnchorPane>
-							<children>
-								<Button fx:id="suppButton" mnemonicParsing="false"  text="SUPPRIMER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0" />
-							</children>
-						</AnchorPane>
-					</children>
-					<BorderPane.margin>
-						<Insets top="5.0" />
-					</BorderPane.margin>
-				</VBox>
-			</center>
-		</BorderPane>
-	</children>
+<?import Controller.FilteredComboBox?>
+
+<AnchorPane fx:id="menuSet" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefWidth="500.0" styleClass="menuSolo" stylesheets="@application.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.MenuTeamController">
+<children>
+    <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <top>
+            <Label alignment="CENTER" styleClass="labelTitle" text="Menu edition equipes" textAlignment="CENTER"
+                   textOverrun="CENTER_WORD_ELLIPSIS" BorderPane.alignment="CENTER">
+                <BorderPane.margin>
+                    <Insets top="5.0"/>
+                </BorderPane.margin>
+            </Label>
+        </top>
+        <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                <children>
+                    <AnchorPane>
+                        <children>
+                            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="labelNormal"
+                                   text="Nouvelle equipe" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                   AnchorPane.topAnchor="0.0">
+                                <opaqueInsets>
+                                    <Insets/>
+                                </opaqueInsets>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                            <HBox spacing="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+                                <children>
+                                    <RadioButton mnemonicParsing="false" styleClass="labelNormal"
+                                                 text="6 Pokemons"/>
+                                    <RadioButton fx:id="team3" mnemonicParsing="false" styleClass="labelNormal"
+                                                 text="3 Pokemons"/>
+                                </children>
+                            </HBox>
+                        </children>
+                    </AnchorPane>
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                               prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints/>
+                            <RowConstraints minHeight="50.0" prefHeight="50.0" valignment="CENTER"
+                                            vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <VBox.margin>
+                            <Insets left="20.0" right="20.0"/>
+                        </VBox.margin>
+                        <children>
+                            <Label styleClass="labelNormal" text="Choisir un Pokémon" GridPane.rowIndex="1">
+                                <opaqueInsets>
+                                    <Insets/>
+                                </opaqueInsets>
+                            </Label>
+                            <ComboBox fx:id="pkmnList" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                        </children>
+                    </GridPane>
+                    <AnchorPane>
+                        <children>
+                            <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER"
+                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                    onAction="#handleAddButton" text="AJOUTER" AnchorPane.bottomAnchor="10.0"
+                                    AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0"
+                                    AnchorPane.topAnchor="10.0"/>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane>
+                        <children>
+                            <Line endX="460.0" stroke="WHITE" AnchorPane.bottomAnchor="5.0"
+                                  AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+                                  AnchorPane.topAnchor="5.0"/>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane>
+                        <children>
+                            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="168.0"
+                                   maxWidth="1.7976931348623157E308" styleClass="labelNormal"
+                                   text="Supprimer une equipe" textAlignment="CENTER"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <opaqueInsets>
+                                    <Insets/>
+                                </opaqueInsets>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <GridPane prefHeight="50.0" prefWidth="400.0">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                               prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <children>
+                            <Label styleClass="labelNormal" text="Nom de l'equipe">
+                                <opaqueInsets>
+                                    <Insets/>
+                                </opaqueInsets>
+                            </Label>
+                            <TextField fx:id="teamNameField" maxWidth="150.0" prefWidth="150.0"
+                                       GridPane.columnIndex="1"/>
+                        </children>
+                        <padding>
+                            <Insets left="20.0" right="20.0"/>
+                        </padding>
+                    </GridPane>
+                    <AnchorPane>
+                        <children>
+                            <Button fx:id="suppButton" mnemonicParsing="false" text="SUPPRIMER"
+                                    AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0"
+                                    AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0"/>
+                        </children>
+                    </AnchorPane>
+                </children>
+                <BorderPane.margin>
+                    <Insets top="5.0"/>
+                </BorderPane.margin>
+            </VBox>
+        </center>
+    </BorderPane>
+</children>
 </AnchorPane>

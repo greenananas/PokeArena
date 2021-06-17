@@ -84,7 +84,7 @@ public class Battle {
                 Move move = (Move) current.getAction();
                 applyPreMoveEffect(move, current, other, true);
                 boolean landed = false;
-                if (doesHit(user, target, move)) {
+                if (doesHit(user, target, move) || move.getPrecision() == 0) {
                     landed = true;
                     if (move.getPower() != 0)
                         user.attack(target, move);
@@ -220,6 +220,7 @@ public class Battle {
         switch (moveToProcess.getId()) {
             case 14: //Danse Lames
                 modifyStat(user, "attack", 2);
+                System.out.println("L'attaque de "+user.getName()+" a augmentée !");
                 break;
             case 226: //Relais
                 //encore un changement de pokémon -> voir avec Louis
@@ -238,15 +239,20 @@ public class Battle {
     public void modifyStat(Pokemon poke, String stat, int value) {
         switch (stat) {
             case "attack":
-                poke.setAttackModifier(poke.getAttackModifier() + value);
+                if (poke.getAttackModifier()<6) poke.setAttackModifier(poke.getAttackModifier() + value);
+                else System.out.println("Cela n'aura aucun effet...");
             case "defence":
-                poke.setDefenceModifier(poke.getDefenceModifier() + value);
+                if (poke.getDefenceModifier()<6) poke.setDefenceModifier(poke.getDefenceModifier() + value);
+                else System.out.println("Cela n'aura aucun effet...");
             case "speAttack":
-                poke.setSpeAttackModifier(poke.getSpeAttackModifier() + value);
+                if (poke.getSpeAttackModifier()<6) poke.setSpeAttackModifier(poke.getSpeAttackModifier() + value);
+                else System.out.println("Cela n'aura aucun effet...");
             case "speDefence":
-                poke.setDefenceModifier(poke.getDefenceModifier() + value);
+                if (poke.getDefenceModifier()<6) poke.setDefenceModifier(poke.getDefenceModifier() + value);
+                else System.out.println("Cela n'aura aucun effet...");
             case "speed":
-                poke.setSpeedModifier(poke.getSpeedModifier() + value);
+                if (poke.getSpeedModifier()<6) poke.setSpeedModifier(poke.getSpeedModifier() + value);
+                else System.out.println("Cela n'aura aucun effet...");
         }
     }
 

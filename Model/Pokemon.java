@@ -583,6 +583,7 @@ public class Pokemon {
      */
     public void setAttackModifier(int attackMod) {
         this.attackMod = attackMod;
+        if (this.attackMod > 6) this.attackMod = 6;
     }
 
     /**
@@ -592,6 +593,7 @@ public class Pokemon {
      */
     public void setDefenceModifier(int defenceMod) {
         this.defenceMod = defenceMod;
+        if (this.defenceMod > 6) this.defenceMod = 6;
     }
 
     /**
@@ -601,6 +603,7 @@ public class Pokemon {
      */
     public void setSpeAttackModifier(int speAttackMod) {
         this.speAttackMod = speAttackMod;
+        if (this.speAttackMod > 6) this.speAttackMod = 6;
     }
 
     /**
@@ -610,6 +613,7 @@ public class Pokemon {
      */
     public void setSpeDefenceModifier(int speDefenceMod) {
         this.speDefenceMod = speDefenceMod;
+        if (this.speDefenceMod > 6) this.speDefenceMod = 6;
     }
 
     /**
@@ -619,6 +623,7 @@ public class Pokemon {
      */
     public void setSpeedModifier(int speedMod) {
         this.speedMod = speedMod;
+        if (this.speedMod > 6) this.speedMod = 6;
     }
 
     /**
