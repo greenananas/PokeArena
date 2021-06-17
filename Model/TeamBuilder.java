@@ -358,7 +358,7 @@ public class TeamBuilder {
         List<String> name_available_poks = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from Sets LEFT JOIN pokemon WHERE Sets.pokemon = pokemon.id";
+            String sql = "SELECT * from Sets LEFT JOIN pokemon WHERE Sets.pokemon = pokemon.id ORDER BY pokemon";
             stmt = mycon.createStatement();
             Myresults = stmt.executeQuery(sql);
             while(Myresults.next()){
@@ -676,4 +676,5 @@ public class TeamBuilder {
             throwables.printStackTrace();
         }
     }
+    
 }
