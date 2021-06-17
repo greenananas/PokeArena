@@ -226,6 +226,8 @@ public class Battle {
                 //encore un changement de pokémon -> voir avec Louis
             case 137: //Regard Médusant
                 target.setStatus(PokeStatus.Status.PARALYZED);
+            case 95: //Hypnose
+                target.setStatus(PokeStatus.Status.ASLEEP);
         }
     }
 

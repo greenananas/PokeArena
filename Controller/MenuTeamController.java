@@ -74,6 +74,8 @@ public class MenuTeamController implements Initializable {
     private Button saveButton;
     @FXML
     private ComboBox<String> pkmnList;
+    @FXML
+    private Label errLabel;
 
     ArrayList<String> team3list;
     ArrayList<String> team6list;
@@ -129,7 +131,7 @@ public class MenuTeamController implements Initializable {
             else {
                 TeamBuilder.remove_team(teamField.getValue(), (team3.isSelected() ? 3 : 6));
                 nt.create(team, teamNameField.getText());
-                errorField.setText("L'équipe a bien été modifiée.");
+                //errorField.setText("L'équipe a bien été modifiée.");
             }
 
         } catch (UnknownPokemonException e) {
