@@ -17,6 +17,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -42,18 +45,18 @@ public class MenuTeamController implements Initializable {
 //    @FXML    private PokemonMenuItem p6;
 //    private ArrayList<PokemonMenuItem> pkmnCurrentTeam;
 	@FXML
-	private TextField p1;
+	private Label p1;
 	@FXML
-	private TextField p2;
+	private Label p2;
 	@FXML
-	private TextField p3;
+	private Label p3;
 	@FXML
-	private TextField p4;
+	private Label p4;
 	@FXML
-	private TextField p5;
+	private Label p5;
 	@FXML
-	private TextField p6;
-	private ArrayList<TextField> pkmnCurrentTeam;
+	private Label p6;
+	private ArrayList<Label> pkmnCurrentTeam;
 
 	@FXML
 	private Button addButton;
@@ -74,12 +77,34 @@ public class MenuTeamController implements Initializable {
 	@FXML
 	public void handleAddButton(ActionEvent event) {
 		int i = 0;
-		while (i < 6 && !pkmnCurrentTeam.get(i).getText().equals("")) {
+		while (i < 6 && !pkmnCurrentTeam.get(i).getText().equals("---")) {
 			i++;
 		}
 		if (i < 6) {
+			pkmnCurrentTeam.get(i).setText(pkmnList.getValue().split(" - ")[1]);
+			ImageView img = new ImageView(new Image("Resources/Sprites/frontFrame2/" + pkmnList.getValue().split(" - ")[0] + ".png"));
+			img.setFitHeight(40);
+			img.setPreserveRatio(true);
+			pkmnCurrentTeam.get(i).setGraphic(img);
+		}
+	}
 
-			pkmnCurrentTeam.get(i).setVisible(true);
+	@FXML
+	public void handleDelButton(MouseEvent event) {
+		Label item = (Label) event.getSource();
+		int i = 0;
+		while (i < 5 && pkmnCurrentTeam.get(i) != item) {
+			i++;
+		}
+		int k = i;
+		while (k < 5 && !pkmnCurrentTeam.get(k).getText().equals("---")) {
+			k++;
+		}
+		for (int j = i; j < k; j++){
+			pkmnCurrentTeam.get(j).setText(pkmnCurrentTeam.get(j+1).getText());
+			pkmnCurrentTeam.get(j+1).setText("---");
+			pkmnCurrentTeam.get(j).setGraphic(pkmnCurrentTeam.get(j+1).getGraphic());
+			pkmnCurrentTeam.get(j+1).setGraphic(null);
 		}
 	}
 
@@ -88,8 +113,8 @@ public class MenuTeamController implements Initializable {
 	public void handleSaveButton(ActionEvent event) {
 		TeamBuilder nt = new TeamBuilder();
 		ArrayList<String> team = new ArrayList<>();
-		for (TextField tf : pkmnCurrentTeam) {
-			team.add(tf.getText());
+		for (Label lbl : pkmnCurrentTeam) {
+			team.add(lbl.getText());
 		}
 		try {
 			nt.create(team, teamNameField.getText());
@@ -102,14 +127,15 @@ public class MenuTeamController implements Initializable {
 		}
 	}
 
-	// Event Listener on FilteredComboBox[#teamList].onAction
+	// Event Listener on ComboBox[#teamList].onAction
 	@FXML
 	public void handleTeamList(ActionEvent event) {
 		ArrayList<Pokemon> poke = TeamBuilder.getTeamByName(teamList.getValue(),
 				(team3.isSelected() ? TeamBuilder.allTeams3 : TeamBuilder.allTeams6)).getPokemons();
 		for (int p = 0; p < poke.size(); p++) {
-			pkmnCurrentTeam.get(p).setText(poke.get(p).getName());
-			pkmnCurrentTeam.get(p).setVisible(true);
+			pkmnCurrentTeam.get(p).setText(poke.get(p).getName().split(" - ")[1]);
+			pkmnCurrentTeam.get(p).setGraphic(new ImageView(new Image("Resources/Sprites/frontFrame2/" + poke.get(p).getName().split(" - ")[0] + ".png")));
+			//pkmnCurrentTeam.get(p).setVisible(true);
 		}
 	}
 
@@ -123,108 +149,54 @@ public class MenuTeamController implements Initializable {
 			pkmnListData.add(pkmnListItems.getLeft().get(i) + " - " + pkmnListItems.getRight().get(i));
 		}
 		pkmnList.setItems(FXCollections.observableArrayList(pkmnListData));
-
-//		
-//		
-//        ComboBox<String> cb = new ComboBox<String>();
-//        cb.setEditable(true);
-//
-//        // Create a list with some dummy values.
-//        ObservableList<String> items = FXCollections.observableArrayList("One", "Two", "Three", "Four", "Five", "Six",
-//                "Seven", "Eight", "Nine", "Ten", "One", "Two", "Three", "Four", "Five", "Six",
-//                "Seven", "Eight", "Nine", "Ten");
-//
-//        // Create a FilteredList wrapping the ObservableList.
-//        FilteredList<String> filteredItems = new FilteredList<String>(items, p -> true);
-//
-//        // Add a listener to the textProperty of the combobox editor. The
-//        // listener will simply filter the list every time the input is changed
-//        // as long as the user hasn't selected an item in the list.
-//        cb.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-//            final TextField editor = cb.getEditor();
-//            final String selected = cb.getSelectionModel().getSelectedItem();
-//
-//            // This needs run on the GUI thread to avoid the error described
-//            // here: https://bugs.openjdk.java.net/browse/JDK-8081700.
-//            Platform.runLater(() -> {
-//                // If the no item in the list is selected or the selected item
-//                // isn't equal to the current input, we refilter the list.
-//                if (selected == null || !selected.equals(editor.getText())) {
-//                    filteredItems.setPredicate(item -> {
-//                        // We return true for any items that starts with the
-//                        // same letters as the input. We use toUpperCase to
-//                        // avoid case sensitivity.
-//                        if (item.toUpperCase().startsWith(newValue.toUpperCase())) {
-//                            return true;
-//                        } else {
-//                            return false;
-//                        }
-//                    });
-//                }
-//            });
-//        });
-//
-//        cb.setItems(filteredItems);
 		
-//		ToggleGroup group = new ToggleGroup();
-//		team3.getStyleClass().remove("radio-button");
-//		team3.getStyleClass().add("toggle-button");
-//		team6.getStyleClass().remove("radio-button");
-//		team6.getStyleClass().add("toggle-button");
-//		team3.setToggleGroup(group);
-//		team6.setToggleGroup(group);
+		ToggleGroup group = new ToggleGroup();
+		team3.setToggleGroup(group);
+		team6.setToggleGroup(group);
 
-//		pkmnCurrentTeam.add(p1);
-//		pkmnCurrentTeam.add(p2);
-//		pkmnCurrentTeam.add(p3);
-//		pkmnCurrentTeam.add(p4);
-//		pkmnCurrentTeam.add(p5);
-//		pkmnCurrentTeam.add(p6);
-//
-//		ArrayList<String> team3list = new ArrayList<>();
-//		ArrayList<String> team6list = new ArrayList<>();
-//		for (Team t : TeamBuilder.allTeams3) {
-//			team3list.add(t.getName());
-//		}
-//		for (Team t : TeamBuilder.allTeams6) {
-//			team6list.add(t.getName());
-//		}
-//
-//		group.selectedToggleProperty().addListener((ob, o, n) -> {
-//			RadioButton rb = (RadioButton) group.getSelectedToggle();
-//			if (rb != null) {
-//				if (rb.getId().equals("team3")) {
-//					p4.setVisible(false);
-//					p5.setVisible(false);
-//					p6.setVisible(false);
-//					teamList.clear();
-//					teamList.setData(team3list);
-//					for (TextField pmi : pkmnCurrentTeam) {
-//						pmi.setText("");
-//						pmi.setVisible(false); //bouton associé
-//					}
-//				} else {
-//					p4.setVisible(true);
-//					p5.setVisible(true);
-//					p6.setVisible(true);
-//					teamList.clear();
-//					teamList.setData(team6list);
-//					for (TextField pmi : pkmnCurrentTeam) {
-//						pmi.setText("");
-//						pmi.setVisible(false);
-//					}
-//				}
-//			}
-//		});
-//		team3.setSelected(true);
-//
-//		// Initializing the list of all Pokemons.
-//		Pair<List<Integer>, List<String>> pkmnListItems = TeamBuilder.getAvailablePokemons();
-//		ArrayList<String> pkmnListData = new ArrayList<>();
-//
-//		for (int i = 0; i < pkmnListItems.getLeft().size(); i++) {
-//			pkmnListData.add(pkmnListItems.getLeft().get(i) + " - " + pkmnListItems.getRight().get(i));
-//		}
-//		pkmnList.setData(pkmnListData);
+		pkmnCurrentTeam = new ArrayList<>();
+		pkmnCurrentTeam.add(p1);
+		pkmnCurrentTeam.add(p2);
+		pkmnCurrentTeam.add(p3);
+		pkmnCurrentTeam.add(p4);
+		pkmnCurrentTeam.add(p5);
+		pkmnCurrentTeam.add(p6);
+
+		ArrayList<String> team3list = new ArrayList<>();
+		ArrayList<String> team6list = new ArrayList<>();
+		for (Team t : TeamBuilder.allTeams3) {
+			team3list.add(t.getName());
+		}
+		for (Team t : TeamBuilder.allTeams6) {
+		team6list.add(t.getName());
+		}
+
+		group.selectedToggleProperty().addListener((ob, o, n) -> {
+			RadioButton rb = (RadioButton) group.getSelectedToggle();
+			if (rb != null) {
+				if (rb.getId().equals("team3")) {
+					p4.setVisible(false);
+					p5.setVisible(false);
+					p6.setVisible(false);
+					teamList.getEditor().clear();
+					teamList.setItems(FXCollections.observableArrayList(team3list));
+					for (Label lbl : pkmnCurrentTeam) {
+						lbl.setText("---");
+						lbl.setVisible(false); //bouton associé
+					}
+				} else {
+					p4.setVisible(true);
+					p5.setVisible(true);
+					p6.setVisible(true);
+					teamList.getEditor().clear();
+					teamList.setItems(FXCollections.observableArrayList(team6list));
+					for (Label lbl : pkmnCurrentTeam) {
+						lbl.setText("---");
+						lbl.setVisible(false);
+					}
+				}
+			}
+		});
+		team6.setSelected(true);
 	}
 }
