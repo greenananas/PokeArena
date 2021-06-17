@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import Model.Utils.Pair;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -61,6 +62,8 @@ public class MenuTeamController implements Initializable {
 	@FXML
 	private Button addButton;
 	@FXML
+	private ChoiceBox<String> teamField;
+	@FXML
 	private TextField teamNameField;
 	@FXML
 	private TextField errorField;
@@ -70,8 +73,6 @@ public class MenuTeamController implements Initializable {
 	private Button saveButton;
 	@FXML
 	private ComboBox<String> pkmnList;
-	@FXML
-	private ComboBox<String> teamList;
 
 	// Event Listener on Button[#addButton].onAction
 	@FXML
@@ -117,7 +118,7 @@ public class MenuTeamController implements Initializable {
 			team.add(lbl.getText());
 		}
 		try {
-			nt.create(team, teamNameField.getText());
+			nt.create(team, teamField.getValue());
 		} catch (UnknownPokemonException e) {
 			errorField.setText("Un des Pokémons séléctionnés n'existe pas !");
 		} catch (MultipleSamePokemonException e) {
@@ -127,21 +128,9 @@ public class MenuTeamController implements Initializable {
 		}
 	}
 
-	// Event Listener on ComboBox[#teamList].onAction
-	@FXML
-	public void handleTeamList(ActionEvent event) {
-		ArrayList<Pokemon> poke = TeamBuilder.getTeamByName(teamList.getValue(),
-				(team3.isSelected() ? TeamBuilder.allTeams3 : TeamBuilder.allTeams6)).getPokemons();
-		for (int p = 0; p < poke.size(); p++) {
-			pkmnCurrentTeam.get(p).setText(poke.get(p).getName().split(" - ")[1]);
-			pkmnCurrentTeam.get(p).setGraphic(new ImageView(new Image("Resources/Sprites/frontFrame2/" + poke.get(p).getName().split(" - ")[0] + ".png")));
-			//pkmnCurrentTeam.get(p).setVisible(true);
-		}
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		//teamField.getItems().clear();
 		Pair<List<Integer>, List<String>> pkmnListItems = TeamBuilder.getAvailablePokemons();
 		ArrayList<String> pkmnListData = new ArrayList<>();
 
@@ -149,7 +138,7 @@ public class MenuTeamController implements Initializable {
 			pkmnListData.add(pkmnListItems.getLeft().get(i) + " - " + pkmnListItems.getRight().get(i));
 		}
 		pkmnList.setItems(FXCollections.observableArrayList(pkmnListData));
-		
+
 		ToggleGroup group = new ToggleGroup();
 		team3.setToggleGroup(group);
 		team6.setToggleGroup(group);
@@ -174,29 +163,46 @@ public class MenuTeamController implements Initializable {
 		group.selectedToggleProperty().addListener((ob, o, n) -> {
 			RadioButton rb = (RadioButton) group.getSelectedToggle();
 			if (rb != null) {
+				teamField.getItems().clear();
+				//teamField.getItems().add("--Nouvelle équipe--");
+				//teamField.getSelectionModel().select(0);
 				if (rb.getId().equals("team3")) {
 					p4.setVisible(false);
 					p5.setVisible(false);
 					p6.setVisible(false);
-					teamList.getEditor().clear();
-					teamList.setItems(FXCollections.observableArrayList(team3list));
+					teamField.getItems().addAll(team3list);
 					for (Label lbl : pkmnCurrentTeam) {
 						lbl.setText("---");
-						lbl.setVisible(false); //bouton associé
+						lbl.setGraphic(null);
 					}
 				} else {
 					p4.setVisible(true);
 					p5.setVisible(true);
 					p6.setVisible(true);
-					teamList.getEditor().clear();
-					teamList.setItems(FXCollections.observableArrayList(team6list));
+					teamField.getItems().addAll(team6list);
 					for (Label lbl : pkmnCurrentTeam) {
 						lbl.setText("---");
-						lbl.setVisible(false);
+						lbl.setGraphic(null);
 					}
 				}
 			}
 		});
 		team6.setSelected(true);
+		teamField.getSelectionModel().select(0);
+
+        teamField.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
+            System.out.println(teamField.getValue());
+            if (!newValue.equals(0)){
+                ArrayList<Pokemon> poke = TeamBuilder.getTeamByName(teamField.getValue(),
+                        (team3.isSelected() ? TeamBuilder.allTeams3 : TeamBuilder.allTeams6)).getPokemons();
+                for (int p = 0; p < poke.size(); p++) {
+                    pkmnCurrentTeam.get(p).setText(poke.get(p).getName());
+                    ImageView img = new ImageView(new Image("Resources/Sprites/frontFrame2/" + poke.get(p).getId() + ".png"));
+                    img.setFitHeight(40);
+                    img.setPreserveRatio(true);
+                    pkmnCurrentTeam.get(p).setGraphic(img);
+                }
+            }
+        });
 	}
 }
