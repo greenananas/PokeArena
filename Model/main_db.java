@@ -6,14 +6,17 @@ public class main_db {
     public static void main(String[] args) throws MultipleSamePokemonException, UnknownPokemonException, TeamNameAlreadyExistsException, UnknownTeamException, WrongTypeBDDException {
 
         //Test_ajout
-        List<String> wanted_pokemons = new ArrayList<>();
+        /*ist<String> wanted_pokemons = new ArrayList<>(); */
         TeamBuilder.load_teams();
-        wanted_pokemons.add("Arbok");
+        /*wanted_pokemons.add("Dracaufeu");
+        wanted_pokemons.add("Rattatac");
         wanted_pokemons.add("Roucarnage");
         wanted_pokemons.add("Dardargnan");
+        wanted_pokemons.add("Simularbre");
+        wanted_pokemons.add("Arbok");
         TeamBuilder nt = new TeamBuilder();
-        nt.create(wanted_pokemons,"team3-1");
-        System.out.println("Équipe " + TeamBuilder.allTeams3.get(TeamBuilder.allTeams6.size() - 1).getName()+ " terminée, voici les pokémons :");
+        nt.create(wanted_pokemons,"team6-2");
+        System.out.println("Équipe " + TeamBuilder.allTeams6.get(TeamBuilder.allTeams6.size() - 1).getName()+ " terminée, voici les pokémons :");
         System.out.println("Affichage des Teams3");
         for(Team t : TeamBuilder.allTeams6){
             System.out.println("----------------------------------------------------------");
@@ -34,12 +37,12 @@ public class main_db {
                         " Attaque 4 : " + pok.getMove4().getName());
                 System.out.println("----------------------------------------------");
             }
-        }
+        }*/
         //Test Suppression
         /*TeamBuilder.remove_team("last3_crew",3);*/
-/*        String findTeam = "team6-3";
+        String findTeam = "team6-1";
         Team t = TeamBuilder.getTeamByName(findTeam, TeamBuilder.allTeams6);
-        System.out.println("Team : " + t.getName() + " trouvé !");*/
+        System.out.println("Team : " + t.getName() + " trouvé !");
     }
 }
 

@@ -378,13 +378,12 @@ public class TeamBuilder {
      * @return L'équipe Pokémon associée au nom
      */
     public static Team getTeamByName(String teamName, List<Team> allTeams){
-        int i = 0;
-        Team t = allTeams.get(0);
-        while (!teamName.equals(t.getName())){
-            i++;
-            t = allTeams.get(i);
+        for(Team t : allTeams){
+            if(teamName.equals(t.getName())){
+                return (t);
+            }
         }
-        return t;
+        return null;
     }
 
 
