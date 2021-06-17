@@ -247,6 +247,7 @@ public final class FXRouter {
         // show the window
         window.show();
         //window.setFullScreen(true);
+        window.setResizable(false);
         
         // set scene animation
         routeAnimation(resource);

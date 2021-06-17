@@ -68,7 +68,6 @@ public class MenuMultiController implements Initializable{
 			team = TeamBuilder.getTeamByName(teamList.getValue(), TeamBuilder.allTeams6);
 			
 		}
-		System.out.println("---"+team.getName());
 
 		try {
 			client = new PokeArenaClient("localhost", 8888);
@@ -85,10 +84,8 @@ public class MenuMultiController implements Initializable{
 			
 		} catch (IOException e) {
 			System.out.println("Erreur chargement Lobby.fxml");
-			
-		} 
-
-
+			e.printStackTrace();			
+		}
 	}
 
 	// Event Listener on Button[#joinButton].onAction
@@ -122,6 +119,7 @@ public class MenuMultiController implements Initializable{
 			
 		} catch (IOException e) {
 			System.out.println("Erreur chargement Lobby.fxml");
+			e.printStackTrace();
 			
 		} 
 	}

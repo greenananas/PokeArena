@@ -46,17 +46,19 @@ public class FightController implements Initializable  {
 	@FXML	private ImageView imageCurrPkm;
 	@FXML	private Label nameCurrPkm;
 	@FXML	private ProgressBar pvCurrPkm;
+	@FXML	private Label pvLabelCurrPkm;
 	
 	@FXML	private ImageView imageOppPkm;
 	@FXML	private Label nameOppPkm;
 	@FXML	private ProgressBar pvOppPkm;
+	@FXML	private Label pvLabelOppPkm;
 	
 	@FXML	private StackPane sp6;
 	@FXML	private StackPane sp5;
 	@FXML	private StackPane sp4;
 	
-	@FXML	private ImageView p1;
-	@FXML	private Label nameP1;
+//	@FXML	private ImageView p1;
+//	@FXML	private Label nameP1;
 	@FXML	private ImageView p2;
 	@FXML	private Label nameP2;
 	@FXML	private ImageView p3;
@@ -179,25 +181,14 @@ public class FightController implements Initializable  {
 		updateAll();
 	}
 	
-	// Event Listener on ImageView[#p1].onMouseClicked
-	@FXML
-	public void handleP1(MouseEvent event) {
-
-		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
-				|| cli.getTrainer().getPokemonTeam().getPokemons().get(0).getHP()>0) {
-			cli.sendChangePkmn(new ChangePkmn(0));
-		}
-		updateAll();
-	}
-	
 	// Event Listener on ImageView[#p2].onMouseClicked
 	@FXML
 	public void handleP2(MouseEvent event) {
 
-		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
-				|| cli.getTrainer().getPokemonTeam().getPokemons().get(1).getHP()>0) {
+		System.out.println("p2 en action");
+		if ((cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN)
+				&& cli.getTrainer().getPokemonTeam().getPokemons().get(1).getHP()>0) {
 			cli.sendChangePkmn(new ChangePkmn(1));
 		}
 		updateAll();
@@ -207,11 +198,10 @@ public class FightController implements Initializable  {
 	@FXML
 	public void handleP3(MouseEvent event) {
 		
-		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
-				|| cli.getTrainer().getPokemonTeam().getPokemons().get(2).getHP()>0) {
+		if ((cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN)
+				&& cli.getTrainer().getPokemonTeam().getPokemons().get(2).getHP()>0) {
 			cli.sendChangePkmn(new ChangePkmn(2));
-			//TODO change sprite
 		}
 		updateAll();
 	}
@@ -220,9 +210,9 @@ public class FightController implements Initializable  {
 	@FXML
 	public void handleP4(MouseEvent event) {
 		
-		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
-				|| cli.getTrainer().getPokemonTeam().getPokemons().get(3).getHP()>0)  {
+		if ((cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN)
+				&& cli.getTrainer().getPokemonTeam().getPokemons().get(3).getHP()>0)  {
 			cli.sendChangePkmn(new ChangePkmn(3));
 		}
 		updateAll();
@@ -232,9 +222,9 @@ public class FightController implements Initializable  {
 	@FXML
 	public void handleP5(MouseEvent event) {
 		
-		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
-				|| cli.getTrainer().getPokemonTeam().getPokemons().get(4).getHP()>0)   {
+		if ((cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN)
+				&& cli.getTrainer().getPokemonTeam().getPokemons().get(4).getHP()>0)   {
 			cli.sendChangePkmn(new ChangePkmn(4));
 		}
 		updateAll();
@@ -244,10 +234,10 @@ public class FightController implements Initializable  {
 	@FXML
 	public void handleP6(MouseEvent event) {
 		
-		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
-				|| cli.getTrainer().getPokemonTeam().getPokemons().get(5).getHP()>0)   {
-			cli.sendChangePkmn(new ChangePkmn(5));			//TODO change sprite
+		if ((cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN)
+				&& cli.getTrainer().getPokemonTeam().getPokemons().get(5).getHP()>0)   {
+			cli.sendChangePkmn(new ChangePkmn(5));			
 		}
 		updateAll();
 	}
@@ -300,11 +290,11 @@ public class FightController implements Initializable  {
 			break;
 		
 		case BATTLE_LOST:
-			statusFight.setText("TAS PERDU CHEH MISKINE");
+			statusFight.setText("PERDU, DOMMAGE.... ");
 			break;
 			
 		case BATTLE_WON:
-			statusFight.setText("BRAVO TAS GAGNE");
+			statusFight.setText("GAGNE! FELICITATION");
 			break;
 		
 		default:
@@ -347,13 +337,10 @@ public class FightController implements Initializable  {
 	private void updatePokemons() {
 		
 		ArrayList<Pokemon> listPkms = cli.getTrainer().getPokemonTeam().getPokemons();
-
 		
-		String name1 = listPkms.get(0).getName();
 		String name2 = listPkms.get(1).getName();
 		String name3 = listPkms.get(2).getName();
 		
-		nameP1.setText(name1);
 		nameP2.setText(name2);
 		nameP3.setText(name3);
 		
@@ -367,30 +354,38 @@ public class FightController implements Initializable  {
 			nameP5.setText(name5);		
 			nameP6.setText(name6);
 			
-			if(listPkms.get(3).getHP()==0) {
-				p3.setImage(new Image("Resources/pokeballconDark.png"));
+			if(listPkms.get(3).getHP()<=0) {
+				p4.setImage(new Image("/Resources/Buttons/Others/pokeballIconDark.png"));
+				nameP4.setStyle("	-fx-background-color: #a3a3a3;	\n"
+						+ "	-fx-text-fill: #d7d7d7;");
 			}		
-			if(listPkms.get(4).getHP()==0) {
-				p4.setImage(new Image("Resources/pokeballconDark.png"));
+			if(listPkms.get(4).getHP()<=0) {
+				p5.setImage(new Image("/Resources/Buttons/Others/pokeballIconDark.png"));
+				nameP5.setStyle("	-fx-background-color: #a3a3a3;	\n"
+						+ "	-fx-text-fill: #d7d7d7;");
 			}
-			if(listPkms.get(5).getHP()==0) {
-				p5.setImage(new Image("Resources/pokeballconDark.png"));
-			}
+			if(listPkms.get(5).getHP()<=0) {
+				p6.setImage(new Image("/Resources/Buttons/Others/pokeballIconDark.png"));
+				nameP6.setStyle("	-fx-background-color: #a3a3a3;	\n"
+						+ "	-fx-text-fill: #d7d7d7;");			}
 			
 		}
 		
-		if(listPkms.get(0).getHP()==0) {
-			p1.setImage(new Image("Resources/pokeballconDark.png"));
-		}		
-		if(listPkms.get(1).getHP()==0) {
-			p2.setImage(new Image("Resources/pokeballconDark.png"));
+//		if(listPkms.get(0).getHP()<=0) {
+//			p1.setImage(new Image("Resources/Buttons/Others/pokeballIconDark.png"));
+//		}		
+		if(listPkms.get(1).getHP()<=0) {
+			p2.setImage(new Image("Resources/Buttons/Others/pokeballIconDark.png"));
+			nameP2.setStyle("	-fx-background-color: #a3a3a3;	\n"
+					+ "	-fx-text-fill: #d7d7d7;");
 		}
-		if(listPkms.get(2).getHP()==0) {
-			p3.setImage(new Image("Resources/pokeballconDark.png"));
+		if(listPkms.get(2).getHP()<=0) {
+			p3.setImage(new Image("Resources/Buttons/Others/pokeballIconDark.png"));
+			nameP3.setStyle("	-fx-background-color: #a3a3a3;	\n"
+					+ "	-fx-text-fill: #d7d7d7;");
 		}
+
 		
-
-
 		String path = "Resources/Sprites/back/"+ cli.getTrainer().getLeadingPkmn().getId() + ".png";
 		imageCurrPkm.setImage(new Image(path));
 		
@@ -398,9 +393,8 @@ public class FightController implements Initializable  {
 		float currHP = cli.getTrainer().getLeadingPkmn().getHP();
 		
 		pvCurrPkm.setProgress(currHP/maxHP);
-		
+		pvLabelCurrPkm.setText((int)currHP + "/" + (int)maxHP);
 		nameCurrPkm.setText(cli.getTrainer().getLeadingPkmn().getName());
-		
 		
 		
 		path = "Resources/Sprites/frontFrame2/"+ cli.getOpponentPokemon().getId() + ".png";
@@ -410,7 +404,7 @@ public class FightController implements Initializable  {
 		currHP = cli.getOpponentPokemon().getHP();
 		
 		pvOppPkm.setProgress(currHP/maxHP);
-		
+		pvLabelOppPkm.setText((int)currHP + "/" +  (int)maxHP);		
 		nameOppPkm.setText(cli.getOpponentPokemon().getName());
 		
 //		

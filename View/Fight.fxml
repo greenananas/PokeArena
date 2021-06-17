@@ -69,7 +69,7 @@
                               <Insets right="50.0" />
                            </GridPane.margin>
 								</ImageView>
-								<ImageView fx:id="imageCurrPkm" fitHeight="234.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+								<ImageView fx:id="imageCurrPkm" fitHeight="234.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
 									<image>
 										<Image url="@../Resources/Sprites/back/7.png" />
 									</image>
@@ -84,7 +84,8 @@
 												<Label fx:id="nameCurrPkm" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="fight" text="CARAPUCE" />
 												<GridPane>
 													<columnConstraints>
-														<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+														<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
 														<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 													</columnConstraints>
 													<rowConstraints>
@@ -93,7 +94,8 @@
 													</rowConstraints>
 													<children>
 														<Label styleClass="labelNormal" text="PV" />
-														<ProgressBar fx:id="pvCurrPkm" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" />
+														<ProgressBar fx:id="pvCurrPkm" prefWidth="222.0" progress="0.0" GridPane.columnIndex="1" />
+                                          <Label fx:id="pvLabelCurrPkm" styleClass="labelNormal" text="xx/xx" GridPane.columnIndex="2" />
 													</children>
 												</GridPane>
 											</children>
@@ -113,7 +115,8 @@
       												<Label fx:id="nameOppPkm" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="fight" text="DRACAUFEU" />
       												<GridPane>
       													<columnConstraints>
-      														<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+      														<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
       														<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       													</columnConstraints>
       													<rowConstraints>
@@ -123,6 +126,7 @@
       													<children>
       														<Label styleClass="labelNormal" text="PV" />
       														<ProgressBar fx:id="pvOppPkm" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" />
+                                          <Label fx:id="pvLabelOppPkm" styleClass="labelNormal" text="xx/xx" GridPane.columnIndex="2" />
       													</children>
       												</GridPane>
       											</children>
@@ -263,23 +267,6 @@
 						</HBox>
 						<HBox fx:id="pokemonHbox" alignment="CENTER" prefHeight="100.0" prefWidth="500.0" visible="false">
 							<children>
-								<StackPane>
-									<HBox.margin>
-										<Insets right="10.0" />
-									</HBox.margin>
-									<children>
-										<ImageView fx:id="p1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleP1" pickOnBounds="true" preserveRatio="true">
-											<image>
-												<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
-											</image>
-										</ImageView>
-										<Label fx:id="nameP1" alignment="CENTER" styleClass="labelPkm" text="NomPokemon">
-											<opaqueInsets>
-												<Insets />
-											</opaqueInsets>
-										</Label>
-									</children>
-								</StackPane>
 								<StackPane>
 									<HBox.margin>
 										<Insets right="10.0" />
