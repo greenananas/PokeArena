@@ -386,7 +386,6 @@ public class TeamBuilder {
         return null;
     }
 
-
     /**
      * Procédure de création d'une équipe Pokémon à partir des noms des Pokémons à y ajouter et du nom de l'équipe.
      * L'équipe créée sera stockée dans un objet Liste de Teams pour la session courante et sera également stockée dans la BDD
@@ -463,10 +462,9 @@ public class TeamBuilder {
 
         //Vérifier que les noms des Pokémons soient corrects et qu'il n'y ait pas de doublons
         //Permet égalment de faire une liste d'entier contenant les ID des pokémons voulus
-        int loc_wrong_pok = 0;
+        int loc_wrong_pok = 1;
         int id_pok;
         for (String wp : wanted_pokemons) {
-            loc_wrong_pok++;
             if (!poke_with_set.contains(wp)) {
                 throw new UnknownPokemonException("Le Pokémon n'est pas connu dans la BDD", loc_wrong_pok);
             }
@@ -476,6 +474,7 @@ public class TeamBuilder {
             poke_in_team.add(wp);
             id_pok = get_id_pok(Mycon, wp);
             poke_ids.add(id_pok);
+            loc_wrong_pok++;
         }
 
         //On ajoute les ids des pokémons à la table Team3 pour une équipe de 3 Pokémons
