@@ -64,7 +64,7 @@ public class Team {
     /**
      * Modifier le Pokémon d'un dresseur
      *
-     * @param p Nouveau Pokémon du dresseur
+     * @param pkmn Nouveau Pokémon du dresseur
      */
     public void addPokemon(Pokemon... pkmn) {
         assert pokemonTeam.size()+pkmn.length < 6;
