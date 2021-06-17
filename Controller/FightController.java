@@ -184,9 +184,9 @@ public class FightController implements Initializable  {
 	public void handleP1(MouseEvent event) {
 
 		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN) {
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
+				|| cli.getTrainer().getPokemonTeam().getPokemons().get(0).getHP()>0) {
 			cli.sendChangePkmn(new ChangePkmn(0));
-			//TODO change sprite
 		}
 		updateAll();
 	}
@@ -196,9 +196,9 @@ public class FightController implements Initializable  {
 	public void handleP2(MouseEvent event) {
 
 		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN) {
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
+				|| cli.getTrainer().getPokemonTeam().getPokemons().get(1).getHP()>0) {
 			cli.sendChangePkmn(new ChangePkmn(1));
-			//TODO change sprite
 		}
 		updateAll();
 	}
@@ -208,7 +208,8 @@ public class FightController implements Initializable  {
 	public void handleP3(MouseEvent event) {
 		
 		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN) {
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
+				|| cli.getTrainer().getPokemonTeam().getPokemons().get(2).getHP()>0) {
 			cli.sendChangePkmn(new ChangePkmn(2));
 			//TODO change sprite
 		}
@@ -220,9 +221,9 @@ public class FightController implements Initializable  {
 	public void handleP4(MouseEvent event) {
 		
 		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN) {
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
+				|| cli.getTrainer().getPokemonTeam().getPokemons().get(3).getHP()>0)  {
 			cli.sendChangePkmn(new ChangePkmn(3));
-			//TODO change sprite
 		}
 		updateAll();
 	}
@@ -232,9 +233,9 @@ public class FightController implements Initializable  {
 	public void handleP5(MouseEvent event) {
 		
 		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN) {
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
+				|| cli.getTrainer().getPokemonTeam().getPokemons().get(4).getHP()>0)   {
 			cli.sendChangePkmn(new ChangePkmn(4));
-			//TODO change sprite
 		}
 		updateAll();
 	}
@@ -244,9 +245,9 @@ public class FightController implements Initializable  {
 	public void handleP6(MouseEvent event) {
 		
 		if (cli.getState() == PokeArenaClientState.NEED_TO_SEND_ACTION
-				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN) {
-			cli.sendChangePkmn(new ChangePkmn(5));
-			//TODO change sprite
+				|| cli.getState() == PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN
+				|| cli.getTrainer().getPokemonTeam().getPokemons().get(5).getHP()>0)   {
+			cli.sendChangePkmn(new ChangePkmn(5));			//TODO change sprite
 		}
 		updateAll();
 	}
@@ -366,7 +367,29 @@ public class FightController implements Initializable  {
 			nameP5.setText(name5);		
 			nameP6.setText(name6);
 			
+			if(listPkms.get(3).getHP()==0) {
+				p3.setImage(new Image("Resources/pokeballconDark.png"));
+			}		
+			if(listPkms.get(4).getHP()==0) {
+				p4.setImage(new Image("Resources/pokeballconDark.png"));
+			}
+			if(listPkms.get(5).getHP()==0) {
+				p5.setImage(new Image("Resources/pokeballconDark.png"));
+			}
+			
 		}
+		
+		if(listPkms.get(0).getHP()==0) {
+			p1.setImage(new Image("Resources/pokeballconDark.png"));
+		}		
+		if(listPkms.get(1).getHP()==0) {
+			p2.setImage(new Image("Resources/pokeballconDark.png"));
+		}
+		if(listPkms.get(2).getHP()==0) {
+			p3.setImage(new Image("Resources/pokeballconDark.png"));
+		}
+		
+
 
 		String path = "Resources/Sprites/back/"+ cli.getTrainer().getLeadingPkmn().getId() + ".png";
 		imageCurrPkm.setImage(new Image(path));
@@ -390,10 +413,11 @@ public class FightController implements Initializable  {
 		
 		nameOppPkm.setText(cli.getOpponentPokemon().getName());
 		
+//		
 //		if(this.oldHP >= currHP) {
 //			imageCurrPkm.setTranslateX(-2);
 //			try {
-//				TimeUnit.SECONDS.sleep(1);
+//				TimeUnit.SECONDS.sleep((long) 0.5);
 //			} catch (InterruptedException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();

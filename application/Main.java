@@ -1,6 +1,7 @@
 package application;
 
 import Controller.MenuMultiController;
+import Model.TeamBuilder;
 import javafx.application.Application;
 import javafx.stage.Stage;
 //
@@ -8,6 +9,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		TeamBuilder.load_teams();
+
 		try {
 
 			FXRouter.bind(this, primaryStage);

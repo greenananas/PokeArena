@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -18,6 +19,7 @@ import PokeArenaNetwork.Server.PokeArenaServer;
 import application.FXRouter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
@@ -49,25 +51,27 @@ public class MenuMultiController implements Initializable{
 	// Event Listener on Button[#hostButton].onAction
 	@FXML
 	public void handleHostButton(ActionEvent event) {
-		// TODO
 
-		server = new PokeArenaServer("localhost", 8887);
+		server = new PokeArenaServer("localhost", 8888);
 		server.start();
 
 		PokeArenaClient client;
-		Team team;
+		Team team = TeamBuilder.allTeams3.get(0);
 		
-		if(modeList.getValue()=="3v3") {
-			team = TeamBuilder.getTeamByName(teamList.getValue(),TeamBuilder.allTeams3);
-		
-		} else {
-			team = TeamBuilder.getTeamByName(teamList.getValue(),TeamBuilder.allTeams6);
+		System.out.println("****"+modeList.getValue());	
 
-		}
+		if(modeList.getValue()=="3v3") {
+			team = TeamBuilder.getTeamByName(teamList.getValue(), TeamBuilder.allTeams3);
 		
+		} else {				
+			
+			team = TeamBuilder.getTeamByName(teamList.getValue(), TeamBuilder.allTeams6);
+			
+		}
+		System.out.println("---"+team.getName());
 
 		try {
-			client = new PokeArenaClient("localhost", 8887);
+			client = new PokeArenaClient("localhost", 8888);
 			client.connect();
 
 			
@@ -107,7 +111,7 @@ public class MenuMultiController implements Initializable{
 		
 
 		try {
-			client = new PokeArenaClient(ipField.getText(), 8887);
+			client = new PokeArenaClient(ipField.getText(), 8888);
 			client.connect();
 
 			FXRouter.goTo("lobby", client, team);
@@ -135,9 +139,7 @@ public class MenuMultiController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		TeamBuilder.load_teams();
-		
+				
 		modeList.getItems().clear();
 		modeList.getItems().addAll("3v3", "6v6");
 		modeList.getSelectionModel().select("3v3");
@@ -147,13 +149,11 @@ public class MenuMultiController implements Initializable{
 		for (Team team : listT) {
 			teamList.getItems().addAll(team.getName());
 		}
-		modeList.getSelectionModel().select(listT.get(1).getName());
-		for (Team team : listT) {
-			System.out.println(team.getName());
-		}
+		teamList.getSelectionModel().select(listT.get(1).getName());
 		
 		modeList.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
-			List<Team> tl;
+			List<Team> tl = new ArrayList<Team>();
+			
 			if(modeList.getValue() == "3v3") {
 				// 6 teams
 				tl = TeamBuilder.allTeams6;
@@ -162,12 +162,17 @@ public class MenuMultiController implements Initializable{
 				// 3 teams
 				tl = TeamBuilder.allTeams3;
 			}
-
+			
+			ArrayList<String> names = new ArrayList<>();
+			
 			teamList.getItems().clear();
 			for (Team team : tl) {
-				teamList.getItems().addAll(team.getName());
+				names.add(team.getName());
+				//teamList.getItems().addAll(team.getName());
 			}
-			modeList.getSelectionModel().select(tl.get(1).getName());
+			teamList.setItems(FXCollections.observableArrayList(names));
+			
+			teamList.getSelectionModel().select(tl.get(1).getName());
 		});
 		
 	}
