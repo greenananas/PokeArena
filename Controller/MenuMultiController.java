@@ -6,12 +6,13 @@ import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import Model.*;
 import PokeArenaNetwork.Client.PokeArenaClient;
@@ -45,6 +46,8 @@ public class MenuMultiController implements Initializable{
 	private TextField ipField;
 	@FXML
 	private Button joinButton;
+	@FXML
+	private Label errLabel;
 	
 	public static PokeArenaServer server;
 
@@ -58,8 +61,6 @@ public class MenuMultiController implements Initializable{
 		PokeArenaClient client;
 		Team team = TeamBuilder.allTeams3.get(0);
 		
-		System.out.println("****"+modeList.getValue());	
-
 		if(modeList.getValue()=="3v3") {
 			team = TeamBuilder.getTeamByName(teamList.getValue(), TeamBuilder.allTeams3);
 		
@@ -70,7 +71,7 @@ public class MenuMultiController implements Initializable{
 		}
 
 		try {
-			client = new PokeArenaClient("localhost", 8888);
+			client = new PokeArenaClient(ipField.getText(), 8888);
 			client.connect();
 
 			
@@ -78,13 +79,16 @@ public class MenuMultiController implements Initializable{
 				
 			FXRouter.goTo("lobby", client, team); 
 
-		} catch (URISyntaxException e) {
+		}  catch (IOException e) {
+			
+			System.out.println("Erreur chargement Lobby.fxml");
+			e.printStackTrace();
+			
+		}catch (Exception e) {
 
 			System.out.println("Erreur connexion");
+			errLabel.setVisible(true);
 			
-		} catch (IOException e) {
-			System.out.println("Erreur chargement Lobby.fxml");
-			e.printStackTrace();			
 		}
 	}
 
@@ -113,14 +117,14 @@ public class MenuMultiController implements Initializable{
 
 			FXRouter.goTo("lobby", client, team);
 
-		} catch (URISyntaxException e) {
-
-			System.out.println("Erreur connexion");
-			
 		} catch (IOException e) {
 			System.out.println("Erreur chargement Lobby.fxml");
 			e.printStackTrace();
 			
+		} catch (Exception e) {
+			System.out.println("Erreur connexion");
+			errLabel.setVisible(true);
+
 		} 
 	}
 	
@@ -137,21 +141,33 @@ public class MenuMultiController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-				
+		String name = "";
+		try {
+			File myObj = new File("Resources/name.txt");
+			Scanner myReader = new Scanner(myObj);
+			name= myReader.nextLine();
+			myReader.close();
+
+		} catch (IOException e) {
+			System.out.println("Erreur file name.txt missing");
+			e.printStackTrace();
+		}
+		labelChooseTeam.setText("Choisit ton equipe " + name);
+
 		modeList.getItems().clear();
 		modeList.getItems().addAll("3v3", "6v6");
 		modeList.getSelectionModel().select("3v3");
-		
+
 		List<Team> listT = TeamBuilder.allTeams3;
 		teamList.getItems().clear();
 		for (Team team : listT) {
 			teamList.getItems().addAll(team.getName());
 		}
-		teamList.getSelectionModel().select(listT.get(1).getName());
-		
+		teamList.getSelectionModel().select(0);
+
 		modeList.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
 			List<Team> tl = new ArrayList<Team>();
-			
+
 			if(modeList.getValue() == "3v3") {
 				// 6 teams
 				tl = TeamBuilder.allTeams6;

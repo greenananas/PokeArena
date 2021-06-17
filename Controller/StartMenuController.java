@@ -180,13 +180,13 @@ public class StartMenuController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		/*media = new Media(getClass().getClassLoader().getResource("Resources/homeScreen.mp4").toExternalForm());
+		media = new Media(getClass().getClassLoader().getResource("Resources/homeScreen.mp4").toExternalForm());
 		mediaPlayer = new MediaPlayer(media);
 
 		mediaView.setMediaPlayer(mediaPlayer);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-		mediaPlayer.setAutoPlay(true);*/
-
+		mediaPlayer.setAutoPlay(true);
+		
 		soloButton.setVisible(false);
 		multiButton.setVisible(false);
 		returnButton.setVisible(false);
