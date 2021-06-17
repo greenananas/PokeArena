@@ -164,8 +164,8 @@ public class MenuTeamController implements Initializable {
 			RadioButton rb = (RadioButton) group.getSelectedToggle();
 			if (rb != null) {
 				teamField.getItems().clear();
-				//teamField.getItems().add("--Nouvelle équipe--");
-				//teamField.getSelectionModel().select(0);
+				teamField.getItems().add("--Nouvelle équipe--");
+				teamField.getSelectionModel().select(0);
 				if (rb.getId().equals("team3")) {
 					p4.setVisible(false);
 					p5.setVisible(false);
