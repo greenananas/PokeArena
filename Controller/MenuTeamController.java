@@ -74,6 +74,8 @@ public class MenuTeamController implements Initializable {
     private Button saveButton;
     @FXML
     private ComboBox<String> pkmnList;
+    @FXML
+    private Label errLabel;
 
     // Event Listener on Button[#addButton].onAction
     @FXML

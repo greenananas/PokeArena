@@ -43,12 +43,12 @@
 								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Button fx:id="darkModeButton" mnemonicParsing="false" onAction="#handleDarkModeButton" prefHeight="44.0" prefWidth="100.0" text="Mode nuit" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+								<Button fx:id="darkModeButton" mnemonicParsing="false" onAction="#handleDarkModeButton" prefHeight="44.0" prefWidth="110.0" text="Mode nuit" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
 									<GridPane.margin>
 										<Insets right="15.0" top="30.0" />
 									</GridPane.margin>
 								</Button>
-								<Button fx:id="quitButton" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="44.0" prefWidth="100.0" text="Quitter" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+								<Button fx:id="quitButton" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="44.0" prefWidth="110.0" text="Quitter" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
 									<GridPane.margin>
 										<Insets right="15.0" top="10.0" />
 									</GridPane.margin>
@@ -102,7 +102,7 @@
 										</VBox>
 									</children>
 									<GridPane.margin>
-										<Insets bottom="100.0" top="100.0" />
+										<Insets bottom="100.0" right="20.0" top="100.0" />
 									</GridPane.margin>
 									<opaqueInsets>
 										<Insets />
@@ -136,7 +136,7 @@
 										<Insets />
 									</opaqueInsets>
 									<GridPane.margin>
-										<Insets bottom="150.0" />
+										<Insets bottom="150.0" right="20.0" />
 									</GridPane.margin>
 								</AnchorPane>
 								<Label fx:id="statusFight" alignment="CENTER" onMouseClicked="#updateAll" prefHeight="69.0" prefWidth="415.0" styleClass="labelTitleFight" text="A vous de commencer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
@@ -149,6 +149,22 @@
 										<Insets left="22.0" />
 									</GridPane.margin>
 								</Button>
+                        <ImageView fx:id="statusOppPkm" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                           <image>
+                              <Image url="@../Resources/Buttons/Status/burnt.png" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets top="20.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="statusCurrPkm" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../Resources/Buttons/Status/frozen.png" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets top="10.0" />
+                           </GridPane.margin>
+                        </ImageView>
 							</children>
 						</GridPane>
 					</children>
@@ -183,6 +199,9 @@
 									</GridPane.margin>
 								</ImageView>
 							</children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
 						</GridPane>
 						<HBox fx:id="attackHbox" alignment="CENTER" prefHeight="100.0" prefWidth="500.0" visible="false" StackPane.alignment="CENTER">
 							<children>
@@ -264,15 +283,18 @@
 									</children>
 								</StackPane>
 							</children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
 						</HBox>
-						<HBox fx:id="pokemonHbox" alignment="CENTER" prefHeight="100.0" prefWidth="500.0" visible="false">
+						<HBox fx:id="pokemonHbox" alignment="CENTER" visible="false">
 							<children>
 								<StackPane>
 									<HBox.margin>
 										<Insets right="10.0" />
 									</HBox.margin>
 									<children>
-										<ImageView fx:id="p2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleP2" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="p2" fitHeight="130.0" onMouseClicked="#handleP2" pickOnBounds="true" preserveRatio="true">
 											<image>
 												<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
 											</image>
@@ -289,7 +311,7 @@
 										<Insets right="10.0" />
 									</HBox.margin>
 									<children>
-										<ImageView fx:id="p3" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleP3" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="p3" fitHeight="130.0" fitWidth="200.0" onMouseClicked="#handleP3" pickOnBounds="true" preserveRatio="true">
 											<image>
 												<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
 											</image>
@@ -306,7 +328,7 @@
 										<Insets right="10.0" />
 									</HBox.margin>
 									<children>
-										<ImageView fx:id="p4" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleP4" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="p4" fitHeight="130.0" fitWidth="200.0" onMouseClicked="#handleP4" pickOnBounds="true" preserveRatio="true">
 											<image>
 												<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
 											</image>
@@ -323,7 +345,7 @@
 										<Insets right="10.0" />
 									</HBox.margin>
 									<children>
-										<ImageView fx:id="p5" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleP5" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="p5" fitHeight="130.0" fitWidth="200.0" onMouseClicked="#handleP5" pickOnBounds="true" preserveRatio="true">
 											<image>
 												<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
 											</image>
@@ -340,7 +362,7 @@
 										<Insets />
 									</HBox.margin>
 									<children>
-										<ImageView fx:id="p6" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleP6" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="p6" fitHeight="130.0" fitWidth="200.0" onMouseClicked="#handleP6" pickOnBounds="true" preserveRatio="true">
 											<image>
 												<Image url="@../Resources/Buttons/Others/pokeballIcon.png" />
 											</image>

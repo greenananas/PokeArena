@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import Model.ChangePkmn;
+import Model.PokeStatus;
+import Model.PokeStatus.Status;
 import Model.Pokemon;
 import PokeArenaNetwork.Client.PokeArenaClient;
 import PokeArenaNetwork.Client.PokeArenaClientState;
@@ -47,11 +49,13 @@ public class FightController implements Initializable  {
 	@FXML	private Label nameCurrPkm;
 	@FXML	private ProgressBar pvCurrPkm;
 	@FXML	private Label pvLabelCurrPkm;
+	@FXML	private ImageView statusCurrPkm;
 	
 	@FXML	private ImageView imageOppPkm;
 	@FXML	private Label nameOppPkm;
 	@FXML	private ProgressBar pvOppPkm;
 	@FXML	private Label pvLabelOppPkm;
+	@FXML	private ImageView statusOppPkm;
 	
 	@FXML	private StackPane sp6;
 	@FXML	private StackPane sp5;
@@ -370,10 +374,7 @@ public class FightController implements Initializable  {
 						+ "	-fx-text-fill: #d7d7d7;");			}
 			
 		}
-		
-//		if(listPkms.get(0).getHP()<=0) {
-//			p1.setImage(new Image("Resources/Buttons/Others/pokeballIconDark.png"));
-//		}		
+			
 		if(listPkms.get(1).getHP()<=0) {
 			p2.setImage(new Image("Resources/Buttons/Others/pokeballIconDark.png"));
 			nameP2.setStyle("	-fx-background-color: #a3a3a3;	\n"
@@ -396,6 +397,23 @@ public class FightController implements Initializable  {
 		pvLabelCurrPkm.setText((int)currHP + "/" + (int)maxHP);
 		nameCurrPkm.setText(cli.getTrainer().getLeadingPkmn().getName());
 		
+		Status status = cli.getTrainer().getLeadingPkmn().getStatus().status;
+		String statStr = "poisoned";
+		
+		switch(status) {
+		case NORMAL:
+			statusCurrPkm.setVisible(false);
+			break;
+		
+		case BADLY_POISONED:
+			statStr = "poisoned";
+			break;
+			
+		default:
+			statStr = status.toString().toLowerCase();
+			break;
+		}
+		statusCurrPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 		
 		path = "Resources/Sprites/frontFrame2/"+ cli.getOpponentPokemon().getId() + ".png";
 		imageOppPkm.setImage(new Image(path));
@@ -406,6 +424,24 @@ public class FightController implements Initializable  {
 		pvOppPkm.setProgress(currHP/maxHP);
 		pvLabelOppPkm.setText((int)currHP + "/" +  (int)maxHP);		
 		nameOppPkm.setText(cli.getOpponentPokemon().getName());
+		
+		status = cli.getOpponentPokemon().getStatus().status;
+		statStr = "poisoned";
+		
+		switch(status) {
+		case NORMAL:
+			statusOppPkm.setVisible(false);
+			break;
+		
+		case BADLY_POISONED:
+			statStr = "poisoned";
+			break;
+			
+		default:
+			statStr = status.toString().toLowerCase();
+			break;
+		}
+		statusOppPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 		
 //		
 //		if(this.oldHP >= currHP) {
