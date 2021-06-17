@@ -458,7 +458,6 @@ public class Pokemon {
         return this.status;
     }
 
-
     /**
      * Obtenir l'identifiant BDD du Pokémon.
      *
