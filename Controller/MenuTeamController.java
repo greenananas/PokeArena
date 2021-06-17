@@ -131,7 +131,7 @@ public class MenuTeamController implements Initializable {
             else {
                 TeamBuilder.remove_team(teamField.getValue(), (team3.isSelected() ? 3 : 6));
                 nt.create(team, teamNameField.getText());
-                errorField.setText("L'équipe a bien été modifiée.");
+                //errorField.setText("L'équipe a bien été modifiée.");
             }
 
         } catch (UnknownPokemonException e) {
