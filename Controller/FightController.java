@@ -411,6 +411,7 @@ public class FightController implements Initializable  {
 			
 		default:
 			statStr = status.toString().toLowerCase();
+			System.out.println("--------------------------" + statStr + "---------------------------");
 			break;
 		}
 		statusCurrPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));

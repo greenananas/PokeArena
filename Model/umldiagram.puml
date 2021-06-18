@@ -1,42 +1,62 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+abstract class Pair
+class ChangePkmn
+enum FieldTypes
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+Pair <|-- TrainerAction
+TrainerAction o-- Trainer : contient
+TrainerAction o-- Action : contient
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+Action <|- Move
+Action <|- ChangePkmn
+Pokemon "4" o-- Move : possède
+Pokemon o-- PokeType : a
+Pokemon o-- PokeStatus : est affecté
+Pokemon o-- Nature : possède
+Team o-- Pokemon : est formé de
+Trainer o-- Team : possède
+PokeStatus o-- Status
+BattleGround o-- FieldTypes : est de type
+
+Battle "2" o-- TrainerAction : accueil
+Battle o-- BattleGround : a lieu
 
 class Battle {
-Object[] elementData
-size()
+}
+
+class Move {
+}
+
+class Team {
 }
 
 class Trainer {
-Object[] elementData
-size()
+
 }
 
 class Pokemon {
-Object[] elementData
-size()
+
 }
 
 class TrainerAction {
-Object[] elementData
-size()
+
 }
 
-enum Nature {
-DAYS
-HOURS
-MINUTES
+class PokeStatus {
 }
+
+class PokeType {
+enum Types
+}
+
+abstract class Action {
+int Priority
+}
+
+enum Nature
+class BattleGround
+enum Status
 
 @enduml
