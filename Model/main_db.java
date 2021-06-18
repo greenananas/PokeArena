@@ -39,10 +39,13 @@ public class main_db {
             }
         }*/
         //Test Suppression
-        /*TeamBuilder.remove_team("last3_crew",3);*/
-        String findTeam = "team6-1";
+        TeamBuilder.remove_team("team3-2",3);
+        for(Team t : TeamBuilder.allTeams3){
+            System.out.println(" name : " + t.getName());
+        }
+/*        String findTeam = "team6-1";
         Team t = TeamBuilder.getTeamByName(findTeam, TeamBuilder.allTeams6);
-        System.out.println("Team : " + t.getName() + " trouvé !");
+        System.out.println("Team : " + t.getName() + " trouvé !");*/
     }
 }
 
