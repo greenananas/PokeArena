@@ -399,7 +399,8 @@ public class FightController implements Initializable  {
 		
 		Status status = cli.getTrainer().getLeadingPkmn().getStatus().status;
 		String statStr = "poisoned";
-		
+
+		statusCurrPkm.setVisible(false);
 		switch(status) {
 		case NORMAL:
 			statusCurrPkm.setVisible(false);
@@ -408,15 +409,16 @@ public class FightController implements Initializable  {
 		case BADLY_POISONED:
 			statStr = "poisoned";
 			statusCurrPkm.setVisible(true);
+			statusCurrPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 			break;
 			
 		default:
 			statusCurrPkm.setVisible(true);
 			statStr = status.toString().toLowerCase();
 			System.out.println("--------------------------" + statStr + "---------------------------");
+			statusCurrPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 			break;
 		}
-		statusCurrPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 		
 		
 		path = "Resources/Sprites/frontFrame2/"+ cli.getOpponentPokemon().getId() + ".png";
@@ -431,7 +433,8 @@ public class FightController implements Initializable  {
 		
 		status = cli.getOpponentPokemon().getStatus().status;
 		statStr = "poisoned";
-		
+
+		statusOppPkm.setVisible(false);
 		switch(status) {
 		case NORMAL:
 			statusOppPkm.setVisible(false);
@@ -439,15 +442,17 @@ public class FightController implements Initializable  {
 		
 		case BADLY_POISONED:
 			statStr = "poisoned";
-			statusCurrPkm.setVisible(true);
+			statusOppPkm.setVisible(true);
+			statusOppPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 			break;
 			
 		default:
 			statStr = status.toString().toLowerCase();
-			statusCurrPkm.setVisible(true);
+			statusOppPkm.setVisible(true);
+			statusOppPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
 			break;
 		}
-		statusOppPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
+		
 		
 //		
 //		if(this.oldHP >= currHP) {
