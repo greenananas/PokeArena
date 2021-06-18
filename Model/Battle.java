@@ -228,6 +228,8 @@ public class Battle {
                 target.setStatus(PokeStatus.Status.PARALYZED);
             case 95: //Hypnose
                 target.setStatus(PokeStatus.Status.ASLEEP);
+            case 79: //Poudre dodo
+                target.setStatus(PokeStatus.Status.ASLEEP);
         }
     }
 
