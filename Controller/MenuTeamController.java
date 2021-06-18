@@ -67,15 +67,13 @@ public class MenuTeamController implements Initializable {
     @FXML
     private TextField teamNameField;
     @FXML
-    private TextField errorField;
-    @FXML
     private Button suppButton;
     @FXML
     private Button saveButton;
     @FXML
     private ComboBox<String> pkmnList;
     @FXML
-    private Label errLabel;
+    private Label msgLabel;
 
     ArrayList<String> team3list;
     ArrayList<String> team6list;
@@ -126,30 +124,48 @@ public class MenuTeamController implements Initializable {
         try {
             if (teamField.getValue().equals("--Nouvelle équipe--")) {
                 nt.create(team, teamNameField.getText());
-                //errorField.setText("L'équipe a bien été créée.");
+                msgLabel.setText("L'équipe a bien été créée.");
+                teamField.getItems().add(teamNameField.getText());
             }
             else {
                 TeamBuilder.remove_team(teamField.getValue(), (team3.isSelected() ? 3 : 6));
                 nt.create(team, teamNameField.getText());
-                errorField.setText("L'équipe a bien été modifiée.");
+                msgLabel.setText("L'équipe a bien été modifiée.");
+                teamField.getItems().add(teamNameField.getText());
             }
 
         } catch (UnknownPokemonException e) {
-            errorField.setText("Un des Pokémons séléctionnés n'existe pas !");
+            msgLabel.setText("Un des Pokémons séléctionnés n'existe pas !");
         } catch (MultipleSamePokemonException e) {
-            errorField.setText("Vous ne pouvez pas avoir plusieurs fois le même Pokémon !");
+            msgLabel.setText("Vous ne pouvez pas avoir plusieurs fois le même Pokémon !");
         } catch (TeamNameAlreadyExistsException e) {
-            errorField.setText("Vous ne pouvez pas avoir deux équipes avec le même nom !");
+            msgLabel.setText("Vous ne pouvez pas avoir deux équipes avec le même nom !");
         } catch (UnknownTeamException e) {
-            errorField.setText("Vous ne pouvez pas modifier cette équipe.");
+            msgLabel.setText("Vous ne pouvez pas modifier cette équipe.");
         } finally {
             reloadLists();
         }
     }
 
+    // Event Listener on Button[#saveButton].onAction
+    @FXML
+    public void handleSuppButton(ActionEvent event) {
+        try {
+            TeamBuilder.remove_team(teamField.getValue(), (team3.isSelected() ? 3 : 6));
+        } catch (UnknownTeamException e) {
+            e.printStackTrace();
+        }
+        msgLabel.setText("L'équipe a bien été supprimée.");
+        for (Label lbl : pkmnCurrentTeam) {
+            lbl.setText("---");
+            lbl.setGraphic(null);
+        }
+        reloadLists();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //teamField.getItems().clear();
+
         teamField.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
             if (!newValue.equals(-1) && !newValue.equals(0)){
                 ArrayList<Pokemon> poke = TeamBuilder.getTeamByName(teamField.getItems().get((int)newValue),
@@ -183,8 +199,6 @@ public class MenuTeamController implements Initializable {
         pkmnCurrentTeam.add(p5);
         pkmnCurrentTeam.add(p6);
 
-        team3list = new ArrayList<>();
-        team6list = new ArrayList<>();
         reloadLists();
 
         group.selectedToggleProperty().addListener((ob, o, n) -> {
@@ -218,11 +232,17 @@ public class MenuTeamController implements Initializable {
     }
 
     public void reloadLists() {
+        teamField.getItems().clear();
+        teamField.getItems().add("--Nouvelle équipe--");
+        teamField.getSelectionModel().select(0);
+        team3list = new ArrayList<>();
+        team6list = new ArrayList<>();
         for (Team t : TeamBuilder.allTeams3) {
             team3list.add(t.getName());
         }
         for (Team t : TeamBuilder.allTeams6) {
             team6list.add(t.getName());
         }
+        teamField.getItems().addAll((team3.isSelected() ? team3list : team6list));
     }
 }

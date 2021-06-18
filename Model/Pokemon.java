@@ -756,7 +756,7 @@ public class Pokemon {
      * @param damage Dégats infligés au Pokémon
      */
     public void getDamaged(int damage) {
-        this.setHP(this.getHP() - damage);
+        this.setHP(Math.max(this.getHP() - damage, 0));
     }
 
     /**

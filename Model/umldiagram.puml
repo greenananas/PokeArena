@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Pair
+class ChangePkmn
+enum FieldTypes
+
+Pair <|-- TrainerAction
+TrainerAction o-- Trainer : contient
+TrainerAction o-- Action : contient
+
+Action <|- Move
+Action <|- ChangePkmn
+Pokemon "4" o-- Move : possède
+Pokemon o-- PokeType : a
+Pokemon o-- PokeStatus : est affecté
+Pokemon o-- Nature : possède
+Team o-- Pokemon : est formé de
+Trainer o-- Team : possède
+PokeStatus o-- Status
+BattleGround o-- FieldTypes : est de type
+
+Battle "2" o-- TrainerAction : accueil
+Battle o-- BattleGround : a lieu
+
+class Battle {
+}
+
+class Move {
+}
+
+class Team {
+}
+
+class Trainer {
+
+}
+
+class Pokemon {
+
+}
+
+class TrainerAction {
+
+}
+
+class PokeStatus {
+}
+
+class PokeType {
+enum Types
+}
+
+abstract class Action {
+int Priority
+}
+
+enum Nature
+class BattleGround
+enum Status
+
+@enduml

@@ -635,7 +635,7 @@ public class TeamBuilder {
             sql = "SELECT name from Team3";
         }
         else if(size == 6){
-            sql = "SELECT name from Team3";
+            sql = "SELECT name from Team6";
         }
 
         List<String> teams_names = new ArrayList<>();
@@ -653,12 +653,18 @@ public class TeamBuilder {
             throw new UnknownTeamException("L'équipe que vous essayez de supprimer n'existe pas !");
         }
 
+        List<Team> allTeamsX = new ArrayList<>();
+
         if(size == 3 ){
             sql = "DELETE from Team3 WHERE name like ?";
+            allTeamsX = TeamBuilder.allTeams3;
         }
         else if(size == 6){
             sql = "DELETE from Team6 WHERE name like ?";
+            allTeamsX = TeamBuilder.allTeams6;
         }
+
+        allTeamsX.removeIf(t -> team_name.equals(t.getName()));
 
         try {
             pstmt = Mycon.prepareStatement(sql);
