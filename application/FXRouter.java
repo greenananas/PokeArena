@@ -1,20 +1,5 @@
 package application;
-//
 
-/*
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -26,12 +11,6 @@ import javafx.util.Duration;
 import javafx.animation.FadeTransition;
 
 
-/**
- * FXRouter allows to manage scenes switching on JavaFX Application with an easy API
- * Inspired by Angular JS $routeProvider
- * @author Marco Trombino
- * @version 1.0.0
- */
 public final class FXRouter {
     private static final String WINDOW_TITLE = "PokeArena";
     private static final Double WINDOW_WIDTH = 1280.0;

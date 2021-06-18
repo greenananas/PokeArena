@@ -152,7 +152,7 @@ public class MenuMultiController implements Initializable{
 			System.out.println("Erreur file name.txt missing");
 			e.printStackTrace();
 		}
-		labelChooseTeam.setText("Choisit ton equipe " + name);
+		labelChooseTeam.setText("Choisis ton equipe " + name);
 
 		modeList.getItems().clear();
 		modeList.getItems().addAll("3v3", "6v6");

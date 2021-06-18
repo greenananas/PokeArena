@@ -407,13 +407,16 @@ public class FightController implements Initializable  {
 		
 		case BADLY_POISONED:
 			statStr = "poisoned";
+			statusCurrPkm.setVisible(true);
 			break;
 			
 		default:
+			statusCurrPkm.setVisible(true);
 			statStr = status.toString().toLowerCase();
 			break;
 		}
 		statusCurrPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));
+		
 		
 		path = "Resources/Sprites/frontFrame2/"+ cli.getOpponentPokemon().getId() + ".png";
 		imageOppPkm.setImage(new Image(path));
@@ -435,10 +438,12 @@ public class FightController implements Initializable  {
 		
 		case BADLY_POISONED:
 			statStr = "poisoned";
+			statusCurrPkm.setVisible(true);
 			break;
 			
 		default:
 			statStr = status.toString().toLowerCase();
+			statusCurrPkm.setVisible(true);
 			break;
 		}
 		statusOppPkm.setImage(new Image("Resources/Buttons/Status/"+ statStr +".png"));

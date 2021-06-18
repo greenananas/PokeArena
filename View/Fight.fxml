@@ -149,7 +149,7 @@
 										<Insets left="22.0" />
 									</GridPane.margin>
 								</Button>
-                        <ImageView fx:id="statusOppPkm" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                        <ImageView fx:id="statusOppPkm" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                            <image>
                               <Image url="@../Resources/Buttons/Status/burnt.png" />
                            </image>
@@ -157,7 +157,7 @@
                               <Insets top="20.0" />
                            </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="statusCurrPkm" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <ImageView fx:id="statusCurrPkm" fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                            <image>
                               <Image url="@../Resources/Buttons/Status/frozen.png" />
                            </image>
