@@ -39,8 +39,8 @@ public class main_db {
             }
         }*/
         //Test Suppression
-        TeamBuilder.remove_team("team3-2",3);
-        for(Team t : TeamBuilder.allTeams3){
+        TeamBuilder.remove_team("team6-2",6);
+        for(Team t : TeamBuilder.allTeams6){
             System.out.println(" name : " + t.getName());
         }
 /*        String findTeam = "team6-1";

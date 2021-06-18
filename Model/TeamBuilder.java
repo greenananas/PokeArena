@@ -635,7 +635,7 @@ public class TeamBuilder {
             sql = "SELECT name from Team3";
         }
         else if(size == 6){
-            sql = "SELECT name from Team3";
+            sql = "SELECT name from Team6";
         }
 
         List<String> teams_names = new ArrayList<>();
