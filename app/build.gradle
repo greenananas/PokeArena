@@ -1,5 +1,5 @@
 plugins {
-    id 'application'
+    id 'java'
 }
 
 repositories {
@@ -11,6 +11,20 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.7'
 }
 
-application {
-    mainClass = 'PokeArena.PokeArenaNetwork.PokeArenaExamples.ServeurExemple'
+task runServer (type: JavaExec) {
+    dependsOn build
+    group("exec")
+    description("Lancer un serveur PokeArena")
+    main = 'PokeArena.PokeArenaNetwork.Examples.ServeurExemple'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
+
+task runClient (type: JavaExec) {
+    dependsOn build
+    group("exec")
+    description("Lancer un client PokeArena")
+    main = 'PokeArena.PokeArenaNetwork.Examples.ClientExemple'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
 }
