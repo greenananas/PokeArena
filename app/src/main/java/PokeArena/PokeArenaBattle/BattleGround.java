@@ -1,4 +1,4 @@
-package Model;
+package PokeArena.PokeArenaBattle;
 
 import java.util.HashMap;
 import java.util.Map;

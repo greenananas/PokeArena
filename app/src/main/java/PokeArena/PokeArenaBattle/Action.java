@@ -1,4 +1,5 @@
-package Model;
+package PokeArena.PokeArenaBattle;
+
 /**
  * Interface décrivant le choix d'action du dresseur (Attaque ou changement de Pokémon).
  */

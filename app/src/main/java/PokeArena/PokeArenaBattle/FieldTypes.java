@@ -1,4 +1,5 @@
-package Model;
+package PokeArena.PokeArenaBattle;
+
 /**
  * Class énumérant les différents types de terrains.
  */

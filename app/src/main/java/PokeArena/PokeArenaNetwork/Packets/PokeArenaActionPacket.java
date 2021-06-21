@@ -1,6 +1,6 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
-import Model.Action;
+import PokeArena.PokeArenaBattle.Action;
 
 /**
  * Modélise le format des paquets utilisés envoyer des actions.

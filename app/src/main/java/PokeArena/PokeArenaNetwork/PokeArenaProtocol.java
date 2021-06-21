@@ -1,6 +1,6 @@
-package PokeArenaNetwork;
+package PokeArena.PokeArenaNetwork;
 
-import PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaPacket;
 import org.java_websocket.WebSocket;
 
 /**

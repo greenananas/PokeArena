@@ -1,8 +1,6 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
-import PokeArenaNetwork.Packets.PokeArenaPacket;
-import PokeArenaNetwork.Packets.PokeArenaPacketType;
-import PokeArenaNetwork.Update;
+import PokeArena.PokeArenaNetwork.Update;
 
 public class PokeArenaUpdatePacket extends PokeArenaPacket {
 

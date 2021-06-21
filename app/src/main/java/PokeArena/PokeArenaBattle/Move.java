@@ -1,4 +1,4 @@
-package Model;
+package PokeArena.PokeArenaBattle;
 
 /**
  * Class décrivant l'attaque d'un Pokémon.

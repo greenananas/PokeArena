@@ -1,4 +1,4 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
 public enum PokeArenaPacketType {
     PING,

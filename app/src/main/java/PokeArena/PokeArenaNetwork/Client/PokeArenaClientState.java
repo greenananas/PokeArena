@@ -1,4 +1,4 @@
-package PokeArenaNetwork.Client;
+package PokeArena.PokeArenaNetwork.Client;
 
 /**
  * États que le client peut prendre.

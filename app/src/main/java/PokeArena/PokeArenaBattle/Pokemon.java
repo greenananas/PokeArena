@@ -1,6 +1,5 @@
-package Model;
-
-import Model.Utils.TerminalColors;
+package PokeArena.PokeArenaBattle;
+import PokeArena.PokeArenaBattle.Utils.TerminalColors;
 
 import java.util.ArrayList;
 

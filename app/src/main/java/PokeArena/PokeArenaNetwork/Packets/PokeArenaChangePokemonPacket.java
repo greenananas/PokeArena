@@ -1,6 +1,6 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
-import Model.ChangePkmn;
+import PokeArena.PokeArenaBattle.ChangePkmn;
 
 /**
  * Modélise le format des paquets utilisés pour envoyer des changements de Pokémon.

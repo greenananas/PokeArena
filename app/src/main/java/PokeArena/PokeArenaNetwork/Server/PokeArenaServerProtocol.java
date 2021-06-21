@@ -1,12 +1,12 @@
-package PokeArenaNetwork.Server;
+package PokeArena.PokeArenaNetwork.Server;
 
-import Model.*;
-import PokeArenaNetwork.Packets.*;
-import PokeArenaNetwork.PokeArenaProtocol;
-import PokeArenaNetwork.Update;
+import PokeArena.PokeArenaBattle.*;
+import PokeArena.PokeArenaNetwork.Packets.*;
+import PokeArena.PokeArenaNetwork.PokeArenaProtocol;
+import PokeArena.PokeArenaNetwork.Update;
 import org.java_websocket.WebSocket;
 
-import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
+import static PokeArena.PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
 /**
  * Protocole associé à un serveur PokeArena.

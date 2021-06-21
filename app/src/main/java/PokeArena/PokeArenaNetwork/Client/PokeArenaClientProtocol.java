@@ -1,20 +1,18 @@
-package PokeArenaNetwork.Client;
+package PokeArena.PokeArenaNetwork.Client;
 
-import Controller.FightController;
-import Model.Move;
-import Model.Pokemon;
-import Model.Team;
-import Model.Trainer;
-import PokeArenaNetwork.Packets.PokeArenaPacket;
-import PokeArenaNetwork.Packets.PokeArenaPacketType;
-import PokeArenaNetwork.Packets.PokeArenaTextPacket;
-import PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
-import PokeArenaNetwork.PokeArenaProtocol;
-import PokeArenaNetwork.Update;
-import javafx.application.Platform;
+import PokeArena.PokeArenaBattle.Move;
+import PokeArena.PokeArenaBattle.Pokemon;
+import PokeArena.PokeArenaBattle.Team;
+import PokeArena.PokeArenaBattle.Trainer;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaTextPacket;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
+import PokeArena.PokeArenaNetwork.PokeArenaProtocol;
+import PokeArena.PokeArenaNetwork.Update;
 import org.java_websocket.WebSocket;
 
-import static PokeArenaNetwork.PokeArenaUtilities.createPacket;
+import static PokeArena.PokeArenaNetwork.PokeArenaUtilities.createPacket;
 
 /**
  * Protocole associé à un client PokeArena.
@@ -114,17 +112,6 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                         break;
                     default:
                         break;
-                }
-
-                FightController ctrl = client.getCtrl();
-                if (ctrl != null) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            ctrl.updateAll();
-                            ;
-                        }
-                    });
                 }
 
                 response = null;

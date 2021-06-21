@@ -1,6 +1,6 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
-import Model.Move;
+import PokeArena.PokeArenaBattle.Move;
 
 public class PokeArenaMovePacket extends PokeArenaPacket {
 

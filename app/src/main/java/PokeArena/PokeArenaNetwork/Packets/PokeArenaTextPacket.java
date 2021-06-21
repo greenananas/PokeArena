@@ -1,4 +1,4 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
 import PokeArenaNetwork.Packets.PokeArenaPacket;
 import PokeArenaNetwork.Packets.PokeArenaPacketType;

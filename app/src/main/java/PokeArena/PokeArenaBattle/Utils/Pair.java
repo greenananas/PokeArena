@@ -1,4 +1,4 @@
-package Model.Utils;
+package PokeArena.PokeArenaBattle.Utils;
 
 public class Pair<L,R> {
 

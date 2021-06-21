@@ -1,4 +1,4 @@
-package Model;
+package PokeArena.PokeArenaBattle;
 
 public class ChangePkmn extends Action{
 

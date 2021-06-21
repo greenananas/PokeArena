@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package PokeArenaNetwork;
+package PokeArena.PokeArenaNetwork;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

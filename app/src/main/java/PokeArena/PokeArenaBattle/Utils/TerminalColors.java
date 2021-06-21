@@ -1,4 +1,4 @@
-package Model.Utils;
+package PokeArena.PokeArenaBattle.Utils;
 
 /**
  * Class listant les codes couleurs à utiliser dans le terminal.

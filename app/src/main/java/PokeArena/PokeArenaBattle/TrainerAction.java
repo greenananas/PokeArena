@@ -1,6 +1,6 @@
-package Model;
+package PokeArena.PokeArenaBattle;
 
-import Model.Utils.Pair;
+import PokeArena.PokeArenaBattle.Utils.Pair;
 
 public class TrainerAction extends Pair<Trainer, Action> {
     public TrainerAction(Trainer left, Action right) {

@@ -1,4 +1,4 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
 public class PokeArenaForfeitPacket extends PokeArenaPacket {
 

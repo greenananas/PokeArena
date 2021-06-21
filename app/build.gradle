@@ -1,20 +1,16 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 repositories {
     mavenCentral()
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-    }
-}
-
 dependencies {
     compile "org.java-websocket:Java-WebSocket:1.5.1"
     implementation 'com.google.code.gson:gson:2.8.7'
+}
+
+application {
+    mainClass = 'PokeArena.PokeArenaNetwork.PokeArenaExamples.ServeurExemple'
 }

@@ -1,4 +1,4 @@
-package Model;
+package PokeArena.PokeArenaBattle;
 
 public enum Nature {
     BOLD (0.9f,1.1f,1,1,1),

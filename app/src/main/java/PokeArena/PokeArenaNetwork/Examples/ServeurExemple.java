@@ -1,9 +1,10 @@
-package PokeArenaNetwork.Examples;
+package PokeArena.PokeArenaNetwork.Examples;
 
-import Model.Battle;
-import Model.Pokemon;
-import PokeArenaNetwork.Server.PokeArenaServer;
+import PokeArena.PokeArenaBattle.Battle;
+import PokeArena.PokeArenaBattle.Pokemon;
+import PokeArena.PokeArenaNetwork.Server.PokeArenaServer;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -90,7 +91,7 @@ public class ServeurExemple {
         }
         try {
             server.stop();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
 

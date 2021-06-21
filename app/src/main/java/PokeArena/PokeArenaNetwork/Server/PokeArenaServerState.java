@@ -1,4 +1,4 @@
-package PokeArenaNetwork.Server;
+package PokeArena.PokeArenaNetwork.Server;
 
 /**
  * États que le serveur peut prendre.

@@ -1,12 +1,10 @@
-package PokeArenaNetwork.Server;
+package PokeArena.PokeArenaNetwork.Server;
 
-import Model.Battle;
-import Model.Pokemon;
-import PokeArenaNetwork.Packets.PokeArenaPacket;
-import PokeArenaNetwork.Packets.PokeArenaPacketType;
-import PokeArenaNetwork.Packets.PokeArenaUpdatePacket;
-import PokeArenaNetwork.PokeArenaUtilities;
-import PokeArenaNetwork.Update;
+import PokeArena.PokeArenaBattle.Battle;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaPacket;
+import PokeArena.PokeArenaNetwork.Packets.PokeArenaPacketType;
+import PokeArena.PokeArenaNetwork.PokeArenaUtilities;
+import PokeArena.PokeArenaNetwork.Update;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;

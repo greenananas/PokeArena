@@ -1,4 +1,4 @@
-package PokeArenaNetwork.Packets;
+package PokeArena.PokeArenaNetwork.Packets;
 
 /**
  * Définit le format des paquets utilisés pour la communication entre les serveur et clients PokeArena.

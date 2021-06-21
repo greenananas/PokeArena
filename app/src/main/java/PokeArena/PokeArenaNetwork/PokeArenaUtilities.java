@@ -1,10 +1,10 @@
-package PokeArenaNetwork;
+package PokeArena.PokeArenaNetwork;
 
-import Model.Action;
-import Model.ChangePkmn;
-import Model.Move;
-import Model.Team;
-import PokeArenaNetwork.Packets.*;
+import PokeArena.PokeArenaBattle.Action;
+import PokeArena.PokeArenaBattle.ChangePkmn;
+import PokeArena.PokeArenaBattle.Move;
+import PokeArena.PokeArenaBattle.Team;
+import PokeArena.PokeArenaNetwork.Packets.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

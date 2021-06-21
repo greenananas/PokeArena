@@ -1,8 +1,8 @@
-package PokeArenaNetwork;
+package PokeArena.PokeArenaNetwork;
 
-import Model.Move;
-import Model.Pokemon;
-import Model.Team;
+import PokeArena.PokeArenaBattle.Move;
+import PokeArena.PokeArenaBattle.Pokemon;
+import PokeArena.PokeArenaBattle.Team;
 
 /**
  * Modélise la mise à jour des informations du combat à envoyer aux clients.

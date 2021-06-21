@@ -1,4 +1,4 @@
-package Model;
+package PokeArena.PokeArenaBattle;
 
 /**
  * Classe décrivant les actions menées pendant un combat Pokémon.
