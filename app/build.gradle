@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.java-websocket:Java-WebSocket:1.5.1"
+    implementation 'com.google.code.gson:gson:2.8.7'
+}
+
+task runServer (type: JavaExec) {
+    dependsOn build
+    group("exec")
+    description("Lancer un serveur PokeArena")
+    main = 'PokeArena.PokeArenaNetwork.Examples.ServeurExemple'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
+
+task runClient (type: JavaExec) {
+    dependsOn build
+    group("exec")
+    description("Lancer un client PokeArena")
+    main = 'PokeArena.PokeArenaNetwork.Examples.ClientExemple'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
