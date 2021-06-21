@@ -1,7 +1,7 @@
-package PokeArenaNetwork.Examples;
+package PokeArena.PokeArenaNetwork.Examples;
 
-import Model.*;
-import PokeArenaNetwork.Client.PokeArenaClient;
+import PokeArena.PokeArenaBattle.*;
+import PokeArena.PokeArenaNetwork.Client.PokeArenaClient;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -52,23 +52,23 @@ public class ClientExemple {
             Pokemon elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95,0,0,0,0,0,0,"HARDY", poingeclair, poingfeu, poingglace, seisme, 446);
             Pokemon pingoleon = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111, 101, 60,0,0,0,0,0,0,"HARDY", surf, hydrocanon, luminocanon, laserglace, 395);
 
-            ArrayList<Pokemon> alTeam1 = new ArrayList<Pokemon>();
+            ArrayList<Pokemon> alTeam1 = new ArrayList<>();
             alTeam1.add(carchacrok);
             alTeam1.add(metalosse);
             alTeam1.add(pingoleon);
             Team team1 = new Team(alTeam1);
 
-            ArrayList<Pokemon> alTeam2 = new ArrayList<Pokemon>();
+            ArrayList<Pokemon> alTeam2 = new ArrayList<>();
             alTeam2.add(tyranocif);
             alTeam2.add(togekiss);
             alTeam2.add(elekable);
             Team team2 = new Team(alTeam2);
 
-            ArrayList<Pokemon> alSoloTeam1 = new ArrayList<Pokemon>();
+            ArrayList<Pokemon> alSoloTeam1 = new ArrayList<>();
             alSoloTeam1.add(elekable);
             Team soloTeam1 = new Team(alSoloTeam1);
 
-            ArrayList<Pokemon> alSoloTeam2 = new ArrayList<Pokemon>();
+            ArrayList<Pokemon> alSoloTeam2 = new ArrayList<>();
             alSoloTeam2.add(pingoleon);
             Team soloTeam2 = new Team(alSoloTeam2);
 
