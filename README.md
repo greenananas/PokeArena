@@ -3,6 +3,9 @@
 ![pokearena1](https://user-images.githubusercontent.com/38182562/119683821-46371280-be44-11eb-89b8-7fd982775d0d.png)
 
 [![gradle build](https://github.com/greenananas/PokeArena/actions/workflows/gradle.yml/badge.svg)](https://github.com/greenananas/PokeArena/actions/workflows/gradle.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=greenananas_PokeArena&metric=alert_status)](https://sonarcloud.io/dashboard?id=greenananas_PokeArena)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=greenananas_PokeArena&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=greenananas_PokeArena)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=greenananas_PokeArena&metric=coverage)](https://sonarcloud.io/dashboard?id=greenananas_PokeArena)
 
 Dans l’optique de choisir un sujet qui nous passionne tous, nous nous sommes penchés sur un **simulateur de combat Pokémon**. De manière générale, la stratégie Pokémon fait partie de ces jeux que l’on peut qualifier de “**easy to play, hard to master**”, dans le sens où n’importe quel néophyte peut jouer mais où le jeu est assez complexe pour créer un écart de niveau conséquent entre les joueurs. Il en va de même du point de vue du code. En effet, la base du jeu semble simple à produire, mais le nombre d’éléments à prendre en compte pour rendre le simulateur vraiment complet est immense.
 
