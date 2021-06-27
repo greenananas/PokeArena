@@ -1,6 +1,5 @@
 package PokeArena.PokeArenaNetwork.Examples;
 
-import PokeArena.PokeArenaBattle.Battle;
 import PokeArena.PokeArenaBattle.Pokemon;
 import PokeArena.PokeArenaNetwork.Server.PokeArenaServer;
 
@@ -15,9 +14,9 @@ import java.util.Scanner;
 public class ServeurExemple {
 
     public static void main(String[] args) {
-        PokeArenaServer server = new PokeArenaServer("localhost", 8887);
+        var server = new PokeArenaServer("localhost", 8887);
         server.start();
-        Scanner sc = new Scanner(System.in);
+        var sc = new Scanner(System.in);
         String input = sc.next();
 
         while (!input.equals("quit")) {
@@ -57,7 +56,7 @@ public class ServeurExemple {
                 case "b":
                 case "battleinfo":
                     try {
-                        Battle battle = server.getBattle();
+                        var battle = server.getBattle();
 
                         // Informations du client 1
                         System.out.println("=== CLIENT 1 ===");
