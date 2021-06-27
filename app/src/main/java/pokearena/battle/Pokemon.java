@@ -1,4 +1,5 @@
 package pokearena.battle;
+
 import pokearena.battle.utils.TerminalColors;
 
 import java.util.ArrayList;
@@ -575,9 +576,7 @@ public class Pokemon {
     }
 
     /**
-     * Obtenir le modificateur d'attaque du Pokémon.
-     *
-     * @return Nouveau modificateur d'attaque du Pokémon.
+     * Modifier le modificateur d'attaque du Pokémon.
      */
     public void setAttackModifier(int attackMod) {
         this.attackMod = attackMod;
@@ -700,7 +699,7 @@ public class Pokemon {
     }
 
     /**
-     *  Retourne si oui ou non le pokémon possède un certain type.
+     * Retourne si oui ou non le pokémon possède un certain type.
      *
      * @param type Le type recherché.
      * @return Le pokémon possède le type.
@@ -879,9 +878,9 @@ public class Pokemon {
     public boolean isFaster(Pokemon p) {
         double ownSpeedMultiplier = (status.status.equals(PokeStatus.Status.PARALYZED) ? 0.5 : 1);
         double ennemySpeedMultiplier = (p.getStatus().status.equals(PokeStatus.Status.PARALYZED) ? 0.5 : 1);
-        if (this.getSpeed()*ownSpeedMultiplier > p.getSpeed()*ennemySpeedMultiplier) {
+        if (this.getSpeed() * ownSpeedMultiplier > p.getSpeed() * ennemySpeedMultiplier) {
             return true;
-        } else if (this.getSpeed()*ownSpeedMultiplier < p.getSpeed()*ennemySpeedMultiplier) {
+        } else if (this.getSpeed() * ownSpeedMultiplier < p.getSpeed() * ennemySpeedMultiplier) {
             return false;
         } else {
             if (Math.random() > 0.5) {

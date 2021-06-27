@@ -33,7 +33,8 @@ public class PokeArenaActionPacket extends PokeArenaPacket {
 
     /**
      * Obtenir l'action contenu dans le paquet.
-     * @return
+     *
+     * @return Action contenu dans le paquet.
      */
     public Action getAction() {
         return action;
