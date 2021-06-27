@@ -24,7 +24,7 @@ task runServer (type: JavaExec) {
     dependsOn build
     group("exec")
     description("Lancer un serveur PokeArena")
-    main = 'PokeArena.PokeArenaNetwork.Examples.ServeurExemple'
+    main = 'pokearena.network.examples.CLIServer'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }
@@ -33,7 +33,7 @@ task runClient (type: JavaExec) {
     dependsOn build
     group("exec")
     description("Lancer un client PokeArena")
-    main = 'PokeArena.PokeArenaNetwork.Examples.ClientExemple'
+    main = 'pokearena.network.examples.CLIClient'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }
