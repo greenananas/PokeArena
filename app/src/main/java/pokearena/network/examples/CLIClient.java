@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Exemple d'implémentation d'un client PokeArena en ligne de commande.
+ * Exemple d'implémentation d'un client PokeArena en ligne de commande
  *
  * @author Louis
  */
