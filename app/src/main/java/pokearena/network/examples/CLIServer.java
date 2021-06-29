@@ -92,8 +92,11 @@ public class CLIServer {
         }
         try {
             server.stop();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            logger.error(e.toString());
+        } catch (InterruptedException e) {
+            logger.error(e.toString());
+            Thread.currentThread().interrupt();
         }
 
     }
