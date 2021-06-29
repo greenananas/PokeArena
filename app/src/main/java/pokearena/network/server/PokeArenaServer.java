@@ -1,5 +1,7 @@
 package pokearena.network.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pokearena.battle.Battle;
 import pokearena.network.packets.PokeArenaPacket;
 import pokearena.network.packets.PokeArenaPacketType;
@@ -42,6 +44,8 @@ public class PokeArenaServer extends WebSocketServer {
      * Connexion associée au client 2.
      */
     private WebSocket client2WS;
+
+    private final Logger logger = LoggerFactory.getLogger(PokeArenaServer.class);
 
     /**
      * Protocole utilisé pour traiter les paquets et gérer l'état du serveur.
@@ -92,8 +96,7 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onClose(WebSocket ws, int code, String message, boolean remote) {
-        System.out.println("Connexion fermée avec code " + code
-                + ", informations additionnels : " + message);
+        logger.info("Connexion fermée avec code {}, informations additionnels : {}", code, message);
     }
 
     /**
@@ -104,7 +107,7 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onMessage(WebSocket ws, String message) {
-        System.out.println("Message reçu : " + message);
+        logger.debug("Message reçu : {}", message);
         PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
         if (packet != null) protocol.processPacket(ws, packet);
     }
@@ -118,7 +121,7 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onError(WebSocket ws, Exception e) {
-
+        logger.error("", e);
     }
 
     /**
@@ -192,6 +195,7 @@ public class PokeArenaServer extends WebSocketServer {
      */
     @Override
     public void onStart() {
+        logger.info("Le serveur vient de démarrer");
         this.state = PokeArenaServerState.WAITING_FOR_CLIENT1_TO_JOIN;
     }
 
