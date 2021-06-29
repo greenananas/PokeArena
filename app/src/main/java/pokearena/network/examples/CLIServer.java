@@ -4,8 +4,9 @@ import org.slf4j.LoggerFactory;
 import pokearena.battle.Pokemon;
 import pokearena.network.server.PokeArenaServer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStreamReader;
 
 /**
  * Exemple d'implémentation d'un serveur PokeArena en ligne de commande.
@@ -19,11 +20,21 @@ public class CLIServer {
 
         var server = new PokeArenaServer("localhost", 8887);
         server.start();
-        var sc = new Scanner(System.in);
-        String input = sc.next();
 
-        while (!input.equals("quit")) {
+        var reader = new BufferedReader(new InputStreamReader(System.in));
+        var loop = true;
+        while (loop) {
+            String input = null;
+            try {
+                input = reader.readLine();
+            } catch (IOException e) {
+                input = "";
+                e.printStackTrace();
+            }
             switch (input) {
+                case "quit":
+                    loop = false;
+                    break;
                 case "ping1":
                     try {
                         server.sendPing(server.getClient1WS());
@@ -88,7 +99,6 @@ public class CLIServer {
                     logger.error("Commande non reconnue");
                     break;
             }
-            input = sc.next();
         }
         try {
             server.stop();
