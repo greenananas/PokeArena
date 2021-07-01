@@ -1,11 +1,12 @@
 package pokearena.network.client;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pokearena.battle.*;
 import pokearena.network.packets.PokeArenaPacket;
 import pokearena.network.packets.PokeArenaPacketType;
 import pokearena.network.packets.PokeArenaUpdatePacket;
 import pokearena.network.PokeArenaUtilities;
-import pokearena.network.Update;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -23,6 +24,8 @@ public class PokeArenaClient extends WebSocketClient {
      * État du client.
      */
     private PokeArenaClientState state = PokeArenaClientState.NOT_CONNECTED;
+
+    private final Logger logger = LoggerFactory.getLogger(PokeArenaClient.class);
 
     /**
      * Protocole utilisé pour traiter les paquets et gérer l'état du client.
@@ -65,7 +68,7 @@ public class PokeArenaClient extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
         if (state == PokeArenaClientState.NOT_CONNECTED) {
-            System.out.println("Ouverture de la connexion");
+            logger.info("Ouverture de la connexion");
             state = PokeArenaClientState.NEED_TO_SEND_TEAM;
         } else {
             //TODO: Lever une erreur
@@ -80,17 +83,18 @@ public class PokeArenaClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
-        if (packet.getType() == PokeArenaPacketType.UPDATE) {
-            Update up = ((PokeArenaUpdatePacket) packet).getUpdate();
-            System.out.println("Équipe :");
+        if (packet.getType() == PokeArenaPacketType.UPDATE && logger.isDebugEnabled()) {
+            var up = ((PokeArenaUpdatePacket) packet).getUpdate();
+            StringBuilder updateInfo;
+            updateInfo = new StringBuilder("Équipe :\n");
             for (Pokemon poke : up.getTeam().getPokemons()) {
-                System.out.println("- " + poke.getName());
+                updateInfo.append("- ").append(poke.getName()).append("\n");
             }
-            System.out.println("Pokémon adverse : " + up.getOpponentPokemon());
-            System.out.println("Dernière attaque adverse : " + up.getOppenentMove());
+            updateInfo.append("Pokémon adverse : ").append(up.getOpponentPokemon()).append("\n");
+            updateInfo.append("Dernière attaque adverse : ").append(up.getOppenentMove());
+            logger.debug("{}", updateInfo);
         } else {
-            System.out.println(message);
-            System.out.println("Message reçu : " + message);
+            logger.debug("Message reçu : {}", message);
         }
         if (packet != null) protocol.processPacket(getConnection(), packet);
     }
@@ -104,8 +108,7 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onClose(int code, String message, boolean remote) {
-        System.out.println("Connexion fermée avec code " + code
-                + ", informations aditionnels : " + message);
+        logger.info("Connexion fermée avec code {}, informations aditionnels : {}", code, message);
     }
 
     /**
@@ -116,7 +119,7 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onError(Exception e) {
-
+        logger.error("", e);
     }
 
     /**
@@ -131,6 +134,7 @@ public class PokeArenaClient extends WebSocketClient {
     /**
      * Envoyer un ping au serveur.
      */
+    @Override
     public void sendPing() {
         sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
     }
@@ -246,6 +250,7 @@ public class PokeArenaClient extends WebSocketClient {
 
     /**
      * Obtenir la dernière attaque de l'adversaire.
+     *
      * @return Dernière attaque de l'adversaire.
      */
     public Move getOpponentMove() {
