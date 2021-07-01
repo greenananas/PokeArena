@@ -1,5 +1,7 @@
 package pokearena.network.client;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pokearena.battle.Move;
 import pokearena.battle.Pokemon;
 import pokearena.battle.Team;
@@ -25,6 +27,8 @@ import static pokearena.network.PokeArenaUtilities.createPacket;
  * @author Louis
  */
 public class PokeArenaClientProtocol extends PokeArenaProtocol {
+
+    private final Logger logger = LoggerFactory.getLogger(PokeArenaClient.class);
 
     /**
      * Client PokeArena qui utilise le protocole.
@@ -74,7 +78,7 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 response = createPacket(PokeArenaPacketType.PONG, null);
                 break;
             case TEXT:
-                System.out.println("Serveur dit : " + ((PokeArenaTextPacket) request).getText());
+                logger.debug("Serveur dit : {}", ((PokeArenaTextPacket) request).getText());
                 response = null;
                 break;
             case WIN:
