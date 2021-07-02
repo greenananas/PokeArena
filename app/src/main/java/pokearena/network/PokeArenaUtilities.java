@@ -16,6 +16,11 @@ import com.google.gson.reflect.TypeToken;
  */
 public class PokeArenaUtilities {
 
+    private PokeArenaUtilities() {
+        throw new IllegalStateException("Utility class");
+    }
+
+
     /**
      * Utilisé pour la sérialisation.
      */

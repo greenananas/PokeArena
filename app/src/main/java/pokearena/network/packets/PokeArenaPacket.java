@@ -17,7 +17,7 @@ public abstract class PokeArenaPacket {
      *
      * @param type Type du paquet.
      */
-    public PokeArenaPacket(PokeArenaPacketType type) {
+    protected PokeArenaPacket(PokeArenaPacketType type) {
         this.type = type;
     }
 

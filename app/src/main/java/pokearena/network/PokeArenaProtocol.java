@@ -8,7 +8,7 @@ import org.java_websocket.WebSocket;
  *
  * @author Louis
  */
-abstract public class PokeArenaProtocol {
+public abstract class PokeArenaProtocol {
 
     /**
      * Traite un paquet.
@@ -16,6 +16,6 @@ abstract public class PokeArenaProtocol {
      * @param ws      Connexion associé au paquet à traiter.
      * @param request Paquet à traiter.
      */
-    abstract public void processPacket(WebSocket ws, PokeArenaPacket request);
+    public abstract void processPacket(WebSocket ws, PokeArenaPacket request);
 
 }
