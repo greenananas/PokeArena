@@ -1,6 +1,6 @@
 package pokearena.network.packets;
 
-public enum PokeArenaPacketType {
+public enum PacketType {
     PING,
     PONG,
     TEXT,

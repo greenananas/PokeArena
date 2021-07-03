@@ -74,11 +74,11 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      * @param ws      Connexion associé au paquet à traiter.
      * @param request Paquet à traiter.
      */
-    public void processPacket(WebSocket ws, PokeArenaPacket request) {
-        PokeArenaPacket response;
+    public void processPacket(WebSocket ws, Packet request) {
+        Packet response;
         switch (request.getType()) {
             case PING:
-                response = createPacket(PokeArenaPacketType.PONG, null);
+                response = createPacket(PacketType.PONG, null);
                 break;
             case REFRESH:
                 Team trainerTeam = null;
@@ -94,7 +94,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     opponentMove = lastClient1Move;
                 }
                 response = (trainerTeam != null && opponentPokemon != null)
-                        ? createPacket(PokeArenaPacketType.UPDATE, new Update(trainerTeam, opponentPokemon, opponentMove))
+                        ? createPacket(PacketType.UPDATE, new Update(trainerTeam, opponentPokemon, opponentMove))
                         : null;
                 break;
             case FORFEIT:
@@ -105,10 +105,10 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     server.sendWin(server.getClient1WS());
                     server.setState(PokeArenaServerState.CLIENT_1_WON);
                 }
-                response = createPacket(PokeArenaPacketType.LOSE, null);
+                response = createPacket(PacketType.LOSE, null);
                 break;
             case TEAM:
-                var team = ((PokeArenaTeamPacket) request).getTeam();
+                var team = ((TeamPacket) request).getTeam();
                 System.out.println("Équipe reçue :");
                 for (Pokemon p : team.getPokemons()) {
                     System.out.println(" - " + p);
@@ -142,7 +142,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 break;
             case TEXT:
                 String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
-                System.out.println(clt + " dit : " + ((PokeArenaTextPacket) request).getText());
+                System.out.println(clt + " dit : " + ((TextPacket) request).getText());
                 response = null;
                 break;
             case MOVE:
@@ -152,8 +152,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 switch (server.getState()) {
                     case WAITING_FOR_CLIENT_1_CHANGEPKMN:
                         if (ws == server.getClient1WS()) {
-                            battle.trainer1.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PokeArenaPacketType.UPDATE, generateClient1Update()); // Message d'update au client 1
+                            battle.trainer1.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
+                            response = createPacket(PacketType.UPDATE, generateClient1Update()); // Message d'update au client 1
                             server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
                             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
@@ -162,8 +162,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                         break;
                     case WAITING_FOR_CLIENT_2_CHANGEPKMN:
                         if (ws == server.getClient2WS()) {
-                            battle.trainer2.getTrainer().changePokemon(((PokeArenaChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PokeArenaPacketType.UPDATE, generateClient2Update()); // Message d'update au client 2
+                            battle.trainer2.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
+                            response = createPacket(PacketType.UPDATE, generateClient2Update()); // Message d'update au client 2
                             server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
                             server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
@@ -213,18 +213,18 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      * @param request Paquet à traiter.
      * @return Paquet de réponse.
      */
-    protected PokeArenaPacket processActionPacket(WebSocket ws, PokeArenaPacket request) {
-        PokeArenaPacket response;
+    protected Packet processActionPacket(WebSocket ws, Packet request) {
+        Packet response;
         Action action;
         switch (request.getType()) {
             case MOVE:
-                action = ((PokeArenaMovePacket) request).getMove();
+                action = ((MovePacket) request).getMove();
                 break;
             case ACTION:
-                action = ((PokeArenaActionPacket) request).getAction();
+                action = ((ActionPacket) request).getAction();
                 break;
             case CHANGEPOKEMON:
-                action = ((PokeArenaChangePokemonPacket) request).getChangePkmn();
+                action = ((ChangePokemonPacket) request).getChangePkmn();
                 break;
             default:
                 action = null;
@@ -256,7 +256,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     handleActions(client1Action, client2Action);
 
                     server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
-                    response = createPacket(PokeArenaPacketType.UPDATE, generateClient1Update()); // Envoie de l'update au client 1
+                    response = createPacket(PacketType.UPDATE, generateClient1Update()); // Envoie de l'update au client 1
                     break;
                 }
                 response = null;
@@ -270,7 +270,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     handleActions(client1Action, client2Action);
 
                     server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
-                    response = createPacket(PokeArenaPacketType.UPDATE, generateClient2Update()); // Envoie de l'update au client 2
+                    response = createPacket(PacketType.UPDATE, generateClient2Update()); // Envoie de l'update au client 2
                     break;
                 }
                 response = null;

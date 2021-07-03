@@ -7,16 +7,16 @@ import pokearena.battle.ChangePkmn;
  *
  * @author Louis
  */
-public class PokeArenaChangePokemonPacket extends PokeArenaPacket {
+public class ChangePokemonPacket extends Packet {
 
     private ChangePkmn changePkmn = null;
 
     // Sans constructeur par défaut problème de désérialisation
-    public PokeArenaChangePokemonPacket() {
-        super(PokeArenaPacketType.CHANGEPOKEMON);
+    public ChangePokemonPacket() {
+        super(PacketType.CHANGEPOKEMON);
     }
 
-    public PokeArenaChangePokemonPacket(ChangePkmn changePkmn) {
+    public ChangePokemonPacket(ChangePkmn changePkmn) {
         this();
         this.changePkmn = changePkmn;
     }

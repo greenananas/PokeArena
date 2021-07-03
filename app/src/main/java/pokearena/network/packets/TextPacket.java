@@ -1,15 +1,15 @@
 package pokearena.network.packets;
 
-public class PokeArenaTextPacket extends PokeArenaPacket {
+public class TextPacket extends Packet {
 
     private String text = null;
 
     // Sans constructeur par défaut problème de désérialisation
-    public PokeArenaTextPacket() {
-        super(PokeArenaPacketType.TEXT);
+    public TextPacket() {
+        super(PacketType.TEXT);
     }
 
-    public PokeArenaTextPacket(String text) {
+    public TextPacket(String text) {
         this();
         this.text = text;
     }

@@ -24,7 +24,7 @@ public class PokeArenaUtilities {
     /**
      * Utilisé pour la sérialisation.
      */
-    private static final TypeToken<PokeArenaPacket> REQUEST_LIST_TYPE_TOKEN = new TypeToken<PokeArenaPacket>() {
+    private static final TypeToken<Packet> REQUEST_LIST_TYPE_TOKEN = new TypeToken<Packet>() {
     };
 
     /**
@@ -32,19 +32,19 @@ public class PokeArenaUtilities {
      * Enregistrement des sous-types de la classe PokeArenaPacket.
      */
     private static final RuntimeTypeAdapterFactory<?> TYPE_FACTORY = RuntimeTypeAdapterFactory
-            .of(PokeArenaPacket.class, "type")
-            .registerSubtype(PokeArenaPingPacket.class, "PING")
-            .registerSubtype(PokeArenaPongPacket.class, "PONG")
-            .registerSubtype(PokeArenaWinPacket.class, "WIN")
-            .registerSubtype(PokeArenaLosePacket.class, "LOSE")
-            .registerSubtype(PokeArenaRefreshPacket.class, "REFRESH")
-            .registerSubtype(PokeArenaForfeitPacket.class, "FORFEIT")
-            .registerSubtype(PokeArenaUpdatePacket.class, "UPDATE")
-            .registerSubtype(PokeArenaTextPacket.class, "TEXT")
-            .registerSubtype(PokeArenaMovePacket.class, "MOVE")
-            .registerSubtype(PokeArenaTeamPacket.class, "TEAM")
-            .registerSubtype(PokeArenaActionPacket.class, "ACTION")
-            .registerSubtype(PokeArenaChangePokemonPacket.class, "CHANGEPOKEMON");
+            .of(Packet.class, "type")
+            .registerSubtype(PingPacket.class, "PING")
+            .registerSubtype(PongPacket.class, "PONG")
+            .registerSubtype(WinPacket.class, "WIN")
+            .registerSubtype(LosePacket.class, "LOSE")
+            .registerSubtype(RefreshPacket.class, "REFRESH")
+            .registerSubtype(ForfeitPacket.class, "FORFEIT")
+            .registerSubtype(UpdatePacket.class, "UPDATE")
+            .registerSubtype(TextPacket.class, "TEXT")
+            .registerSubtype(MovePacket.class, "MOVE")
+            .registerSubtype(TeamPacket.class, "TEAM")
+            .registerSubtype(ActionPacket.class, "ACTION")
+            .registerSubtype(ChangePokemonPacket.class, "CHANGEPOKEMON");
 
     /**
      * Objet utilisé pour la sérialisation des paquets PokeArenaPacket.
@@ -57,8 +57,8 @@ public class PokeArenaUtilities {
      * @param jsonPacket Paquet au format JSON.
      * @return Paquet parsé vers le type contenu dans le paquet JSON.
      */
-    public static PokeArenaPacket parseJsonPacket(String jsonPacket) {
-        PokeArenaPacket packet = null;
+    public static Packet parseJsonPacket(String jsonPacket) {
+        Packet packet = null;
         try {
             packet = GSON.fromJson(jsonPacket, REQUEST_LIST_TYPE_TOKEN.getType());
         } catch (Exception e) {
@@ -75,44 +75,44 @@ public class PokeArenaUtilities {
      * @param <D>        Type générique qui contient les informations du paquet.
      * @return Paquet créé.
      */
-    public static <D> PokeArenaPacket createPacket(PokeArenaPacketType packetType, D packetData) {
-        PokeArenaPacket packet;
+    public static <D> Packet createPacket(PacketType packetType, D packetData) {
+        Packet packet;
         switch (packetType) {
             case PING:
-                packet = new PokeArenaPingPacket();
+                packet = new PingPacket();
                 break;
             case PONG:
-                packet = new PokeArenaPongPacket();
+                packet = new PongPacket();
                 break;
             case WIN:
-                packet = new PokeArenaWinPacket();
+                packet = new WinPacket();
                 break;
             case LOSE:
-                packet = new PokeArenaLosePacket();
+                packet = new LosePacket();
                 break;
             case REFRESH:
-                packet = new PokeArenaRefreshPacket();
+                packet = new RefreshPacket();
                 break;
             case FORFEIT:
-                packet = new PokeArenaForfeitPacket();
+                packet = new ForfeitPacket();
                 break;
             case UPDATE:
-                packet = new PokeArenaUpdatePacket((Update) packetData);
+                packet = new UpdatePacket((Update) packetData);
                 break;
             case MOVE:
-                packet = new PokeArenaMovePacket((Move) packetData);
+                packet = new MovePacket((Move) packetData);
                 break;
             case CHANGEPOKEMON:
-                packet = new PokeArenaChangePokemonPacket((ChangePkmn) packetData);
+                packet = new ChangePokemonPacket((ChangePkmn) packetData);
                 break;
             case TEAM:
-                packet = new PokeArenaTeamPacket((Team) packetData);
+                packet = new TeamPacket((Team) packetData);
                 break;
             case TEXT:
-                packet = new PokeArenaTextPacket((String) packetData);
+                packet = new TextPacket((String) packetData);
                 break;
             case ACTION:
-                packet = new PokeArenaActionPacket((Action) packetData);
+                packet = new ActionPacket((Action) packetData);
                 break;
             default:
                 packet = null;
@@ -127,7 +127,7 @@ public class PokeArenaUtilities {
      * @param packet Paquet de type PokeArenaPacket.
      * @return Paquet de type String sérialisé en JSON.
      */
-    public static String toJson(PokeArenaPacket packet) {
+    public static String toJson(Packet packet) {
         return GSON.toJson(packet);
     }
 

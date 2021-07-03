@@ -7,7 +7,7 @@ import pokearena.battle.Action;
  *
  * @author Louis
  */
-public class PokeArenaActionPacket extends PokeArenaPacket {
+public class ActionPacket extends Packet {
 
     /**
      * Action contenu par le paquet.
@@ -17,8 +17,8 @@ public class PokeArenaActionPacket extends PokeArenaPacket {
     /**
      * Créer un paquet action.
      */
-    public PokeArenaActionPacket() {
-        super(PokeArenaPacketType.ACTION);
+    public ActionPacket() {
+        super(PacketType.ACTION);
     }
 
     /**
@@ -26,7 +26,7 @@ public class PokeArenaActionPacket extends PokeArenaPacket {
      *
      * @param action Action qui va être contenu par le paquet.
      */
-    public PokeArenaActionPacket(Action action) {
+    public ActionPacket(Action action) {
         this();
         this.action = action;
     }

@@ -3,8 +3,8 @@ package pokearena.network.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pokearena.battle.Battle;
-import pokearena.network.packets.PokeArenaPacket;
-import pokearena.network.packets.PokeArenaPacketType;
+import pokearena.network.packets.Packet;
+import pokearena.network.packets.PacketType;
 import pokearena.network.PokeArenaUtilities;
 import pokearena.network.Update;
 import org.java_websocket.WebSocket;
@@ -108,7 +108,7 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         logger.debug("Message reçu : {}", message);
-        PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
+        Packet packet = PokeArenaUtilities.parseJsonPacket(message);
         if (packet != null) protocol.processPacket(ws, packet);
     }
 
@@ -130,7 +130,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws     Connexion sur laquelle on va envoyer le paquet.
      * @param packet Paquet qui va être envoyé.
      */
-    public void sendPacket(WebSocket ws, PokeArenaPacket packet) {
+    public void sendPacket(WebSocket ws, Packet packet) {
         ws.send(PokeArenaUtilities.toJson(packet));
     }
 
@@ -140,7 +140,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle le ping va être envoyé.
      */
     public void sendPing(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
+        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.PING, null));
     }
 
     /**
@@ -149,7 +149,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle le pong va être envoyé.
      */
     public void sendPong(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.PONG, null));
+        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.PONG, null));
     }
 
     /**
@@ -159,7 +159,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param texte Message texte qui va être envoyé.
      */
     public void sendText(WebSocket ws, String texte) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, texte));
+        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.TEXT, texte));
     }
 
     /**
@@ -169,7 +169,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param update Update qui va être envoyée.
      */
     public void sendUpdate(WebSocket ws, Update update) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.UPDATE, update));
+        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.UPDATE, update));
     }
 
     /**
@@ -178,7 +178,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle l'annonce va être envoyée.
      */
     public void sendWin(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.WIN, null));
+        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.WIN, null));
     }
 
     /**
@@ -187,7 +187,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle l'annonce va être envoyée.
      */
     public void sendLose(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PokeArenaPacketType.LOSE, null));
+        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.LOSE, null));
     }
 
     /**

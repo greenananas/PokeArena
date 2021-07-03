@@ -2,16 +2,16 @@ package pokearena.network.packets;
 
 import pokearena.battle.Move;
 
-public class PokeArenaMovePacket extends PokeArenaPacket {
+public class MovePacket extends Packet {
 
     private Move move = null;
 
     // Sans constructeur par défaut problème de désérialisation
-    public PokeArenaMovePacket() {
-        super(PokeArenaPacketType.MOVE);
+    public MovePacket() {
+        super(PacketType.MOVE);
     }
 
-    public PokeArenaMovePacket(Move move) {
+    public MovePacket(Move move) {
         this();
         this.move = move;
     }

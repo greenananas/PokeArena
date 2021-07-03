@@ -2,15 +2,15 @@ package pokearena.network.packets;
 
 import pokearena.network.Update;
 
-public class PokeArenaUpdatePacket extends PokeArenaPacket {
+public class UpdatePacket extends Packet {
 
     private Update update;
 
-    public PokeArenaUpdatePacket() {
-        super(PokeArenaPacketType.UPDATE);
+    public UpdatePacket() {
+        super(PacketType.UPDATE);
     }
 
-    public PokeArenaUpdatePacket(Update update) {
+    public UpdatePacket(Update update) {
         this();
         this.update = update;
     }

@@ -1,6 +1,6 @@
 package pokearena.network;
 
-import pokearena.network.packets.PokeArenaPacket;
+import pokearena.network.packets.Packet;
 import org.java_websocket.WebSocket;
 
 /**
@@ -16,6 +16,6 @@ public abstract class PokeArenaProtocol {
      * @param ws      Connexion associé au paquet à traiter.
      * @param request Paquet à traiter.
      */
-    public abstract void processPacket(WebSocket ws, PokeArenaPacket request);
+    public abstract void processPacket(WebSocket ws, Packet request);
 
 }

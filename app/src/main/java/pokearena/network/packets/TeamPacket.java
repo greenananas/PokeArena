@@ -2,15 +2,15 @@ package pokearena.network.packets;
 
 import pokearena.battle.Team;
 
-public class PokeArenaTeamPacket extends PokeArenaPacket {
+public class TeamPacket extends Packet {
 
     private Team team;
 
-    public PokeArenaTeamPacket() {
-        super(PokeArenaPacketType.TEAM);
+    public TeamPacket() {
+        super(PacketType.TEAM);
     }
 
-    public PokeArenaTeamPacket(Team team) {
+    public TeamPacket(Team team) {
         this();
         this.team = team;
     }

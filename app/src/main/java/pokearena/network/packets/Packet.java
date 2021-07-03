@@ -5,19 +5,19 @@ package pokearena.network.packets;
  *
  * @author Louis
  */
-public abstract class PokeArenaPacket {
+public abstract class Packet {
 
     /**
      * Type du paquet.
      */
-    private final PokeArenaPacketType type;
+    private final PacketType type;
 
     /**
      * Créer un paquet du type fourni en paramètre.
      *
      * @param type Type du paquet.
      */
-    protected PokeArenaPacket(PokeArenaPacketType type) {
+    protected Packet(PacketType type) {
         this.type = type;
     }
 
@@ -26,7 +26,7 @@ public abstract class PokeArenaPacket {
      *
      * @return Type du paquet.
      */
-    public PokeArenaPacketType getType() {
+    public PacketType getType() {
         return type;
     }
 

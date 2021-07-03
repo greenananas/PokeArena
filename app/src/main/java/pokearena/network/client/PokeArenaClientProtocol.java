@@ -6,10 +6,10 @@ import pokearena.battle.Move;
 import pokearena.battle.Pokemon;
 import pokearena.battle.Team;
 import pokearena.battle.Trainer;
-import pokearena.network.packets.PokeArenaPacket;
-import pokearena.network.packets.PokeArenaPacketType;
-import pokearena.network.packets.PokeArenaTextPacket;
-import pokearena.network.packets.PokeArenaUpdatePacket;
+import pokearena.network.packets.Packet;
+import pokearena.network.packets.PacketType;
+import pokearena.network.packets.TextPacket;
+import pokearena.network.packets.UpdatePacket;
 import pokearena.network.PokeArenaProtocol;
 import org.java_websocket.WebSocket;
 
@@ -70,14 +70,14 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
      * @param ws      Connexion associé au paquet à traiter.
      * @param request Paquet à traiter.
      */
-    public void processPacket(WebSocket ws, PokeArenaPacket request) {
-        PokeArenaPacket response;
+    public void processPacket(WebSocket ws, Packet request) {
+        Packet response;
         switch (request.getType()) {
             case PING:
-                response = createPacket(PokeArenaPacketType.PONG, null);
+                response = createPacket(PacketType.PONG, null);
                 break;
             case TEXT:
-                logger.debug("Serveur dit : {}", ((PokeArenaTextPacket) request).getText());
+                logger.debug("Serveur dit : {}", ((TextPacket) request).getText());
                 response = null;
                 break;
             case WIN:
@@ -91,7 +91,7 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
             case UPDATE:
 
                 // Mise à jour des informations du combat
-                var update = ((PokeArenaUpdatePacket) request).getUpdate();
+                var update = ((UpdatePacket) request).getUpdate();
                 this.opponentPokemon = update.getOpponentPokemon();
                 this.opponentMove = update.getOppenentMove();
                 if (trainer == null) {

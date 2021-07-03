@@ -3,9 +3,9 @@ package pokearena.network.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pokearena.battle.*;
-import pokearena.network.packets.PokeArenaPacket;
-import pokearena.network.packets.PokeArenaPacketType;
-import pokearena.network.packets.PokeArenaUpdatePacket;
+import pokearena.network.packets.Packet;
+import pokearena.network.packets.PacketType;
+import pokearena.network.packets.UpdatePacket;
 import pokearena.network.PokeArenaUtilities;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -82,9 +82,9 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onMessage(String message) {
-        PokeArenaPacket packet = PokeArenaUtilities.parseJsonPacket(message);
-        if (packet.getType() == PokeArenaPacketType.UPDATE && logger.isDebugEnabled()) {
-            var up = ((PokeArenaUpdatePacket) packet).getUpdate();
+        Packet packet = PokeArenaUtilities.parseJsonPacket(message);
+        if (packet.getType() == PacketType.UPDATE && logger.isDebugEnabled()) {
+            var up = ((UpdatePacket) packet).getUpdate();
             StringBuilder updateInfo;
             updateInfo = new StringBuilder("Équipe :\n");
             for (Pokemon poke : up.getTeam().getPokemons()) {
@@ -127,7 +127,7 @@ public class PokeArenaClient extends WebSocketClient {
      *
      * @param packet Paquet qui va être envoyé.
      */
-    public void sendPacket(PokeArenaPacket packet) {
+    public void sendPacket(Packet packet) {
         send(PokeArenaUtilities.toJson(packet));
     }
 
@@ -136,14 +136,14 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void sendPing() {
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.PING, null));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.PING, null));
     }
 
     /**
      * Envoyer une demande de rafraichissement des informations du combat au serveur.
      */
     public void sendRefresh() {
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.REFRESH, null));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.REFRESH, null));
     }
 
     /**
@@ -152,7 +152,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param text Texte du message qui va être envoyé au serveur.
      */
     public void sendText(String text) {
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEXT, text));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.TEXT, text));
     }
 
     /**
@@ -165,7 +165,7 @@ public class PokeArenaClient extends WebSocketClient {
             state = PokeArenaClientState.WAITING_FOR_START;
         }
         protocol.setTeam(team);
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.TEAM, team));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.TEAM, team));
     }
 
 
@@ -178,7 +178,7 @@ public class PokeArenaClient extends WebSocketClient {
         if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
             state = PokeArenaClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.ACTION, action));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.ACTION, action));
     }
 
     /**
@@ -190,7 +190,7 @@ public class PokeArenaClient extends WebSocketClient {
         if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
             state = PokeArenaClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.MOVE, move));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.MOVE, move));
     }
 
     /**
@@ -202,14 +202,14 @@ public class PokeArenaClient extends WebSocketClient {
         if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
             state = PokeArenaClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.CHANGEPOKEMON, changePkmn));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.CHANGEPOKEMON, changePkmn));
     }
 
     /**
      * Envoyer une déclaration de forfait au serveur.
      */
     public void sendForfeit() {
-        sendPacket(PokeArenaUtilities.createPacket(PokeArenaPacketType.FORFEIT, null));
+        sendPacket(PokeArenaUtilities.createPacket(PacketType.FORFEIT, null));
     }
 
     /**
