@@ -6,7 +6,7 @@ import pokearena.battle.*;
 import pokearena.network.packets.Packet;
 import pokearena.network.packets.PacketType;
 import pokearena.network.packets.UpdatePacket;
-import pokearena.network.PokeArenaUtilities;
+import pokearena.network.Utils;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -18,26 +18,26 @@ import java.net.URISyntaxException;
  *
  * @author Louis
  */
-public class PokeArenaClient extends WebSocketClient {
+public class Client extends WebSocketClient {
 
     /**
      * État du client.
      */
-    private PokeArenaClientState state = PokeArenaClientState.NOT_CONNECTED;
+    private ClientState state = ClientState.NOT_CONNECTED;
 
-    private final Logger logger = LoggerFactory.getLogger(PokeArenaClient.class);
+    private final Logger logger = LoggerFactory.getLogger(Client.class);
 
     /**
      * Protocole utilisé pour traiter les paquets et gérer l'état du client.
      */
-    private final PokeArenaClientProtocol protocol = new PokeArenaClientProtocol(this);
+    private final ClientProtocol protocol = new ClientProtocol(this);
 
     /**
      * Créer un client PokeArenaClient à partir d'une URI.
      *
      * @param serveurURI URI du serveur au format de type ws://hostname:portnumber
      */
-    public PokeArenaClient(URI serveurURI) {
+    public Client(URI serveurURI) {
         super(serveurURI);
     }
 
@@ -47,7 +47,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param serveurURI URI du serveur au format de type ws://hostname:portnumber
      * @throws URISyntaxException Soulevé si la chaîne de caractères n'est pas à un format valide d'URI.
      */
-    public PokeArenaClient(String serveurURI) throws URISyntaxException {
+    public Client(String serveurURI) throws URISyntaxException {
         this(new URI(serveurURI));
     }
 
@@ -56,7 +56,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param portNumber Numéro de port du serveur.
      * @throws URISyntaxException Soulevé si le nom d'hôte ou le numéro de port ne sont pas valides.
      */
-    public PokeArenaClient(String hostname, int portNumber) throws URISyntaxException {
+    public Client(String hostname, int portNumber) throws URISyntaxException {
         this("ws://" + hostname + ":" + portNumber);
     }
 
@@ -67,9 +67,9 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        if (state == PokeArenaClientState.NOT_CONNECTED) {
+        if (state == ClientState.NOT_CONNECTED) {
             logger.info("Ouverture de la connexion");
-            state = PokeArenaClientState.NEED_TO_SEND_TEAM;
+            state = ClientState.NEED_TO_SEND_TEAM;
         } else {
             //TODO: Lever une erreur
         }
@@ -82,7 +82,7 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void onMessage(String message) {
-        Packet packet = PokeArenaUtilities.parseJsonPacket(message);
+        Packet packet = Utils.parseJsonPacket(message);
         if (packet.getType() == PacketType.UPDATE && logger.isDebugEnabled()) {
             var up = ((UpdatePacket) packet).getUpdate();
             StringBuilder updateInfo;
@@ -128,7 +128,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param packet Paquet qui va être envoyé.
      */
     public void sendPacket(Packet packet) {
-        send(PokeArenaUtilities.toJson(packet));
+        send(Utils.toJson(packet));
     }
 
     /**
@@ -136,14 +136,14 @@ public class PokeArenaClient extends WebSocketClient {
      */
     @Override
     public void sendPing() {
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.PING, null));
+        sendPacket(Utils.createPacket(PacketType.PING, null));
     }
 
     /**
      * Envoyer une demande de rafraichissement des informations du combat au serveur.
      */
     public void sendRefresh() {
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.REFRESH, null));
+        sendPacket(Utils.createPacket(PacketType.REFRESH, null));
     }
 
     /**
@@ -152,7 +152,7 @@ public class PokeArenaClient extends WebSocketClient {
      * @param text Texte du message qui va être envoyé au serveur.
      */
     public void sendText(String text) {
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.TEXT, text));
+        sendPacket(Utils.createPacket(PacketType.TEXT, text));
     }
 
     /**
@@ -161,11 +161,11 @@ public class PokeArenaClient extends WebSocketClient {
      * @param team Équipe qui va être envoyée au serveur.
      */
     public void sendTeam(Team team) {
-        if (state == PokeArenaClientState.NEED_TO_SEND_TEAM) {
-            state = PokeArenaClientState.WAITING_FOR_START;
+        if (state == ClientState.NEED_TO_SEND_TEAM) {
+            state = ClientState.WAITING_FOR_START;
         }
         protocol.setTeam(team);
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.TEAM, team));
+        sendPacket(Utils.createPacket(PacketType.TEAM, team));
     }
 
 
@@ -175,10 +175,10 @@ public class PokeArenaClient extends WebSocketClient {
      * @param action Action qui va être envoyée au serveur.
      */
     public void sendAction(Action action) {
-        if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
-            state = PokeArenaClientState.ACTION_SENT;
+        if (state == ClientState.NEED_TO_SEND_ACTION) {
+            state = ClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.ACTION, action));
+        sendPacket(Utils.createPacket(PacketType.ACTION, action));
     }
 
     /**
@@ -187,10 +187,10 @@ public class PokeArenaClient extends WebSocketClient {
      * @param move Attaque qui va être envoyée au serveur.
      */
     public void sendMove(Move move) {
-        if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
-            state = PokeArenaClientState.ACTION_SENT;
+        if (state == ClientState.NEED_TO_SEND_ACTION) {
+            state = ClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.MOVE, move));
+        sendPacket(Utils.createPacket(PacketType.MOVE, move));
     }
 
     /**
@@ -199,17 +199,17 @@ public class PokeArenaClient extends WebSocketClient {
      * @param changePkmn Changement de Pokémon qui va être envoyé au serveur.
      */
     public void sendChangePkmn(ChangePkmn changePkmn) {
-        if (state == PokeArenaClientState.NEED_TO_SEND_ACTION) {
-            state = PokeArenaClientState.ACTION_SENT;
+        if (state == ClientState.NEED_TO_SEND_ACTION) {
+            state = ClientState.ACTION_SENT;
         }
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.CHANGEPOKEMON, changePkmn));
+        sendPacket(Utils.createPacket(PacketType.CHANGEPOKEMON, changePkmn));
     }
 
     /**
      * Envoyer une déclaration de forfait au serveur.
      */
     public void sendForfeit() {
-        sendPacket(PokeArenaUtilities.createPacket(PacketType.FORFEIT, null));
+        sendPacket(Utils.createPacket(PacketType.FORFEIT, null));
     }
 
     /**
@@ -217,7 +217,7 @@ public class PokeArenaClient extends WebSocketClient {
      *
      * @return État du client.
      */
-    public PokeArenaClientState getState() {
+    public ClientState getState() {
         return state;
     }
 
@@ -226,7 +226,7 @@ public class PokeArenaClient extends WebSocketClient {
      *
      * @param state État du client.
      */
-    public void setState(PokeArenaClientState state) {
+    public void setState(ClientState state) {
         this.state = state;
     }
 

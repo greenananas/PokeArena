@@ -2,11 +2,11 @@ package pokearena.network.server;
 
 import pokearena.battle.*;
 import pokearena.network.packets.*;
-import pokearena.network.PokeArenaProtocol;
+import pokearena.network.Protocol;
 import pokearena.network.Update;
 import org.java_websocket.WebSocket;
 
-import static pokearena.network.PokeArenaUtilities.createPacket;
+import static pokearena.network.Utils.createPacket;
 
 /**
  * Protocole associé à un serveur PokeArena.
@@ -16,12 +16,12 @@ import static pokearena.network.PokeArenaUtilities.createPacket;
  *     <li>Modifier l'état du combat en fonction des informations reçues par le serveur.</li>
  * </ul>
  */
-public class PokeArenaServerProtocol extends PokeArenaProtocol {
+public class ServerProtocol extends Protocol {
 
     /**
      * Serveur PokeArena qui utilise le protocole.
      */
-    private PokeArenaServer server;
+    private Server server;
 
     /**
      * Combat sur lequel le protocole va agir.
@@ -63,7 +63,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      *
      * @param server Serveur qui va être manipulé par le protocole.
      */
-    public PokeArenaServerProtocol(PokeArenaServer server) {
+    public ServerProtocol(Server server) {
         this.server = server;
     }
 
@@ -100,10 +100,10 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
             case FORFEIT:
                 if (ws == server.getClient1WS()) {
                     server.sendWin(server.getClient2WS());
-                    server.setState(PokeArenaServerState.CLIENT_2_WON);
+                    server.setState(ServerState.CLIENT_2_WON);
                 } else if (ws == server.getClient2WS()) {
                     server.sendWin(server.getClient1WS());
-                    server.setState(PokeArenaServerState.CLIENT_1_WON);
+                    server.setState(ServerState.CLIENT_1_WON);
                 }
                 response = createPacket(PacketType.LOSE, null);
                 break;
@@ -117,22 +117,22 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     case WAITING_FOR_CLIENTS_TEAM:
                         if (ws == server.getClient1WS()) {
                             client1Trainer = new Trainer("Joueur 1", team);
-                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_TEAM);
+                            server.setState(ServerState.WAITING_FOR_CLIENT_2_TEAM);
                         } else if (ws == server.getClient2WS()) {
                             client2Trainer = new Trainer("Joueur 2", team);
-                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_TEAM);
+                            server.setState(ServerState.WAITING_FOR_CLIENT_1_TEAM);
                         }
                         break;
                     case WAITING_FOR_CLIENT_1_TEAM:
                         if (ws == server.getClient1WS()) {
                             client1Trainer = new Trainer("Joueur 1", team);
-                            server.setState(PokeArenaServerState.WAITING_FOR_START);
+                            server.setState(ServerState.WAITING_FOR_START);
                         }
                         break;
                     case WAITING_FOR_CLIENT_2_TEAM:
                         if (ws == server.getClient2WS()) {
                             client2Trainer = new Trainer("Joueur 2", team);
-                            server.setState(PokeArenaServerState.WAITING_FOR_START);
+                            server.setState(ServerState.WAITING_FOR_START);
                         }
                         break;
                     default:
@@ -155,7 +155,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                             battle.trainer1.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
                             response = createPacket(PacketType.UPDATE, generateClient1Update()); // Message d'update au client 1
                             server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
-                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                            server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
                         }
@@ -165,7 +165,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                             battle.trainer2.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
                             response = createPacket(PacketType.UPDATE, generateClient2Update()); // Message d'update au client 2
                             server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
-                            server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                            server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
                         } else {
                             response = null;
                         }
@@ -195,9 +195,9 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      * Lancer le combat.
      */
     public void startBattle() {
-        if (server.getState() == PokeArenaServerState.WAITING_FOR_START) {
+        if (server.getState() == ServerState.WAITING_FOR_START) {
             battle = new Battle(client1Trainer, client2Trainer, new BattleGround());
-            server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+            server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
             // Mise à jour des informations du client 1
             server.sendUpdate(server.getClient1WS(), generateClient1Update());
             // Mise à jour des informations du client 2
@@ -235,13 +235,13 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
                     if (action instanceof Move) lastClient1Move = (Move) action;
-                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_ACTION);
+                    server.setState(ServerState.WAITING_FOR_CLIENT_2_ACTION);
                     response = null;
                     break;
                 } else if (ws == server.getClient2WS()) {
                     if (action instanceof Move) lastClient2Move = (Move) action;
                     client2Action = action;
-                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_ACTION);
+                    server.setState(ServerState.WAITING_FOR_CLIENT_1_ACTION);
                     response = null;
                     break;
                 }
@@ -251,7 +251,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
                     if (action instanceof Move) lastClient1Move = (Move) action;
-                    server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
+                    server.setState(ServerState.PROCESSING_ACTIONS);
 
                     handleActions(client1Action, client2Action);
 
@@ -265,7 +265,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 if (ws == server.getClient2WS()) {
                     client2Action = action;
                     if (action instanceof Move) lastClient2Move = (Move) action;
-                    server.setState(PokeArenaServerState.PROCESSING_ACTIONS);
+                    server.setState(ServerState.PROCESSING_ACTIONS);
 
                     handleActions(client1Action, client2Action);
 
@@ -309,38 +309,38 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     if (firstToAct == trainer1) {
                         server.sendLose(server.getClient1WS());
                         server.sendWin(server.getClient2WS());
-                        server.setState(PokeArenaServerState.CLIENT_2_WON);
+                        server.setState(ServerState.CLIENT_2_WON);
                     } else {
                         server.sendWin(server.getClient1WS());
                         server.sendLose(server.getClient2WS());
-                        server.setState(PokeArenaServerState.CLIENT_1_WON);
+                        server.setState(ServerState.CLIENT_1_WON);
                     }
                 } else {
                     if (firstToAct == trainer1) {
-                        server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+                        server.setState(ServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
                     } else {
-                        server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
+                        server.setState(ServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
                     }
                 }
             } else {
-                server.setState(PokeArenaServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
             }
         } else {
             if (!secondToAct.getTrainer().hasPokemonLeft()) {
                 if (secondToAct == trainer1) {
                     server.sendLose(server.getClient1WS());
                     server.sendWin(server.getClient2WS());
-                    server.setState(PokeArenaServerState.CLIENT_2_WON);
+                    server.setState(ServerState.CLIENT_2_WON);
                 } else {
                     server.sendWin(server.getClient1WS());
                     server.sendLose(server.getClient2WS());
-                    server.setState(PokeArenaServerState.CLIENT_1_WON);
+                    server.setState(ServerState.CLIENT_1_WON);
                 }
             } else {
                 if (secondToAct == trainer1) {
-                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+                    server.setState(ServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
                 } else {
-                    server.setState(PokeArenaServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
+                    server.setState(ServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
                 }
             }
         }

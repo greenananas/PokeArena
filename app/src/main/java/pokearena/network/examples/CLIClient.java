@@ -1,7 +1,7 @@
 package pokearena.network.examples;
 
 import pokearena.battle.*;
-import pokearena.network.client.PokeArenaClient;
+import pokearena.network.client.Client;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -47,10 +47,10 @@ public class CLIClient {
         var elekable = new Pokemon("Elekable", PokeTypes.type.ELECTRIC, null, 50, 75, 123, 67, 95, 85, 95, 0, 0, 0, 0, 0, 0, nature, poingeclair, poingfeu, poingglace, seisme, 446);
         var pingoleon = new Pokemon("Pingoléon", PokeTypes.type.WATER, PokeTypes.type.STEEL, 50, 84, 86, 88, 111, 101, 60, 0, 0, 0, 0, 0, 0, nature, surf, hydrocanon, luminocanon, laserglace, 395);
 
-        PokeArenaClient client = null;
+        Client client = null;
 
         try {
-            client = new PokeArenaClient("localhost", 8887);
+            client = new Client("localhost", 8887);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

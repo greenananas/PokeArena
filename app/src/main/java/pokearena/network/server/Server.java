@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import pokearena.battle.Battle;
 import pokearena.network.packets.Packet;
 import pokearena.network.packets.PacketType;
-import pokearena.network.PokeArenaUtilities;
+import pokearena.network.Utils;
 import pokearena.network.Update;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -18,7 +18,7 @@ import java.net.InetSocketAddress;
  *
  * @author Louis
  */
-public class PokeArenaServer extends WebSocketServer {
+public class Server extends WebSocketServer {
 
     /**
      * Nom ou adresse IP du serveur.
@@ -33,7 +33,7 @@ public class PokeArenaServer extends WebSocketServer {
     /**
      * État du serveur.
      */
-    private PokeArenaServerState state;
+    private ServerState state;
 
     /**
      * Connexion associée au client 1.
@@ -45,12 +45,12 @@ public class PokeArenaServer extends WebSocketServer {
      */
     private WebSocket client2WS;
 
-    private final Logger logger = LoggerFactory.getLogger(PokeArenaServer.class);
+    private final Logger logger = LoggerFactory.getLogger(Server.class);
 
     /**
      * Protocole utilisé pour traiter les paquets et gérer l'état du serveur.
      */
-    private final PokeArenaServerProtocol protocol = new PokeArenaServerProtocol(this);
+    private final ServerProtocol protocol = new ServerProtocol(this);
 
     /**
      * Créer un serveur PokeArenaServer.
@@ -58,7 +58,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param hostname   Nom ou adresse IP du serveur.
      * @param portNumber Numéro de port du serveur.
      */
-    public PokeArenaServer(String hostname, int portNumber) {
+    public Server(String hostname, int portNumber) {
         super(new InetSocketAddress(hostname, portNumber));
     }
 
@@ -74,12 +74,12 @@ public class PokeArenaServer extends WebSocketServer {
             case WAITING_FOR_CLIENT1_TO_JOIN:
                 client1WS = ws;
                 sendText(ws, "Bienvenue sur le serveur, vous êtes le joueur 1");
-                state = PokeArenaServerState.WAITING_FOR_CLIENT2_TO_JOIN;
+                state = ServerState.WAITING_FOR_CLIENT2_TO_JOIN;
                 break;
             case WAITING_FOR_CLIENT2_TO_JOIN:
                 client2WS = ws;
                 sendText(ws, "Bienvenue sur le serveur, vous êtes le joueur 2");
-                state = PokeArenaServerState.WAITING_FOR_CLIENTS_TEAM;
+                state = ServerState.WAITING_FOR_CLIENTS_TEAM;
                 break;
             default:
                 ws.close();
@@ -108,7 +108,7 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         logger.debug("Message reçu : {}", message);
-        Packet packet = PokeArenaUtilities.parseJsonPacket(message);
+        Packet packet = Utils.parseJsonPacket(message);
         if (packet != null) protocol.processPacket(ws, packet);
     }
 
@@ -131,7 +131,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param packet Paquet qui va être envoyé.
      */
     public void sendPacket(WebSocket ws, Packet packet) {
-        ws.send(PokeArenaUtilities.toJson(packet));
+        ws.send(Utils.toJson(packet));
     }
 
     /**
@@ -140,7 +140,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle le ping va être envoyé.
      */
     public void sendPing(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.PING, null));
+        sendPacket(ws, Utils.createPacket(PacketType.PING, null));
     }
 
     /**
@@ -149,7 +149,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle le pong va être envoyé.
      */
     public void sendPong(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.PONG, null));
+        sendPacket(ws, Utils.createPacket(PacketType.PONG, null));
     }
 
     /**
@@ -159,7 +159,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param texte Message texte qui va être envoyé.
      */
     public void sendText(WebSocket ws, String texte) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.TEXT, texte));
+        sendPacket(ws, Utils.createPacket(PacketType.TEXT, texte));
     }
 
     /**
@@ -169,7 +169,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param update Update qui va être envoyée.
      */
     public void sendUpdate(WebSocket ws, Update update) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.UPDATE, update));
+        sendPacket(ws, Utils.createPacket(PacketType.UPDATE, update));
     }
 
     /**
@@ -178,7 +178,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle l'annonce va être envoyée.
      */
     public void sendWin(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.WIN, null));
+        sendPacket(ws, Utils.createPacket(PacketType.WIN, null));
     }
 
     /**
@@ -187,7 +187,7 @@ public class PokeArenaServer extends WebSocketServer {
      * @param ws Connexion sur laquelle l'annonce va être envoyée.
      */
     public void sendLose(WebSocket ws) {
-        sendPacket(ws, PokeArenaUtilities.createPacket(PacketType.LOSE, null));
+        sendPacket(ws, Utils.createPacket(PacketType.LOSE, null));
     }
 
     /**
@@ -196,7 +196,7 @@ public class PokeArenaServer extends WebSocketServer {
     @Override
     public void onStart() {
         logger.info("Le serveur vient de démarrer");
-        this.state = PokeArenaServerState.WAITING_FOR_CLIENT1_TO_JOIN;
+        this.state = ServerState.WAITING_FOR_CLIENT1_TO_JOIN;
     }
 
     /**
@@ -229,7 +229,7 @@ public class PokeArenaServer extends WebSocketServer {
      *
      * @return État du serveur.
      */
-    public PokeArenaServerState getState() {
+    public ServerState getState() {
         return state;
     }
 
@@ -238,7 +238,7 @@ public class PokeArenaServer extends WebSocketServer {
      *
      * @param state État du serveur.
      */
-    public void setState(PokeArenaServerState state) {
+    public void setState(ServerState state) {
         this.state = state;
     }
 

@@ -5,7 +5,7 @@ package pokearena.network.server;
  *
  * @author Louis
  */
-public enum PokeArenaServerState {
+public enum ServerState {
     /**
      * Le serveur est en attente de la connexion du client 1.
      */

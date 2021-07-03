@@ -2,7 +2,7 @@ package pokearena.network.examples;
 
 import org.slf4j.LoggerFactory;
 import pokearena.battle.Pokemon;
-import pokearena.network.server.PokeArenaServer;
+import pokearena.network.server.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class CLIServer {
     public static void main(String[] args) {
         var logger = LoggerFactory.getLogger(CLIServer.class);
 
-        var server = new PokeArenaServer("localhost", 8887);
+        var server = new Server("localhost", 8887);
         server.start();
 
         var reader = new BufferedReader(new InputStreamReader(System.in));

@@ -8,7 +8,7 @@ import org.java_websocket.WebSocket;
  *
  * @author Louis
  */
-public abstract class PokeArenaProtocol {
+public abstract class Protocol {
 
     /**
      * Traite un paquet.

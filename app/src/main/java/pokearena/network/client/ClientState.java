@@ -5,7 +5,7 @@ package pokearena.network.client;
  *
  * @author Louis
  */
-public enum PokeArenaClientState {
+public enum ClientState {
     /**
      * Le client n'est pas connecté à un serveur.
      */

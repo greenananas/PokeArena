@@ -10,10 +10,10 @@ import pokearena.network.packets.Packet;
 import pokearena.network.packets.PacketType;
 import pokearena.network.packets.TextPacket;
 import pokearena.network.packets.UpdatePacket;
-import pokearena.network.PokeArenaProtocol;
+import pokearena.network.Protocol;
 import org.java_websocket.WebSocket;
 
-import static pokearena.network.PokeArenaUtilities.createPacket;
+import static pokearena.network.Utils.createPacket;
 
 /**
  * Protocole associé à un client PokeArena.
@@ -25,14 +25,14 @@ import static pokearena.network.PokeArenaUtilities.createPacket;
  *
  * @author Louis
  */
-public class PokeArenaClientProtocol extends PokeArenaProtocol {
+public class ClientProtocol extends Protocol {
 
-    private final Logger logger = LoggerFactory.getLogger(PokeArenaClientProtocol.class);
+    private final Logger logger = LoggerFactory.getLogger(ClientProtocol.class);
 
     /**
      * Client PokeArena qui utilise le protocole.
      */
-    private PokeArenaClient client;
+    private Client client;
 
     /**
      * Dresseur qui est manipulé par le protocole.
@@ -59,7 +59,7 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
      *
      * @param client Client qui va être manipulé par le protocole.
      */
-    public PokeArenaClientProtocol(PokeArenaClient client) {
+    public ClientProtocol(Client client) {
         this.client = client;
     }
 
@@ -81,11 +81,11 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 response = null;
                 break;
             case WIN:
-                client.setState(PokeArenaClientState.BATTLE_WON);
+                client.setState(ClientState.BATTLE_WON);
                 response = null;
                 break;
             case LOSE:
-                client.setState(PokeArenaClientState.BATTLE_LOST);
+                client.setState(ClientState.BATTLE_LOST);
                 response = null;
                 break;
             case UPDATE:
@@ -103,14 +103,14 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
                 // Changement de l'état du cient
                 switch (client.getState()) {
                     case WAITING_FOR_START:
-                        client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
+                        client.setState(ClientState.NEED_TO_SEND_ACTION);
                         break;
                     case ACTION_SENT:
                     case NEED_TO_SEND_CHANGEPKMN:
                         if (client.getTrainer().getLeadingPkmn().isKO()) {
-                            client.setState(PokeArenaClientState.NEED_TO_SEND_CHANGEPKMN);
+                            client.setState(ClientState.NEED_TO_SEND_CHANGEPKMN);
                         } else {
-                            client.setState(PokeArenaClientState.NEED_TO_SEND_ACTION);
+                            client.setState(ClientState.NEED_TO_SEND_ACTION);
                         }
                         break;
                     default:

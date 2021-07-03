@@ -14,9 +14,9 @@ import com.google.gson.reflect.TypeToken;
  *
  * @author Louis
  */
-public class PokeArenaUtilities {
+public class Utils {
 
-    private PokeArenaUtilities() {
+    private Utils() {
         throw new IllegalStateException("Utility class");
     }
 
