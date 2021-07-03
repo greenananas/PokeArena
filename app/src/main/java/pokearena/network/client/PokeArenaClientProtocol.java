@@ -11,7 +11,6 @@ import pokearena.network.packets.PokeArenaPacketType;
 import pokearena.network.packets.PokeArenaTextPacket;
 import pokearena.network.packets.PokeArenaUpdatePacket;
 import pokearena.network.PokeArenaProtocol;
-import pokearena.network.Update;
 import org.java_websocket.WebSocket;
 
 import static pokearena.network.PokeArenaUtilities.createPacket;
@@ -28,7 +27,7 @@ import static pokearena.network.PokeArenaUtilities.createPacket;
  */
 public class PokeArenaClientProtocol extends PokeArenaProtocol {
 
-    private final Logger logger = LoggerFactory.getLogger(PokeArenaClient.class);
+    private final Logger logger = LoggerFactory.getLogger(PokeArenaClientProtocol.class);
 
     /**
      * Client PokeArena qui utilise le protocole.
@@ -92,7 +91,7 @@ public class PokeArenaClientProtocol extends PokeArenaProtocol {
             case UPDATE:
 
                 // Mise à jour des informations du combat
-                Update update = ((PokeArenaUpdatePacket) request).getUpdate();
+                var update = ((PokeArenaUpdatePacket) request).getUpdate();
                 this.opponentPokemon = update.getOpponentPokemon();
                 this.opponentMove = update.getOppenentMove();
                 if (trainer == null) {

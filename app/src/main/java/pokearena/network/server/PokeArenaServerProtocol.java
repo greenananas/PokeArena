@@ -108,7 +108,7 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                 response = createPacket(PokeArenaPacketType.LOSE, null);
                 break;
             case TEAM:
-                Team team = ((PokeArenaTeamPacket) request).getTeam();
+                var team = ((PokeArenaTeamPacket) request).getTeam();
                 System.out.println("Équipe reçue :");
                 for (Pokemon p : team.getPokemons()) {
                     System.out.println(" - " + p);
@@ -245,7 +245,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     response = null;
                     break;
                 }
-                // On n'utilise pas de break pour utiliser le cas default du switch
+                response = null;
+                break;
             case WAITING_FOR_CLIENT_1_ACTION:
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
@@ -258,6 +259,8 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     response = createPacket(PokeArenaPacketType.UPDATE, generateClient1Update()); // Envoie de l'update au client 1
                     break;
                 }
+                response = null;
+                break;
             case WAITING_FOR_CLIENT_2_ACTION:
                 if (ws == server.getClient2WS()) {
                     client2Action = action;
@@ -270,10 +273,11 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
                     response = createPacket(PokeArenaPacketType.UPDATE, generateClient2Update()); // Envoie de l'update au client 2
                     break;
                 }
+                response = null;
+                break;
             default:
                 response = null;
                 // Envoyer un paquet d'erreur
-                // reponse = createPacket(ClassePaquetErreur, null);
         }
         return response;
     }
@@ -287,14 +291,14 @@ public class PokeArenaServerProtocol extends PokeArenaProtocol {
      *     <li>L'envoie de paquet aux clients.</li>
      * </ul>
      *
-     * @param T1action Action du joueur 1.
-     * @param T2action Action du joueur 2.
+     * @param t1Action Action du joueur 1.
+     * @param t2action Action du joueur 2.
      */
-    public void handleActions(Action T1action, Action T2action) {
+    public void handleActions(Action t1Action, Action t2action) {
         TrainerAction trainer1 = battle.trainer1;
         TrainerAction trainer2 = battle.trainer2;
-        trainer1.pairWith(T1action);
-        trainer2.pairWith(T2action);
+        trainer1.pairWith(t1Action);
+        trainer2.pairWith(t2action);
         TrainerAction firstToAct = battle.calculatePriority();
         TrainerAction secondToAct = (firstToAct == trainer1 ? trainer2 : trainer1);
         battle.apply(firstToAct, secondToAct, true);
