@@ -5,15 +5,15 @@ package pokearena.network.server;
  *
  * @author Louis
  */
-public enum ServerState {
+public enum ServerStatesEnum {
     /**
      * Le serveur est en attente de la connexion du client 1.
      */
-    WAITING_FOR_CLIENT1_TO_JOIN,
+    WAITING_FOR_CLIENT_1_TO_JOIN,
     /**
      * Le serveur est en attente de la connexion du client 2.
      */
-    WAITING_FOR_CLIENT2_TO_JOIN,
+    WAITING_FOR_CLIENT_2_TO_JOIN,
     /**
      * Le serveur est en attente des équipes des deux clients.
      */

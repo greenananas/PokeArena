@@ -10,6 +10,10 @@ import pokearena.network.Update;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
+import pokearena.network.server.states.ServerState;
+import pokearena.network.server.states.WaitingForClient1ToJoinState;
+import pokearena.network.server.states.WaitingForClient2ToJoinState;
+import pokearena.network.server.states.WaitingForClientsTeamState;
 
 import java.net.InetSocketAddress;
 
@@ -29,6 +33,7 @@ public class Server extends WebSocketServer {
      * Numéro de port du serveur.
      */
     private int portNumber;
+
 
     /**
      * État du serveur.
@@ -70,16 +75,16 @@ public class Server extends WebSocketServer {
      */
     @Override
     public void onOpen(WebSocket ws, ClientHandshake clientHandshake) {
-        switch (state) {
-            case WAITING_FOR_CLIENT1_TO_JOIN:
+        switch (state.getStateName()) {
+            case WAITING_FOR_CLIENT_1_TO_JOIN:
                 client1WS = ws;
                 sendText(ws, "Bienvenue sur le serveur, vous êtes le joueur 1");
-                state = ServerState.WAITING_FOR_CLIENT2_TO_JOIN;
+                state = new WaitingForClient2ToJoinState(protocol);
                 break;
-            case WAITING_FOR_CLIENT2_TO_JOIN:
+            case WAITING_FOR_CLIENT_2_TO_JOIN:
                 client2WS = ws;
                 sendText(ws, "Bienvenue sur le serveur, vous êtes le joueur 2");
-                state = ServerState.WAITING_FOR_CLIENTS_TEAM;
+                state = new WaitingForClientsTeamState(protocol);
                 break;
             default:
                 ws.close();
@@ -196,7 +201,7 @@ public class Server extends WebSocketServer {
     @Override
     public void onStart() {
         logger.info("Le serveur vient de démarrer");
-        this.state = ServerState.WAITING_FOR_CLIENT1_TO_JOIN;
+        state = new WaitingForClient1ToJoinState(protocol);
     }
 
     /**

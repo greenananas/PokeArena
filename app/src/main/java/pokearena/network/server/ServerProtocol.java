@@ -5,6 +5,7 @@ import pokearena.network.packets.*;
 import pokearena.network.Protocol;
 import pokearena.network.Update;
 import org.java_websocket.WebSocket;
+import pokearena.network.server.states.*;
 
 import static pokearena.network.Utils.createPacket;
 
@@ -100,10 +101,10 @@ public class ServerProtocol extends Protocol {
             case FORFEIT:
                 if (ws == server.getClient1WS()) {
                     server.sendWin(server.getClient2WS());
-                    server.setState(ServerState.CLIENT_2_WON);
+                    server.setState(new Client2WonState(this));
                 } else if (ws == server.getClient2WS()) {
                     server.sendWin(server.getClient1WS());
-                    server.setState(ServerState.CLIENT_1_WON);
+                    server.setState(new Client1WonState(this));
                 }
                 response = createPacket(PacketType.LOSE, null);
                 break;
@@ -113,26 +114,26 @@ public class ServerProtocol extends Protocol {
                 for (Pokemon p : team.getPokemons()) {
                     System.out.println(" - " + p);
                 }
-                switch (server.getState()) {
+                switch (server.getState().getStateName()) {
                     case WAITING_FOR_CLIENTS_TEAM:
                         if (ws == server.getClient1WS()) {
                             client1Trainer = new Trainer("Joueur 1", team);
-                            server.setState(ServerState.WAITING_FOR_CLIENT_2_TEAM);
+                            server.setState(new WaitingForClient2TeamState(this));
                         } else if (ws == server.getClient2WS()) {
                             client2Trainer = new Trainer("Joueur 2", team);
-                            server.setState(ServerState.WAITING_FOR_CLIENT_1_TEAM);
+                            server.setState(new WaitingForClient1TeamState(this));
                         }
                         break;
                     case WAITING_FOR_CLIENT_1_TEAM:
                         if (ws == server.getClient1WS()) {
                             client1Trainer = new Trainer("Joueur 1", team);
-                            server.setState(ServerState.WAITING_FOR_START);
+                            server.setState(new WaitingForStartState(this));
                         }
                         break;
                     case WAITING_FOR_CLIENT_2_TEAM:
                         if (ws == server.getClient2WS()) {
                             client2Trainer = new Trainer("Joueur 2", team);
-                            server.setState(ServerState.WAITING_FOR_START);
+                            server.setState(new WaitingForStartState(this));
                         }
                         break;
                     default:
@@ -149,13 +150,13 @@ public class ServerProtocol extends Protocol {
                 response = processActionPacket(ws, request);
                 break;
             case CHANGEPOKEMON:
-                switch (server.getState()) {
+                switch (server.getState().getStateName()) {
                     case WAITING_FOR_CLIENT_1_CHANGEPKMN:
                         if (ws == server.getClient1WS()) {
                             battle.trainer1.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
                             response = createPacket(PacketType.UPDATE, generateClient1Update()); // Message d'update au client 1
                             server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
-                            server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                            server.setState(new WaitingForClientsActionState(this));
                         } else {
                             response = null;
                         }
@@ -165,7 +166,7 @@ public class ServerProtocol extends Protocol {
                             battle.trainer2.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
                             response = createPacket(PacketType.UPDATE, generateClient2Update()); // Message d'update au client 2
                             server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
-                            server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                            server.setState(new WaitingForClientsActionState(this));
                         } else {
                             response = null;
                         }
@@ -195,9 +196,9 @@ public class ServerProtocol extends Protocol {
      * Lancer le combat.
      */
     public void startBattle() {
-        if (server.getState() == ServerState.WAITING_FOR_START) {
+        if (server.getState().getStateName() == ServerStatesEnum.WAITING_FOR_START) {
             battle = new Battle(client1Trainer, client2Trainer, new BattleGround());
-            server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
+            server.setState(new WaitingForClientsActionState(this));
             // Mise à jour des informations du client 1
             server.sendUpdate(server.getClient1WS(), generateClient1Update());
             // Mise à jour des informations du client 2
@@ -230,18 +231,18 @@ public class ServerProtocol extends Protocol {
                 action = null;
         }
 
-        switch (server.getState()) {
+        switch (server.getState().getStateName()) {
             case WAITING_FOR_CLIENTS_ACTIONS:
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
                     if (action instanceof Move) lastClient1Move = (Move) action;
-                    server.setState(ServerState.WAITING_FOR_CLIENT_2_ACTION);
+                    server.setState(new WaitingForClient2ActionState(this));
                     response = null;
                     break;
                 } else if (ws == server.getClient2WS()) {
                     if (action instanceof Move) lastClient2Move = (Move) action;
                     client2Action = action;
-                    server.setState(ServerState.WAITING_FOR_CLIENT_1_ACTION);
+                    server.setState(new WaitingForClient1ActionState(this));
                     response = null;
                     break;
                 }
@@ -251,7 +252,7 @@ public class ServerProtocol extends Protocol {
                 if (ws == server.getClient1WS()) {
                     client1Action = action;
                     if (action instanceof Move) lastClient1Move = (Move) action;
-                    server.setState(ServerState.PROCESSING_ACTIONS);
+                    server.setState(new ProcessingActionsState(this));
 
                     handleActions(client1Action, client2Action);
 
@@ -265,7 +266,7 @@ public class ServerProtocol extends Protocol {
                 if (ws == server.getClient2WS()) {
                     client2Action = action;
                     if (action instanceof Move) lastClient2Move = (Move) action;
-                    server.setState(ServerState.PROCESSING_ACTIONS);
+                    server.setState(new ProcessingActionsState(this));
 
                     handleActions(client1Action, client2Action);
 
@@ -309,38 +310,39 @@ public class ServerProtocol extends Protocol {
                     if (firstToAct == trainer1) {
                         server.sendLose(server.getClient1WS());
                         server.sendWin(server.getClient2WS());
-                        server.setState(ServerState.CLIENT_2_WON);
+                        server.setState(new Client2WonState(this));
                     } else {
                         server.sendWin(server.getClient1WS());
                         server.sendLose(server.getClient2WS());
-                        server.setState(ServerState.CLIENT_1_WON);
+                        server.setState(new Client1WonState(this));
                     }
                 } else {
                     if (firstToAct == trainer1) {
-                        server.setState(ServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+                        server.setState(new WaitingForClient1ChangePkmnState(this));
                     } else {
-                        server.setState(ServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
+                        server.setState(new WaitingForClient2ChangePkmnState(this));
                     }
                 }
             } else {
-                server.setState(ServerState.WAITING_FOR_CLIENTS_ACTIONS);
+                server.setState(new WaitingForClientsActionState(this));
+
             }
         } else {
             if (!secondToAct.getTrainer().hasPokemonLeft()) {
                 if (secondToAct == trainer1) {
                     server.sendLose(server.getClient1WS());
                     server.sendWin(server.getClient2WS());
-                    server.setState(ServerState.CLIENT_2_WON);
+                    server.setState(new Client2WonState(this));
                 } else {
                     server.sendWin(server.getClient1WS());
                     server.sendLose(server.getClient2WS());
-                    server.setState(ServerState.CLIENT_1_WON);
+                    server.setState(new Client1WonState(this));
                 }
             } else {
                 if (secondToAct == trainer1) {
-                    server.setState(ServerState.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+                    server.setState(new WaitingForClient1ChangePkmnState(this));
                 } else {
-                    server.setState(ServerState.WAITING_FOR_CLIENT_2_CHANGEPKMN);
+                    server.setState(new WaitingForClient2ChangePkmnState(this));
                 }
             }
         }
