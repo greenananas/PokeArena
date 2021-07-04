@@ -15,11 +15,6 @@ public class WaitingForClient1ActionState extends ServerState {
     }
 
     @Override
-    void onPingPacket() {
-
-    }
-
-    @Override
     void onPongPacket() {
 
     }

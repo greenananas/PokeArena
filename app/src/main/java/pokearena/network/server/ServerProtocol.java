@@ -22,7 +22,7 @@ public class ServerProtocol extends Protocol {
     /**
      * Serveur PokeArena qui utilise le protocole.
      */
-    private Server server;
+    private final Server server;
 
     /**
      * Combat sur lequel le protocole va agir.
@@ -79,7 +79,8 @@ public class ServerProtocol extends Protocol {
         Packet response;
         switch (request.getType()) {
             case PING:
-                response = createPacket(PacketType.PONG, null);
+                server.getState().onPingPacket(ws);
+                response = null;
                 break;
             case REFRESH:
                 Team trainerTeam = null;
@@ -375,4 +376,7 @@ public class ServerProtocol extends Protocol {
         return new Update(battle.trainer2.getTrainer().getPokemonTeam(), battle.trainer1.getTrainer().getLeadingPkmn(), lastClient1Move);
     }
 
+    public Server getServer() {
+        return server;
+    }
 }

@@ -1,5 +1,6 @@
 package pokearena.network.server.states;
 
+import org.java_websocket.WebSocket;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStatesEnum;
 
@@ -16,7 +17,9 @@ public abstract class ServerState {
 
     abstract void onUpdatePacket();
 
-    abstract void onPingPacket();
+    public void onPingPacket(WebSocket ws) {
+        serverProtocol.getServer().sendPong(ws);
+    }
 
     abstract void onPongPacket();
 
@@ -31,6 +34,11 @@ public abstract class ServerState {
     abstract void onTextPacket();
 
     abstract void onForfeitPacket();
+
+    @Override
+    public String toString() {
+        return stateName.toString();
+    }
 
     public ServerStatesEnum getStateName() {
         return stateName;

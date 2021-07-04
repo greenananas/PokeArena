@@ -15,11 +15,6 @@ public class ProcessingActionsState extends ServerState {
     }
 
     @Override
-    void onPingPacket() {
-
-    }
-
-    @Override
     void onPongPacket() {
 
     }

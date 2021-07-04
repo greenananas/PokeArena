@@ -16,11 +16,6 @@ public class WaitingForClient2ToJoinState extends ServerState {
     }
 
     @Override
-    void onPingPacket() {
-
-    }
-
-    @Override
     void onPongPacket() {
 
     }

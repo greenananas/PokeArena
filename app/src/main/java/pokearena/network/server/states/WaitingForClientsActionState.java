@@ -3,6 +3,8 @@ package pokearena.network.server.states;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStatesEnum;
 
+import java.net.http.WebSocket;
+
 public class WaitingForClientsActionState extends ServerState {
 
     public WaitingForClientsActionState(ServerProtocol serverProtocol) {
@@ -11,11 +13,6 @@ public class WaitingForClientsActionState extends ServerState {
 
     @Override
     void onUpdatePacket() {
-
-    }
-
-    @Override
-    void onPingPacket() {
 
     }
 
