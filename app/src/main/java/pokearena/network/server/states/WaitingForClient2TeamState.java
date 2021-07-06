@@ -1,21 +1,16 @@
 package pokearena.network.server.states;
 
 import pokearena.network.server.ServerProtocol;
-import pokearena.network.server.ServerStatesEnum;
+import pokearena.network.server.ServerStateName;
 
 public class WaitingForClient2TeamState extends ServerState {
 
     public WaitingForClient2TeamState(ServerProtocol serverProtocol) {
-        super(serverProtocol, ServerStatesEnum.WAITING_FOR_CLIENT_2_TEAM);
+        super(serverProtocol, ServerStateName.WAITING_FOR_CLIENT_2_TEAM);
     }
 
     @Override
     void onUpdatePacket() {
-
-    }
-
-    @Override
-    void onPongPacket() {
 
     }
 

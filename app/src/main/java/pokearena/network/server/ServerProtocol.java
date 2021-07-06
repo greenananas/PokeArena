@@ -197,7 +197,7 @@ public class ServerProtocol extends Protocol {
      * Lancer le combat.
      */
     public void startBattle() {
-        if (server.getState().getStateName() == ServerStatesEnum.WAITING_FOR_START) {
+        if (server.getState().getStateName() == ServerStateName.WAITING_FOR_START) {
             battle = new Battle(client1Trainer, client2Trainer, new BattleGround());
             server.setState(new WaitingForClientsActionState(this));
             // Mise à jour des informations du client 1

@@ -1,21 +1,16 @@
 package pokearena.network.server.states;
 
 import pokearena.network.server.ServerProtocol;
-import pokearena.network.server.ServerStatesEnum;
+import pokearena.network.server.ServerStateName;
 
 public class ProcessingActionsState extends ServerState {
 
    public  ProcessingActionsState(ServerProtocol serverProtocol) {
-        super(serverProtocol, ServerStatesEnum.PROCESSING_ACTIONS);
+        super(serverProtocol, ServerStateName.PROCESSING_ACTIONS);
     }
 
     @Override
     void onUpdatePacket() {
-
-    }
-
-    @Override
-    void onPongPacket() {
 
     }
 

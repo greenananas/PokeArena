@@ -1,21 +1,16 @@
 package pokearena.network.server.states;
 
 import pokearena.network.server.ServerProtocol;
-import pokearena.network.server.ServerStatesEnum;
+import pokearena.network.server.ServerStateName;
 
 public class Client1WonState extends ServerState {
 
     public Client1WonState(ServerProtocol serverProtocol) {
-        super(serverProtocol, ServerStatesEnum.CLIENT_1_WON);
+        super(serverProtocol, ServerStateName.CLIENT_1_WON);
     }
 
     @Override
     void onUpdatePacket() {
-
-    }
-
-    @Override
-    void onPongPacket() {
 
     }
 

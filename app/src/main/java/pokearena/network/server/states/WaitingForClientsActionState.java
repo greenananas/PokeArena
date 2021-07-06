@@ -1,23 +1,16 @@
 package pokearena.network.server.states;
 
 import pokearena.network.server.ServerProtocol;
-import pokearena.network.server.ServerStatesEnum;
-
-import java.net.http.WebSocket;
+import pokearena.network.server.ServerStateName;
 
 public class WaitingForClientsActionState extends ServerState {
 
     public WaitingForClientsActionState(ServerProtocol serverProtocol) {
-        super(serverProtocol, ServerStatesEnum.WAITING_FOR_CLIENTS_ACTIONS);
+        super(serverProtocol, ServerStateName.WAITING_FOR_CLIENTS_ACTIONS);
     }
 
     @Override
     void onUpdatePacket() {
-
-    }
-
-    @Override
-    void onPongPacket() {
 
     }
 

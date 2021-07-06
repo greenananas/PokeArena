@@ -1,21 +1,16 @@
 package pokearena.network.server.states;
 
 import pokearena.network.server.ServerProtocol;
-import pokearena.network.server.ServerStatesEnum;
+import pokearena.network.server.ServerStateName;
 
 public class WaitingForClient1ChangePkmnState extends ServerState {
 
    public  WaitingForClient1ChangePkmnState(ServerProtocol serverProtocol) {
-        super(serverProtocol, ServerStatesEnum.WAITING_FOR_CLIENT_1_CHANGEPKMN);
+        super(serverProtocol, ServerStateName.WAITING_FOR_CLIENT_1_CHANGEPKMN);
     }
 
     @Override
     void onUpdatePacket() {
-
-    }
-
-    @Override
-    void onPongPacket() {
 
     }
 

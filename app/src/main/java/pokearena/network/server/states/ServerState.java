@@ -1,16 +1,20 @@
 package pokearena.network.server.states;
 
 import org.java_websocket.WebSocket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pokearena.network.server.ServerProtocol;
-import pokearena.network.server.ServerStatesEnum;
+import pokearena.network.server.ServerStateName;
 
 public abstract class ServerState {
 
+    private final Logger logger = LoggerFactory.getLogger(ServerState.class);
+
     ServerProtocol serverProtocol;
 
-    ServerStatesEnum stateName;
+    ServerStateName stateName;
 
-    ServerState(ServerProtocol serverProtocol, ServerStatesEnum stateName) {
+    ServerState(ServerProtocol serverProtocol, ServerStateName stateName) {
         this.serverProtocol = serverProtocol;
         this.stateName = stateName;
     }
@@ -21,7 +25,17 @@ public abstract class ServerState {
         serverProtocol.getServer().sendPong(ws);
     }
 
-    abstract void onPongPacket();
+    public void onPongPacket(WebSocket ws) {
+        if (logger.isTraceEnabled()) {
+            if (ws == serverProtocol.getServer().getClient1WS()) {
+                logger.trace("Pong Packet received from client 1");
+            } else if (ws == serverProtocol.getServer().getClient2WS()) {
+                logger.trace("Pong Packet received from client 2");
+            } else {
+                logger.trace("Pong packet received from a client which is not client 1 nor client 2");
+            }
+        }
+    }
 
     abstract void onRefreshPacket();
 
@@ -40,7 +54,7 @@ public abstract class ServerState {
         return stateName.toString();
     }
 
-    public ServerStatesEnum getStateName() {
+    public ServerStateName getStateName() {
         return stateName;
     }
 }
