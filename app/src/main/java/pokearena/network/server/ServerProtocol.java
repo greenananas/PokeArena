@@ -143,44 +143,15 @@ public class ServerProtocol extends Protocol {
                 response = null;
                 break;
             case TEXT:
-                String clt = ws == server.getClient1WS() ? "Client 1" : "Client 2";
-                System.out.println(clt + " dit : " + ((TextPacket) request).getText());
+                server.getState().onTextPacket(ws, request);
                 response = null;
                 break;
             case MOVE:
                 response = processActionPacket(ws, request);
                 break;
             case CHANGEPOKEMON:
-                switch (server.getState().getStateName()) {
-                    case WAITING_FOR_CLIENT_1_CHANGEPKMN:
-                        if (ws == server.getClient1WS()) {
-                            battle.trainer1.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PacketType.UPDATE, generateClient1Update()); // Message d'update au client 1
-                            server.sendUpdate(server.getClient2WS(), generateClient2Update()); // Envoie de l'update au client 2
-                            server.setState(new WaitingForClientsActionState(this));
-                        } else {
-                            response = null;
-                        }
-                        break;
-                    case WAITING_FOR_CLIENT_2_CHANGEPKMN:
-                        if (ws == server.getClient2WS()) {
-                            battle.trainer2.getTrainer().changePokemon(((ChangePokemonPacket) request).getChangePkmn().getIndex());
-                            response = createPacket(PacketType.UPDATE, generateClient2Update()); // Message d'update au client 2
-                            server.sendUpdate(server.getClient1WS(), generateClient1Update()); // Envoie de l'update au client 1
-                            server.setState(new WaitingForClientsActionState(this));
-                        } else {
-                            response = null;
-                        }
-                        break;
-                    case WAITING_FOR_CLIENT_1_ACTION:
-                    case WAITING_FOR_CLIENT_2_ACTION:
-                    case WAITING_FOR_CLIENTS_ACTIONS:
-                        response = processActionPacket(ws, request);
-                        break;
-                    default:
-                        response = null;
-                        break;
-                }
+                server.getState().onChangePokemonPacket(ws, request);
+                response = null;
                 break;
             case ACTION:
                 response = processActionPacket(ws, request);
@@ -215,7 +186,7 @@ public class ServerProtocol extends Protocol {
      * @param request Paquet à traiter.
      * @return Paquet de réponse.
      */
-    protected Packet processActionPacket(WebSocket ws, Packet request) {
+    public Packet processActionPacket(WebSocket ws, Packet request) {
         Packet response;
         Action action;
         switch (request.getType()) {
@@ -356,6 +327,24 @@ public class ServerProtocol extends Protocol {
      */
     public Battle getBattle() {
         return battle;
+    }
+
+    public boolean isClient1(WebSocket ws) {
+        return ws == server.getClient1WS();
+    }
+
+    public boolean isClient2(WebSocket ws) {
+        return ws == server.getClient2WS();
+    }
+
+    public String identifyWsUser(WebSocket ws) {
+        if (isClient1(ws)) {
+            return "client 1";
+        } else if (isClient2(ws)) {
+            return "client 2";
+        } else {
+            return "unknown client";
+        }
     }
 
     /**

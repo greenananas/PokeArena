@@ -3,6 +3,8 @@ package pokearena.network.server.states;
 import org.java_websocket.WebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pokearena.network.packets.Packet;
+import pokearena.network.packets.TextPacket;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStateName;
 
@@ -18,8 +20,6 @@ public abstract class ServerState {
         this.serverProtocol = serverProtocol;
         this.stateName = stateName;
     }
-
-    abstract void onUpdatePacket();
 
     public void onPingPacket(WebSocket ws) {
         serverProtocol.getServer().sendPong(ws);
@@ -37,17 +37,17 @@ public abstract class ServerState {
         }
     }
 
-    abstract void onRefreshPacket();
+    abstract void onRefreshPacket(WebSocket ws, Packet request);
 
-    abstract void onLosePacket();
+    abstract void onTeamPacket(WebSocket ws, Packet request);
 
-    abstract void onWinPacket();
+    public void onTextPacket(WebSocket ws, Packet request) {
+        logger.info("Message reçu de la part de '{}' : {}", serverProtocol.identifyWsUser(ws), ((TextPacket) request).getText());
+    }
 
-    abstract void onTeamPacket();
+    abstract void onForfeitPacket(WebSocket ws, Packet request);
 
-    abstract void onTextPacket();
-
-    abstract void onForfeitPacket();
+    public abstract void onChangePokemonPacket(WebSocket ws, Packet request);
 
     @Override
     public String toString() {
