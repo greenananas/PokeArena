@@ -20,21 +20,13 @@ public class Client1WonState extends ServerState {
 
     @Override
     void onRefreshPacket(WebSocket ws, Packet request) {
-        Team trainerTeam = null;
-        Pokemon opponentPokemon = null;
-        Move opponentMove = null;
-        var battle = serverProtocol.getBattle();
+        var server = serverProtocol.getServer();
         if (serverProtocol.isClient1(ws)) {
-            trainerTeam = battle.trainer1.getTrainer().getPokemonTeam();
-            opponentPokemon = battle.trainer2.getTrainer().getLeadingPkmn();
-            opponentMove = serverProtocol.getLastClient2Move();
+            server.sendUpdate(ws, serverProtocol.generateClient1Update());
         } else if (serverProtocol.isClient2(ws)) {
-            trainerTeam = battle.trainer2.getTrainer().getPokemonTeam();
-            opponentPokemon = battle.trainer1.getTrainer().getLeadingPkmn();
-            opponentMove = serverProtocol.getLastClient1Move();
-        }
-        if (trainerTeam != null && opponentPokemon != null) {
-            serverProtocol.getServer().sendPacket(ws, Utils.createPacket(PacketType.UPDATE, new Update(trainerTeam, opponentPokemon, opponentMove)));
+            server.sendUpdate(ws, serverProtocol.generateClient2Update());
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
         }
     }
 

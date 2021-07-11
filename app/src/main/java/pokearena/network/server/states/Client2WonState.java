@@ -14,7 +14,14 @@ public class Client2WonState extends ServerState {
 
     @Override
     void onRefreshPacket(WebSocket ws, Packet request) {
-        //renvoyer les informations nécessaires à l'émetteur
+        var server = serverProtocol.getServer();
+        if (serverProtocol.isClient1(ws)) {
+            server.sendUpdate(ws, serverProtocol.generateClient1Update());
+        } else if (serverProtocol.isClient2(ws)) {
+            server.sendUpdate(ws, serverProtocol.generateClient2Update());
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
     }
 
     @Override
