@@ -83,21 +83,8 @@ public class ServerProtocol extends Protocol {
                 response = null;
                 break;
             case REFRESH:
-                Team trainerTeam = null;
-                Pokemon opponentPokemon = null;
-                Move opponentMove = null;
-                if (ws == server.getClient1WS()) {
-                    trainerTeam = battle.trainer1.getTrainer().getPokemonTeam();
-                    opponentPokemon = battle.trainer2.getTrainer().getLeadingPkmn();
-                    opponentMove = lastClient2Move;
-                } else if (ws == server.getClient2WS()) {
-                    trainerTeam = battle.trainer2.getTrainer().getPokemonTeam();
-                    opponentPokemon = battle.trainer1.getTrainer().getLeadingPkmn();
-                    opponentMove = lastClient1Move;
-                }
-                response = (trainerTeam != null && opponentPokemon != null)
-                        ? createPacket(PacketType.UPDATE, new Update(trainerTeam, opponentPokemon, opponentMove))
-                        : null;
+                server.getState().onRefreshPacket(ws, request);
+                response = null;
                 break;
             case FORFEIT:
                 if (ws == server.getClient1WS()) {
