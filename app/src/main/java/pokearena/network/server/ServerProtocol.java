@@ -97,36 +97,7 @@ public class ServerProtocol extends Protocol {
                 response = createPacket(PacketType.LOSE, null);
                 break;
             case TEAM:
-                var team = ((TeamPacket) request).getTeam();
-                System.out.println("Équipe reçue :");
-                for (Pokemon p : team.getPokemons()) {
-                    System.out.println(" - " + p);
-                }
-                switch (server.getState().getStateName()) {
-                    case WAITING_FOR_CLIENTS_TEAM:
-                        if (ws == server.getClient1WS()) {
-                            client1Trainer = new Trainer("Joueur 1", team);
-                            server.setState(new WaitingForClient2TeamState(this));
-                        } else if (ws == server.getClient2WS()) {
-                            client2Trainer = new Trainer("Joueur 2", team);
-                            server.setState(new WaitingForClient1TeamState(this));
-                        }
-                        break;
-                    case WAITING_FOR_CLIENT_1_TEAM:
-                        if (ws == server.getClient1WS()) {
-                            client1Trainer = new Trainer("Joueur 1", team);
-                            server.setState(new WaitingForStartState(this));
-                        }
-                        break;
-                    case WAITING_FOR_CLIENT_2_TEAM:
-                        if (ws == server.getClient2WS()) {
-                            client2Trainer = new Trainer("Joueur 2", team);
-                            server.setState(new WaitingForStartState(this));
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                server.getState().onTeamPacket(ws, request);
                 response = null;
                 break;
             case TEXT:
@@ -363,4 +334,13 @@ public class ServerProtocol extends Protocol {
     public Move getLastClient2Move() {
         return lastClient2Move;
     }
+
+    public void setClient1Trainer(Trainer client1Trainer) {
+        this.client1Trainer = client1Trainer;
+    }
+
+    public void setClient2Trainer(Trainer client2Trainer) {
+        this.client2Trainer = client2Trainer;
+    }
+
 }

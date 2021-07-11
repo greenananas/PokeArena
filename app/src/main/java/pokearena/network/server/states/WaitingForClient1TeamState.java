@@ -1,9 +1,13 @@
 package pokearena.network.server.states;
 
 import org.java_websocket.WebSocket;
+import pokearena.battle.Pokemon;
+import pokearena.battle.Trainer;
 import pokearena.network.packets.Packet;
+import pokearena.network.packets.TeamPacket;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStateName;
+import pokearena.network.server.UnexpectedPacketException;
 
 public class WaitingForClient1TeamState extends ServerState {
 
@@ -18,7 +22,22 @@ public class WaitingForClient1TeamState extends ServerState {
 
     @Override
     public void onTeamPacket(WebSocket ws, Packet request) {
-
+        var server = serverProtocol.getServer();
+        var team = ((TeamPacket) request).getTeam();
+        if (logger.isDebugEnabled()) {
+            StringBuilder debugMessage;
+            debugMessage = new StringBuilder("Équipe reçue :\n");
+            for (Pokemon p : team.getPokemons()) {
+                debugMessage.append(" - ").append(p).append("\n");
+            }
+            logger.debug(debugMessage.toString());
+        }
+        if (serverProtocol.isClient1(ws)) {
+            serverProtocol.setClient1Trainer(new Trainer("Joueur 1", team));
+            server.setState(new WaitingForStartState(serverProtocol));
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@ import pokearena.network.server.ServerStateName;
 
 public abstract class ServerState {
 
-    private final Logger logger = LoggerFactory.getLogger(ServerState.class);
+    final Logger logger = LoggerFactory.getLogger(ServerState.class);
 
     ServerProtocol serverProtocol;
 

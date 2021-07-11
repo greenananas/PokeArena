@@ -71,23 +71,24 @@ public class CLIServer {
                 case "battleinfo":
                     try {
                         var battle = server.getBattle();
+                        if (logger.isInfoEnabled()) {
+                            StringBuilder info;
+                            // Informations du client 1
+                            info = new StringBuilder("=== CLIENT 1 ===\nÉquipe :\n");
+                            for (Pokemon pokemon : battle.trainer1.getTrainer().getPokemonTeam().getPokemons()) {
+                                info.append(" - ").append(pokemon).append("\n");
+                            }
+                            info.append("Pokémon au combat :\n").append(battle.trainer1.getTrainer().getLeadingPkmn());
+                            logger.info(info.toString());
 
-                        StringBuilder info;
-                        // Informations du client 1
-                        info = new StringBuilder("=== CLIENT 1 ===\nÉquipe :\n");
-                        for (Pokemon pokemon : battle.trainer1.getTrainer().getPokemonTeam().getPokemons()) {
-                            info.append("- ").append(pokemon).append("\n");
+                            // Informations du client 2
+                            info = new StringBuilder("=== CLIENT 2 ===\nÉquipe :\n");
+                            for (Pokemon pokemon : battle.trainer2.getTrainer().getPokemonTeam().getPokemons()) {
+                                info.append(" - ").append(pokemon).append("\n");
+                            }
+                            info.append("Pokémon au combat :\n").append(battle.trainer2.getTrainer().getLeadingPkmn());
+                            logger.info(info.toString());
                         }
-                        info.append("Pokémon au combat :\n").append(battle.trainer1.getTrainer().getLeadingPkmn());
-                        logger.info("{}", info);
-
-                        // Informations du client 2
-                        info = new StringBuilder("=== CLIENT 2 ===\nÉquipe :\n");
-                        for (Pokemon pokemon : battle.trainer2.getTrainer().getPokemonTeam().getPokemons()) {
-                            info.append("- ").append(pokemon).append("\n");
-                        }
-                        info.append("Pokémon au combat :\n").append(battle.trainer2.getTrainer().getLeadingPkmn());
-                        logger.info("{}", info);
                     } catch (NullPointerException e) {
                         logger.error("Pas de combat en cours");
                     }
