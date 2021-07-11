@@ -42,7 +42,9 @@ public abstract class ServerState {
     abstract void onTeamPacket(WebSocket ws, Packet request);
 
     public void onTextPacket(WebSocket ws, Packet request) {
-        logger.info("Message reçu de la part de '{}' : {}", serverProtocol.identifyWsUser(ws), ((TextPacket) request).getText());
+        if (logger.isInfoEnabled()) {
+            logger.info("Message reçu de la part de '{}' : {}", serverProtocol.identifyWsUser(ws), ((TextPacket) request).getText());
+        }
     }
 
     abstract void onForfeitPacket(WebSocket ws, Packet request);

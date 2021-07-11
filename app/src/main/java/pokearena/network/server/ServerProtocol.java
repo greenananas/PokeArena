@@ -368,4 +368,12 @@ public class ServerProtocol extends Protocol {
     public Server getServer() {
         return server;
     }
+
+    public Move getLastClient1Move() {
+        return lastClient1Move;
+    }
+
+    public Move getLastClient2Move() {
+        return lastClient2Move;
+    }
 }

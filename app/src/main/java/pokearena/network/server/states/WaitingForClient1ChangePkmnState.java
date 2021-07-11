@@ -35,6 +35,7 @@ public class WaitingForClient1ChangePkmnState extends ServerState {
             var server = serverProtocol.getServer();
             server.sendUpdate(ws, serverProtocol.generateClient1Update());
             server.sendUpdate(server.getClient2WS(), serverProtocol.generateClient2Update());
+            server.setState(new WaitingForClientsActionState(serverProtocol));
         } else {
             throw new UnexpectedPacketException(this.stateName);
         }

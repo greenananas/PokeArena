@@ -244,6 +244,7 @@ public class Server extends WebSocketServer {
      * @param state État du serveur.
      */
     public void setState(ServerState state) {
+        logger.debug("Changement de l'état {} vers l'état {}", this.state, state);
         this.state = state;
     }
 
