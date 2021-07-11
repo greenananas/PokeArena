@@ -1,5 +1,7 @@
 package pokearena.network.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pokearena.battle.*;
 import pokearena.network.packets.*;
 import pokearena.network.Protocol;
@@ -18,6 +20,8 @@ import static pokearena.network.Utils.createPacket;
  * </ul>
  */
 public class ServerProtocol extends Protocol {
+
+    private final Logger logger = LoggerFactory.getLogger(Server.class);
 
     /**
      * Serveur PokeArena qui utilise le protocole.
@@ -76,40 +80,30 @@ public class ServerProtocol extends Protocol {
      * @param request Paquet à traiter.
      */
     public void processPacket(WebSocket ws, Packet request) {
-        Packet response;
         switch (request.getType()) {
             case PING:
                 server.getState().onPingPacket(ws);
-                response = null;
                 break;
             case REFRESH:
                 server.getState().onRefreshPacket(ws, request);
-                response = null;
                 break;
             case FORFEIT:
                 server.getState().onForfeitPacket(ws, request);
-                response = null;
                 break;
             case TEAM:
                 server.getState().onTeamPacket(ws, request);
-                response = null;
                 break;
             case TEXT:
                 server.getState().onTextPacket(ws, request);
-                response = null;
                 break;
             case MOVE:
-                response = processActionPacket(ws, request);
+                server.getState().onMovePacket(ws, request);
                 break;
             case CHANGEPOKEMON:
                 server.getState().onChangePokemonPacket(ws, request);
-                response = null;
                 break;
             default:
-                response = null;
-        }
-        if (response != null) {
-            server.sendPacket(ws, response);
+                logger.warn("Unhandled case in processPacket switch");
         }
     }
 
