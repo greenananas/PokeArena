@@ -1,6 +1,8 @@
 package pokearena.network.server.states;
 
 import org.java_websocket.WebSocket;
+import pokearena.network.packets.ChangePokemonPacket;
+import pokearena.network.packets.MovePacket;
 import pokearena.network.packets.Packet;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStateName;
@@ -48,5 +50,37 @@ public class WaitingForClientsActionState extends ServerState {
     @Override
     public void onChangePokemonPacket(WebSocket ws, Packet request) {
         serverProtocol.getServer().sendPacket(ws, serverProtocol.processActionPacket(ws, request));
+        if (serverProtocol.isClient1(ws)) {
+            var server = serverProtocol.getServer();
+            var changePkmn = ((ChangePokemonPacket) request).getChangePkmn();
+            serverProtocol.setClient1Action(changePkmn);
+            server.setState(new WaitingForClient2ActionState(serverProtocol));
+        } else if (serverProtocol.isClient2(ws)) {
+            var server = serverProtocol.getServer();
+            var changePkmn = ((ChangePokemonPacket) request).getChangePkmn();
+            serverProtocol.setClient2Action(changePkmn);
+            server.setState(new WaitingForClient1ActionState(serverProtocol));
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
+    }
+
+    @Override
+    public void onMovePacket(WebSocket ws, Packet request) {
+        if (serverProtocol.isClient1(ws)) {
+            var server = serverProtocol.getServer();
+            var move = ((MovePacket) request).getMove();
+            serverProtocol.setClient1Action(move);
+            serverProtocol.setLastClient1Move(move);
+            server.setState(new WaitingForClient2ActionState(serverProtocol));
+        } else if (serverProtocol.isClient2(ws)) {
+            var server = serverProtocol.getServer();
+            var move = ((MovePacket) request).getMove();
+            serverProtocol.setClient2Action(move);
+            serverProtocol.setLastClient2Move(move);
+            server.setState(new WaitingForClient1ActionState(serverProtocol));
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
     }
 }

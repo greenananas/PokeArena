@@ -63,4 +63,9 @@ public class WaitingForClientsTeamState extends ServerState {
     public void onChangePokemonPacket(WebSocket ws, Packet request) {
 
     }
+
+    @Override
+    public void onMovePacket(WebSocket ws, Packet request) {
+
+    }
 }

@@ -105,9 +105,6 @@ public class ServerProtocol extends Protocol {
                 server.getState().onChangePokemonPacket(ws, request);
                 response = null;
                 break;
-            case ACTION:
-                response = processActionPacket(ws, request);
-                break;
             default:
                 response = null;
         }
@@ -144,9 +141,6 @@ public class ServerProtocol extends Protocol {
         switch (request.getType()) {
             case MOVE:
                 action = ((MovePacket) request).getMove();
-                break;
-            case ACTION:
-                action = ((ActionPacket) request).getAction();
                 break;
             case CHANGEPOKEMON:
                 action = ((ChangePokemonPacket) request).getChangePkmn();
@@ -333,8 +327,32 @@ public class ServerProtocol extends Protocol {
         this.client1Trainer = client1Trainer;
     }
 
+    public void setLastClient1Move(Move lastClient1Move) {
+        this.lastClient1Move = lastClient1Move;
+    }
+
     public void setClient2Trainer(Trainer client2Trainer) {
         this.client2Trainer = client2Trainer;
+    }
+
+    public void setLastClient2Move(Move lastClient2Move) {
+        this.lastClient2Move = lastClient2Move;
+    }
+
+    public Action getClient1Action() {
+        return client1Action;
+    }
+
+    public void setClient1Action(Action client1Action) {
+        this.client1Action = client1Action;
+    }
+
+    public Action getClient2Action() {
+        return client2Action;
+    }
+
+    public void setClient2Action(Action client2Action) {
+        this.client2Action = client2Action;
     }
 
 }

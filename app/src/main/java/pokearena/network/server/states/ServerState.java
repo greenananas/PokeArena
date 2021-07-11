@@ -51,6 +51,8 @@ public abstract class ServerState {
 
     public abstract void onChangePokemonPacket(WebSocket ws, Packet request);
 
+    public abstract void onMovePacket(WebSocket ws, Packet request);
+
     @Override
     public String toString() {
         return stateName.toString();

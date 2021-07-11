@@ -43,7 +43,6 @@ public class Utils {
             .registerSubtype(TextPacket.class, "TEXT")
             .registerSubtype(MovePacket.class, "MOVE")
             .registerSubtype(TeamPacket.class, "TEAM")
-            .registerSubtype(ActionPacket.class, "ACTION")
             .registerSubtype(ChangePokemonPacket.class, "CHANGEPOKEMON");
 
     /**
@@ -110,9 +109,6 @@ public class Utils {
                 break;
             case TEXT:
                 packet = new TextPacket((String) packetData);
-                break;
-            case ACTION:
-                packet = new ActionPacket((Action) packetData);
                 break;
             default:
                 packet = null;

@@ -49,4 +49,9 @@ public class ProcessingActionsState extends ServerState {
     public void onChangePokemonPacket(WebSocket ws, Packet request) {
         throw new UnexpectedPacketException(this.stateName);
     }
+
+    @Override
+    public void onMovePacket(WebSocket ws, Packet request) {
+        throw new UnexpectedPacketException(this.stateName);
+    }
 }

@@ -57,4 +57,9 @@ public class WaitingForClient1ChangePkmnState extends ServerState {
             throw new UnexpectedPacketException(this.stateName);
         }
     }
+
+    @Override
+    public void onMovePacket(WebSocket ws, Packet request) {
+
+    }
 }

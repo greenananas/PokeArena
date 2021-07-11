@@ -1,6 +1,8 @@
 package pokearena.network.server.states;
 
 import org.java_websocket.WebSocket;
+import pokearena.network.packets.ChangePokemonPacket;
+import pokearena.network.packets.MovePacket;
 import pokearena.network.packets.Packet;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStateName;
@@ -48,5 +50,32 @@ public class WaitingForClient1ActionState extends ServerState {
     @Override
     public void onChangePokemonPacket(WebSocket ws, Packet request) {
         serverProtocol.getServer().sendPacket(ws, serverProtocol.processActionPacket(ws, request));
+        if (serverProtocol.isClient1(ws)) {
+            var server = serverProtocol.getServer();
+            var changePkmn = ((ChangePokemonPacket) request).getChangePkmn();
+            serverProtocol.setClient1Action(changePkmn);
+            server.setState(new ProcessingActionsState(serverProtocol));
+            serverProtocol.handleActions(serverProtocol.getClient1Action(), serverProtocol.getClient2Action());
+            server.sendUpdate(ws, serverProtocol.generateClient1Update());
+            server.sendUpdate(server.getClient2WS(), serverProtocol.generateClient2Update());
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
+    }
+
+    @Override
+    public void onMovePacket(WebSocket ws, Packet request) {
+        if (serverProtocol.isClient1(ws)) {
+            var server = serverProtocol.getServer();
+            var move = ((MovePacket) request).getMove();
+            serverProtocol.setClient1Action(move);
+            serverProtocol.setLastClient1Move(move);
+            server.setState(new ProcessingActionsState(serverProtocol));
+            serverProtocol.handleActions(serverProtocol.getClient1Action(), serverProtocol.getClient2Action());
+            server.sendUpdate(ws, serverProtocol.generateClient1Update());
+            server.sendUpdate(server.getClient2WS(), serverProtocol.generateClient2Update());
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
     }
 }
