@@ -37,9 +37,9 @@ public abstract class ServerState {
         }
     }
 
-    abstract void onRefreshPacket(WebSocket ws, Packet request);
+    public abstract void onRefreshPacket(WebSocket ws, Packet request);
 
-    abstract void onTeamPacket(WebSocket ws, Packet request);
+    public abstract void onTeamPacket(WebSocket ws, Packet request);
 
     public void onTextPacket(WebSocket ws, Packet request) {
         if (logger.isInfoEnabled()) {
@@ -47,7 +47,7 @@ public abstract class ServerState {
         }
     }
 
-    abstract void onForfeitPacket(WebSocket ws, Packet request);
+    public abstract void onForfeitPacket(WebSocket ws, Packet request);
 
     public abstract void onChangePokemonPacket(WebSocket ws, Packet request);
 

@@ -14,7 +14,7 @@ public class WaitingForClient2ChangePkmnState extends ServerState {
     }
 
     @Override
-    void onRefreshPacket(WebSocket ws, Packet request) {
+    public void onRefreshPacket(WebSocket ws, Packet request) {
         var server = serverProtocol.getServer();
         if (serverProtocol.isClient1(ws)) {
             server.sendUpdate(ws, serverProtocol.generateClient1Update());
@@ -26,12 +26,12 @@ public class WaitingForClient2ChangePkmnState extends ServerState {
     }
 
     @Override
-    void onTeamPacket(WebSocket ws, Packet request) {
+    public void onTeamPacket(WebSocket ws, Packet request) {
 
     }
 
     @Override
-    void onForfeitPacket(WebSocket ws, Packet request) {
+    public void onForfeitPacket(WebSocket ws, Packet request) {
 
     }
 

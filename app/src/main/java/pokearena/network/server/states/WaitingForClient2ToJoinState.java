@@ -13,17 +13,17 @@ public class WaitingForClient2ToJoinState extends ServerState {
     }
 
     @Override
-    void onRefreshPacket(WebSocket ws, Packet request) {
+    public void onRefreshPacket(WebSocket ws, Packet request) {
 
     }
 
     @Override
-    void onTeamPacket(WebSocket ws, Packet request) {
+    public void onTeamPacket(WebSocket ws, Packet request) {
 
     }
 
     @Override
-    void onForfeitPacket(WebSocket ws, Packet request) {
+    public void onForfeitPacket(WebSocket ws, Packet request) {
 
     }
 
