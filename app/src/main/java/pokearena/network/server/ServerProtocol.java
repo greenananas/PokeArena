@@ -87,14 +87,8 @@ public class ServerProtocol extends Protocol {
                 response = null;
                 break;
             case FORFEIT:
-                if (ws == server.getClient1WS()) {
-                    server.sendWin(server.getClient2WS());
-                    server.setState(new Client2WonState(this));
-                } else if (ws == server.getClient2WS()) {
-                    server.sendWin(server.getClient1WS());
-                    server.setState(new Client1WonState(this));
-                }
-                response = createPacket(PacketType.LOSE, null);
+                server.getState().onForfeitPacket(ws, request);
+                response = null;
                 break;
             case TEAM:
                 server.getState().onTeamPacket(ws, request);

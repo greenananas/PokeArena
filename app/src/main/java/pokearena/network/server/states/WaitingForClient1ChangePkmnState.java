@@ -27,12 +27,22 @@ public class WaitingForClient1ChangePkmnState extends ServerState {
 
     @Override
     public void onTeamPacket(WebSocket ws, Packet request) {
-        throw new UnexpectedPacketException(this.stateName);
     }
 
     @Override
     public void onForfeitPacket(WebSocket ws, Packet request) {
-        throw new UnexpectedPacketException(this.stateName);
+        var server = serverProtocol.getServer();
+        if (serverProtocol.isClient1(ws)) {
+            server.sendLose(ws);
+            server.sendWin(server.getClient2WS());
+            server.setState(new Client2WonState(serverProtocol));
+        } else if (serverProtocol.isClient2(ws)) {
+            server.sendLose(ws);
+            server.sendWin(server.getClient1WS());
+            server.setState(new Client1WonState(serverProtocol));
+        } else {
+            throw new UnexpectedPacketException(this.stateName);
+        }
     }
 
     @Override

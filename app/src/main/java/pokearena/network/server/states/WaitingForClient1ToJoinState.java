@@ -4,6 +4,7 @@ import org.java_websocket.WebSocket;
 import pokearena.network.packets.Packet;
 import pokearena.network.server.ServerProtocol;
 import pokearena.network.server.ServerStateName;
+import pokearena.network.server.UnexpectedPacketException;
 
 public class WaitingForClient1ToJoinState extends ServerState {
 
@@ -23,7 +24,7 @@ public class WaitingForClient1ToJoinState extends ServerState {
 
     @Override
     public void onForfeitPacket(WebSocket ws, Packet request) {
-
+            throw new UnexpectedPacketException(this.stateName);
     }
 
     @Override
