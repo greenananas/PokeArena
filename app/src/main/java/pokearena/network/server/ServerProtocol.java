@@ -21,7 +21,7 @@ import static pokearena.network.Utils.createPacket;
  */
 public class ServerProtocol extends Protocol {
 
-    private final Logger logger = LoggerFactory.getLogger(Server.class);
+    private final Logger logger = LoggerFactory.getLogger(ServerProtocol.class);
 
     /**
      * Serveur PokeArena qui utilise le protocole.
