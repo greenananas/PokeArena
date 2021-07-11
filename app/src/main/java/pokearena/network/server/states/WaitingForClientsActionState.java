@@ -49,7 +49,6 @@ public class WaitingForClientsActionState extends ServerState {
 
     @Override
     public void onChangePokemonPacket(WebSocket ws, Packet request) {
-        serverProtocol.getServer().sendPacket(ws, serverProtocol.processActionPacket(ws, request));
         if (serverProtocol.isClient1(ws)) {
             var server = serverProtocol.getServer();
             var changePkmn = ((ChangePokemonPacket) request).getChangePkmn();
